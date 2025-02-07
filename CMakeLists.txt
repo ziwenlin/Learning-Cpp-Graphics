@@ -47,25 +47,25 @@ target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 # ##############################################################################
 # CTest
 
-# Testing framework Catch2
+# Enable CTest
+enable_testing()
+
+# Fetch Doctest (if not using system package)
 include(FetchContent)
 FetchContent_Declare(
-  Catch2
-  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG v3.4.0) # or a later release
-FetchContent_MakeAvailable(Catch2)
+  doctest
+  GIT_REPOSITORY https://github.com/doctest/doctest.git
+  GIT_TAG v2.4.9)
+FetchContent_MakeAvailable(doctest)
 
 # Link main sources to unit_tests
 add_executable(unit_tests ${TEST_SOURCES} ${SOURCES})
 target_include_directories(unit_tests PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
 # Link testing framework Catch2
-target_link_libraries(unit_tests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(unit_tests PRIVATE doctest)
 target_link_libraries(unit_tests PRIVATE SFML::Graphics)
 target_link_libraries(unit_tests PRIVATE fmt::fmt)
 
-# # Enable CTest enable_testing()
-list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
-include(CTest)
-include(Catch)
-catch_discover_tests(unit_tests)
+# Register test with CTest
+add_test(NAME UnitTest COMMAND unit_tests)
