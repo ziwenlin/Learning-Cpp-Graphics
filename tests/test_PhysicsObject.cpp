@@ -15,12 +15,12 @@ TEST_CASE("PhysicsObject method update test") {
     CHECK(position == "300.0 300.0");
 
     physics_object.accelerate(sf::Vector2f(10.f, 0.f));
-    physics_object.update(.5f);
+    physics_object.calculatePosition(.5f);
     position = toString(physics_object.getPosition());
     CHECK(position == "302.5 300.0");
 
     physics_object.accelerate(sf::Vector2f(10.f, 0.f));
-    physics_object.update(.5f);
+    physics_object.calculatePosition(.5f);
     position = toString(physics_object.getPosition());
     CHECK(position == "307.5 300.0");
 }

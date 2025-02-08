@@ -4,9 +4,7 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/System/Vector2.hpp"
 
-
 static constexpr auto ZERO = sf::Vector2f(0.f, 0.f);
-
 
 class PhysicsObject {
 public:
@@ -14,7 +12,13 @@ public:
 
     void draw(sf::RenderWindow &window) const;
 
-    void update(const float &deltaTime);
+    void update();
+
+    void applyLimits();
+
+    void calculateCollision(PhysicsObject &other);
+
+    void calculatePosition(const float &deltaTime);
 
     void accelerate(const sf::Vector2f &acceleration);
 
@@ -28,5 +32,4 @@ private:
     sf::RectangleShape shape;
 };
 
-
-#endif //PHYSICSOBJECT_H
+#endif // PHYSICSOBJECT_H
