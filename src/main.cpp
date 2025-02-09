@@ -5,6 +5,7 @@
 #include <fmt/format.h>
 
 #include "PhysicsObject.h"
+#include "SmartMouse.h"
 
 int main() {
     using sf::Vector2f, sf::Vector2u, sf::Vector2i;
@@ -28,13 +29,15 @@ int main() {
     list_physics_objects.reserve(100);
     // Counter hoeveel PhysicsObject
     sf::Text text_counter(font);
+    // Maakt een smart muis aan
+    SmartMouse mouse;
     unsigned int count_physics_objects = 0;
 
     // Main window loop
     while (window.isOpen()) {
         const float delta_time = clock.restart().asSeconds();
 
-        // Poll events is belangrijk, want anders kan de venster niet sluiten
+        // Poll events is belangrijk, want anders kan het venster niet sluiten
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
@@ -45,10 +48,13 @@ int main() {
         // de muis
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             const Vector2i mousePosition = sf::Mouse::getPosition(window);
-            const auto spawnPosition = Vector2f(static_cast<float>(mousePosition.x),
-                                                static_cast<float>(mousePosition.y));
-            list_physics_objects.emplace_back(spawnPosition);
-            count_physics_objects++;
+            mouse.setMouseState(true);
+            while (mouse.isMousePressed(mousePosition) == true) {
+                list_physics_objects.emplace_back(mouse.getPosition());;
+                count_physics_objects++;
+            }
+        } else {
+            mouse.setMouseState(false);
         }
 
         // Bereken alle nieuwe posities van PhysicsObject
