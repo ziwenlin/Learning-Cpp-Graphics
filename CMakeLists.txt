@@ -14,7 +14,9 @@ project(
 set(SOURCES src/PhysicsObject.cpp
         src/SmartMouse.cpp
         include/SmartMouse.h)
-set(TEST_SOURCES tests/test_PhysicsObject.cpp)
+set(TEST_SOURCES tests/test_PhysicsObject.cpp
+        tests/test_SmartMouse.cpp
+        tests/test_Helpers.h)
 
 add_executable(${PROJECT_NAME} src/main.cpp ${SOURCES})
 target_include_directories(${PROJECT_NAME}
@@ -52,22 +54,25 @@ target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
 # Enable CTest
 enable_testing()
 
-# Fetch Doctest (if not using system package)
+# Fetch googletest (if not using system package)
 include(FetchContent)
 FetchContent_Declare(
-  doctest
-  GIT_REPOSITORY https://github.com/doctest/doctest.git
-  GIT_TAG v2.4.9)
-FetchContent_MakeAvailable(doctest)
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest
+        GIT_TAG 6910c9d9165801d8827d628cb72eb7ea9dd538c5)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
 
 # Link main sources to unit_tests
 add_executable(unit_tests ${TEST_SOURCES} ${SOURCES})
 target_include_directories(unit_tests PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
 # Link testing framework Catch2
-target_link_libraries(unit_tests PRIVATE doctest)
+target_link_libraries(unit_tests PRIVATE gtest)
 target_link_libraries(unit_tests PRIVATE SFML::Graphics)
 target_link_libraries(unit_tests PRIVATE fmt::fmt)
 
 # Register test with CTest
-add_test(NAME UnitTest COMMAND unit_tests)
+include(GoogleTest)
+gtest_discover_tests(unit_tests)
