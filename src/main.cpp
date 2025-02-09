@@ -14,12 +14,23 @@ int main() {
                             "Learning SFML in C++", sf::Style::Default);
     window.setFramerateLimit(120);
 
+    // Font om tekst op het scherm te zetten
+    sf::Font font;
+    if (!font.openFromFile(R"(C:\Windows\Fonts\Verdana.ttf)")) {
+        fmt::println("Failed to load font");
+        return 1;
+    }
+
     // Houdt de tijd en ticks bij
     sf::Clock clock;
     // Houdt alle instanties van PhysicsObject bij
     std::vector<PhysicsObject> list_physics_objects;
     list_physics_objects.reserve(100);
+    // Counter hoeveel PhysicsObject
+    sf::Text text_counter(font);
+    unsigned int count_physics_objects = 0;
 
+    // Main window loop
     while (window.isOpen()) {
         const float delta_time = clock.restart().asSeconds();
 
@@ -34,18 +45,18 @@ int main() {
         // de muis
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             const Vector2i mousePosition = sf::Mouse::getPosition(window);
-            const Vector2f spawnPosition =
-                Vector2f(static_cast<float>(mousePosition.x),
-                         static_cast<float>(mousePosition.y));
+            const auto spawnPosition = Vector2f(static_cast<float>(mousePosition.x),
+                                                static_cast<float>(mousePosition.y));
             list_physics_objects.emplace_back(spawnPosition);
+            count_physics_objects++;
         }
 
         // Bereken alle nieuwe posities van PhysicsObject
-        for (PhysicsObject &physics_obj : list_physics_objects) {
+        for (PhysicsObject &physics_obj: list_physics_objects) {
             physics_obj.accelerate(Vector2f(0.f, 1000.f));
             physics_obj.calculatePosition(delta_time);
             // Bereken de collision tussen elke PhysicsObject
-            for (PhysicsObject &physics_other : list_physics_objects) {
+            for (PhysicsObject &physics_other: list_physics_objects) {
                 if (&physics_obj == &physics_other)
                     continue;
                 physics_obj.calculateCollision(physics_other);
@@ -53,12 +64,16 @@ int main() {
             physics_obj.applyLimits();
         }
 
+        // Bereid alle teksten voor
+        text_counter.setString(fmt::format("Object: {}", count_physics_objects));
+
         // Render een nieuwe frame
         window.clear(sf::Color::Black);
-        for (PhysicsObject &physics_obj : list_physics_objects) {
+        for (PhysicsObject &physics_obj: list_physics_objects) {
             physics_obj.update();
             physics_obj.draw(window);
         }
+        window.draw(text_counter);
         window.display();
     }
     return 0;
