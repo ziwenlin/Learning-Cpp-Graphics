@@ -4,7 +4,7 @@
 #include "SmartMouse.h"
 
 
-TEST(SmartMouse, position_value_test) {
+TEST(SmartMouse, UpdateGetPosition) {
     SmartMouse mouse;
     mouse.setMouseState(true);
     mouse.isMousePressed(sf::Vector2i(100, 100));

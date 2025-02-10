@@ -12,11 +12,12 @@ project(
         LANGUAGES CXX)
 
 set(SOURCES src/PhysicsObject.cpp
-        src/SmartMouse.cpp
-        include/SmartMouse.h)
-set(TEST_SOURCES tests/test_PhysicsObject.cpp
-        tests/test_SmartMouse.cpp
-        tests/test_Helpers.h)
+        src/SmartMouse.cpp)
+
+set(TEST_SOURCES
+        tests/test_Helpers.h
+        tests/test_PhysicsObject.cc
+        tests/test_SmartMouse.cc)
 
 add_executable(${PROJECT_NAME} src/main.cpp ${SOURCES})
 target_include_directories(${PROJECT_NAME}
@@ -40,7 +41,7 @@ include(FetchContent)
 FetchContent_Declare(
         fmt
         GIT_REPOSITORY https://github.com/fmtlib/fmt
-        GIT_TAG e69e5f977d458f2650bb346dadf2ad30c5320281) # 10.2.1
+        GIT_TAG 10.2.1) # 10.2.1
 FetchContent_MakeAvailable(fmt)
 
 # Link externe libraries
@@ -59,7 +60,7 @@ include(FetchContent)
 FetchContent_Declare(
         googletest
         GIT_REPOSITORY https://github.com/google/googletest
-        GIT_TAG 6910c9d9165801d8827d628cb72eb7ea9dd538c5)
+        GIT_TAG v1.16.0)
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
@@ -69,7 +70,7 @@ add_executable(unit_tests ${TEST_SOURCES} ${SOURCES})
 target_include_directories(unit_tests PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
 # Link testing framework Catch2
-target_link_libraries(unit_tests PRIVATE gtest)
+target_link_libraries(unit_tests PRIVATE GTest::gtest_main)
 target_link_libraries(unit_tests PRIVATE SFML::Graphics)
 target_link_libraries(unit_tests PRIVATE fmt::fmt)
 

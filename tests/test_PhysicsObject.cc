@@ -3,7 +3,7 @@
 #include "test_Helpers.h"
 #include "PhysicsObject.h"
 
-TEST(PhysicsObject, method_update_test) {
+TEST(PhysicsObject, UpdateGetPosition) {
     PhysicsObject physics_object(sf::Vector2f(300.f, 300.f));
     std::string position = toString(physics_object.getPosition());
     EXPECT_EQ(position, "300.0 300.0");
@@ -19,7 +19,7 @@ TEST(PhysicsObject, method_update_test) {
     EXPECT_EQ(position, "307.5 300.0");
 }
 
-TEST(PhysicsObject, shape_length_update_test) {
-    PhysicsObject physics_object(sf::Vector2f(300.f, 300.f));
+TEST(PhysicsObject, InitializeShapeLength) {
+    PhysicsObject physics_object(sf::Vector2f(300.f, 300.f), sf::Vector2f(10.f, 10.f));
     EXPECT_EQ(physics_object.shapeLength, std::sqrt(200.0f));
 }
