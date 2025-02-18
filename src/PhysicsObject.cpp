@@ -1,10 +1,16 @@
 #include "PhysicsObject.h"
 
-PhysicsObject::PhysicsObject(const sf::Vector2f &position)
-    : displacement(ZERO), acceleration(ZERO), shape(sf::Vector2f(10.f, 10.f)) {
+PhysicsObject::PhysicsObject(const sf::Vector2f &position) {
     this->positionCurrent = position;
     this->positionPrevious = position;
     shape.setOrigin(sf::Vector2f(5.f, 5.f));
+}
+
+PhysicsObject::PhysicsObject(const sf::Vector2f &position, const sf::Vector2f &shape)
+    : shapeLength(shape.length()), shape(shape) {
+    this->positionCurrent = position;
+    this->positionPrevious = position;
+    this->shape.setOrigin(shape / 2.f);
 }
 
 void PhysicsObject::draw(sf::RenderWindow &window) const { window.draw(shape); }

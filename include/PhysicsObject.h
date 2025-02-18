@@ -8,7 +8,19 @@ static constexpr auto ZERO = sf::Vector2f(0.f, 0.f);
 
 class PhysicsObject {
 public:
+    const float shapeLength = 20.0f;
+
+private:
+    sf::Vector2f positionCurrent;
+    sf::Vector2f positionPrevious;
+    sf::Vector2f displacement = ZERO;
+    sf::Vector2f acceleration = ZERO;
+    sf::RectangleShape shape{sf::Vector2f(10.0f, 10.0f)};
+
+public:
     explicit PhysicsObject(const sf::Vector2f &position);
+
+    PhysicsObject(const sf::Vector2f &position, const sf::Vector2f &shape);
 
     void draw(sf::RenderWindow &window) const;
 
@@ -23,13 +35,6 @@ public:
     void accelerate(const sf::Vector2f &acceleration);
 
     sf::Vector2f getPosition() const { return positionCurrent; };
-
-private:
-    sf::Vector2f positionCurrent;
-    sf::Vector2f positionPrevious;
-    sf::Vector2f displacement;
-    sf::Vector2f acceleration;
-    sf::RectangleShape shape;
 };
 
 #endif // PHYSICSOBJECT_H
