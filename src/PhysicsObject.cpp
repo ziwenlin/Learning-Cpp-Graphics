@@ -31,29 +31,35 @@ void PhysicsObject::accelerate(const sf::Vector2f &acceleration) {
 
 void PhysicsObject::calculateCollision(PhysicsObject &other) {
     // Bereken de relative positie van het andere PhysicsObject
-    const sf::Vector2f relativePosition =
-        this->positionCurrent - other.positionCurrent;
+    const sf::Vector2f relativePosition = this->positionCurrent - other.positionCurrent;
     const float relativeDistance = relativePosition.length();
-    const float sharedObjectDiameter =
-        (this->shape.getSize().length() + other.shape.getSize().length()) /
-        2.0f;
-    if (relativeDistance < sharedObjectDiameter && relativeDistance != 0.0f) {
-        const float overlap = relativeDistance - sharedObjectDiameter;
-        const sf::Vector2f collisionDisplacement =
-            relativePosition / relativeDistance * overlap / 2.0f;
+    // Als objecten in elkaar zitten, doe helemaal niks
+    if (relativeDistance == 0.0f) { return; }
+    // Bereken de totale diameter van beide objecten
+    if (const float sharedShapeDiameter = (this->shapeLength + other.shapeLength) / 2.0f;
+        sharedShapeDiameter > relativeDistance) {
+        const float overlap = relativeDistance - sharedShapeDiameter;
+        // Bereken de verplaatsing nodig om geen collisiion te hebben
+        const sf::Vector2f collisionDisplacement = relativePosition / relativeDistance * overlap / 2.0f;
         this->positionCurrent -= collisionDisplacement;
         other.positionCurrent += collisionDisplacement;
     }
 }
 
 void PhysicsObject::applyLimits() {
+    // Berekening van stuiteren tegen muren
+    constexpr float constant_multiplier = 1.8f;
+    constexpr float energy_conversion = 0.8f;
     if (positionCurrent.y > 750.0f) {
-        positionCurrent.y = 750.0f;
+        positionPrevious.y = constant_multiplier * 750.0f - energy_conversion * positionPrevious.y;
+        positionCurrent.y = constant_multiplier * 750.0f - energy_conversion * positionCurrent.y;
     }
     if (positionCurrent.x < 50.0f) {
-        positionCurrent.x = 50.0f;
+        positionPrevious.x = constant_multiplier * 50.0f - energy_conversion * positionPrevious.x;
+        positionCurrent.x = constant_multiplier * 50.0f - energy_conversion * positionCurrent.x;
     }
     if (positionCurrent.x > 1230.0f) {
-        positionCurrent.x = 1230.0f;
+        positionPrevious.x = constant_multiplier * 1230.0f - energy_conversion * positionPrevious.x;
+        positionCurrent.x = constant_multiplier * 1230.0f - energy_conversion * positionCurrent.x;
     }
 }
