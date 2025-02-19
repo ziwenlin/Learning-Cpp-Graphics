@@ -22,14 +22,14 @@ bool SmartMouse::setMouseState(const bool &is_mouse_pressed) {
 bool SmartMouse::isMousePressed(const sf::Vector2i &mousePosition) {
     // Converteer muis-positie naar scherm-positie
     const auto newPosition = static_cast<sf::Vector2f>(mousePosition);
-    // Zoek de begin positie
+    // Zoek de startpositie
     if (isStarted == true) {
         dragPosition = newPosition;
         isStarted = false;
         return true;
     }
     // Bereken de afstand van de nieuwe muis-positie met de vorige muis-positie
-    // Als deze groter is dan de drag-lengte mag de de nieuwe drag-positie worden verplaatst
+    // Als deze groter is dan de drag-lengte mag de nieuwe drag-positie worden verplaatst
     if (const sf::Vector2f traveledPosition = newPosition - dragPosition;
         traveledPosition.length() > dragLength) {
         dragPosition += traveledPosition.normalized() * dragLength;
