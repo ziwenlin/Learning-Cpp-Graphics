@@ -11,13 +11,17 @@ project(
         VERSION 0.0.1
         LANGUAGES CXX)
 
-set(SOURCES src/PhysicsObject.cpp
-        src/SmartMouse.cpp)
+set(SOURCES
+        src/PhysicsObject.cpp
+        src/SmartMouse.cpp
+        src/PhysicsEngine.cpp
+)
 
 set(TEST_SOURCES
         tests/test_Helpers.h
         tests/test_PhysicsObject.cc
-        tests/test_SmartMouse.cc)
+        tests/test_SmartMouse.cc
+)
 
 add_executable(${PROJECT_NAME} src/main.cpp ${SOURCES})
 target_include_directories(${PROJECT_NAME}

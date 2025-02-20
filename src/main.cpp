@@ -4,14 +4,13 @@
 #include <SFML/Graphics.hpp>
 #include <fmt/format.h>
 
+#include "PhysicsEngine.h"
 #include "PhysicsObject.h"
 #include "SmartMouse.h"
 
 int main() {
-    using sf::Vector2f, sf::Vector2u, sf::Vector2i;
-
     // Maak een render venster
-    sf::RenderWindow window(sf::VideoMode(Vector2u(1280u, 800u)),
+    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(1280u, 800u)),
                             "Learning SFML in C++", sf::Style::Default);
     window.setFramerateLimit(120);
 
@@ -25,8 +24,8 @@ int main() {
     // Houdt de tijd en ticks bij
     sf::Clock clock;
     // Houdt alle instanties van PhysicsObject bij
-    std::vector<PhysicsObject> list_physics_objects;
-    list_physics_objects.reserve(100);
+    PhysicsEngine engine;
+
     // Counter hoeveel PhysicsObject
     sf::Text text_counter(font);
     // Maakt een smart muis aan
@@ -47,10 +46,10 @@ int main() {
         // Kijkt naar de muis input en spawn een PhysicsObject op de locatie van
         // de muis
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-            const Vector2i mousePosition = sf::Mouse::getPosition(window);
+            const sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
             mouse.setMouseState(true);
             while (mouse.isMousePressed(mousePosition) == true) {
-                list_physics_objects.emplace_back(mouse.getPosition());;
+                engine.spawnObject(mouse.getPosition());
                 count_physics_objects++;
             }
         } else {
@@ -58,16 +57,11 @@ int main() {
         }
 
         // Bereken alle nieuwe posities van PhysicsObject
-        for (PhysicsObject &physics_obj: list_physics_objects) {
-            physics_obj.accelerate(Vector2f(0.f, 1000.f));
-            physics_obj.calculatePosition(delta_time);
-            // Bereken de collision tussen elke PhysicsObject
-            for (PhysicsObject &physics_other: list_physics_objects) {
-                if (&physics_obj == &physics_other)
-                    continue;
-                physics_obj.calculateCollision(physics_other);
-            }
-            physics_obj.applyLimits();
+        constexpr float step_time = 1.0f / 100.0f;
+        float total_step_time = 0.0f;
+        for (auto i = 0; i < 3 && total_step_time < delta_time; i++) {
+            engine.update(step_time);
+            total_step_time += step_time;
         }
 
         // Bereid alle teksten voor
@@ -75,10 +69,7 @@ int main() {
 
         // Render een nieuwe frame
         window.clear(sf::Color::Black);
-        for (PhysicsObject &physics_obj: list_physics_objects) {
-            physics_obj.update();
-            physics_obj.draw(window);
-        }
+        engine.draw(window);
         window.draw(text_counter);
         window.display();
     }
