@@ -21,6 +21,7 @@ set(TEST_SOURCES
         tests/test_Helpers.h
         tests/test_PhysicsObject.cc
         tests/test_SmartMouse.cc
+        tests/test_PhysicsEngine.cc
 )
 
 add_executable(${PROJECT_NAME} src/main.cpp ${SOURCES})
