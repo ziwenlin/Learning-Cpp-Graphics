@@ -34,7 +34,11 @@ public:
 
     void accelerate(const sf::Vector2f &acceleration);
 
-    sf::Vector2f getPosition() const { return positionCurrent; };
+    sf::Vector2f getVelocity() const;
+
+    sf::Vector2f getPosition() const;
+
+    sf::Vector2f getLastPosition() const;;
 };
 
 #endif // PHYSICSOBJECT_H

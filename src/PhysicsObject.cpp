@@ -63,3 +63,15 @@ void PhysicsObject::applyLimits() {
         positionCurrent.x = constant_multiplier * 1230.0f - energy_conversion * positionCurrent.x;
     }
 }
+
+sf::Vector2f PhysicsObject::getVelocity() const {
+    return positionCurrent - positionPrevious;
+}
+
+sf::Vector2f PhysicsObject::getPosition() const {
+    return positionCurrent;
+}
+
+sf::Vector2f PhysicsObject::getLastPosition() const {
+    return positionPrevious;
+}
