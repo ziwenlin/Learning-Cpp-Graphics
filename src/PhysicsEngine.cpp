@@ -16,9 +16,9 @@ void PhysicsEngine::update(const float &delta_time) {
         const sf::Vector2f position_previous = object.getLastPosition();
         const int grid_index_previous = this->getGridPosition(position_previous);
 
-        object.accelerate(sf::Vector2f(0.f, 1000.f));
-        object.calculatePosition(delta_time);
-        object.applyLimits();
+        object.applyForce(sf::Vector2f(0.f, 1000.f));
+        object.applyMovement(delta_time);
+        object.applyBorder();
 
         const sf::Vector2f position_final = object.getLastPosition();
         const int grid_index_final = this->getGridPosition(position_final);
@@ -59,7 +59,7 @@ void PhysicsEngine::calculateObjectCollision(const int &object_index, const int 
     for (const int &other_index: grid[grid_index]) {
         if (object_index == other_index) { continue; }
         PhysicsObject &other = objects[other_index];
-        object.calculateCollision(other);
+        object.applyCollision(other);
     }
 }
 

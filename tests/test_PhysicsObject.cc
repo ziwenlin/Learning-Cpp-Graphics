@@ -8,13 +8,13 @@ TEST(PhysicsObject, UpdateGetPosition) {
     std::string position = toString(physics_object.getPosition());
     EXPECT_EQ(position, "300.0 300.0");
 
-    physics_object.accelerate(sf::Vector2f(10.f, 0.f));
-    physics_object.calculatePosition(.5f);
+    physics_object.applyForce(sf::Vector2f(10.f, 0.f));
+    physics_object.applyMovement(.5f);
     position = toString(physics_object.getPosition());
     EXPECT_EQ(position, "302.5 300.0");
 
-    physics_object.accelerate(sf::Vector2f(10.f, 0.f));
-    physics_object.calculatePosition(.5f);
+    physics_object.applyForce(sf::Vector2f(10.f, 0.f));
+    physics_object.applyMovement(.5f);
     position = toString(physics_object.getPosition());
     EXPECT_EQ(position, "307.5 300.0");
 }

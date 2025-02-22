@@ -26,13 +26,13 @@ public:
 
     void update();
 
-    void applyLimits();
+    bool applyBorder();
 
-    void calculateCollision(PhysicsObject &other);
+    bool applyCollision(PhysicsObject &other);
 
-    void calculatePosition(const float &deltaTime);
+    bool applyMovement(const float &deltaTime);
 
-    void accelerate(const sf::Vector2f &acceleration);
+    void applyForce(const sf::Vector2f &acceleration);
 
     sf::Vector2f getVelocity() const;
 
