@@ -32,18 +32,24 @@ void PhysicsObject::applyForce(const sf::Vector2f &acceleration) {
 
 bool PhysicsObject::applyCollision(PhysicsObject &other) {
     // Bereken de relative positie van het andere PhysicsObject
-    const sf::Vector2f relativePosition = this->positionCurrent - other.positionCurrent;
-    const float relativeDistance = relativePosition.length();
+    const sf::Vector2f relative_position = this->positionCurrent - other.positionCurrent;
+    const float distance = relative_position.length();
     // Als objecten in elkaar zitten, doe helemaal niks
-    if (relativeDistance == 0.0f) { return false; }
+    // const float minimum_distance = this->shapeLength / 10.0f;
+    if (distance == 0.0f) {
+        const sf::Vector2f displacement(this->shapeLength * 0.5f, this->shapeLength * 0.5f);
+        this->positionCurrent += displacement;
+        other.positionCurrent -= displacement;
+        return true;
+    }
     // Bereken de totale diameter van beide objecten
-    if (const float sharedShapeDiameter = (this->shapeLength + other.shapeLength) / 2.0f;
-        sharedShapeDiameter > relativeDistance) {
-        const float overlap = relativeDistance - sharedShapeDiameter;
-        // Bereken de verplaatsing nodig om geen collisiion te hebben
-        const sf::Vector2f collisionDisplacement = relativePosition / relativeDistance * overlap / 2.0f;
-        this->positionCurrent -= collisionDisplacement;
-        other.positionCurrent += collisionDisplacement;
+    const float collision_distance = (this->shapeLength + other.shapeLength) / 2.0f;
+    if (collision_distance > distance) {
+        const float overlap_ratio = 0.5f * (collision_distance / distance) - 0.5f;
+        // Bereken de verplaatsing nodig om de collisiion op te lossen
+        const sf::Vector2f collisionDisplacement = relative_position * overlap_ratio;
+        this->positionCurrent += collisionDisplacement;
+        other.positionCurrent -= collisionDisplacement;
         return true;
     }
     return false;

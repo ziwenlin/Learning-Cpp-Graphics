@@ -1,6 +1,6 @@
 #ifndef COLLISIONENGINE_H
 #define COLLISIONENGINE_H
-#include <set>
+#include <unordered_set>
 #include <vector>
 
 #include "PhysicsObject.h"
@@ -14,7 +14,8 @@ public:
 
 private:
     std::vector<PhysicsObject> objects;
-    std::array<std::set<unsigned int>, 400> grid;
+    std::array<std::unordered_set<unsigned int>, 400> grid;
+    std::vector<short> objects_grid_indices;
 
 public:
     void draw(sf::RenderWindow &window);
@@ -26,6 +27,8 @@ public:
     void calculateObjectCollision(const int &object_index, const int &grid_index);
 
     std::vector<PhysicsObject> getObjects() { return objects; }
+
+    bool updateGridPosition(const int &object_index, const int &final_grid_index);
 
     [[nodiscard]] int getGridPosition(const float &x, const float &y) const;
 

@@ -1,5 +1,6 @@
 #include "PhysicsEngine.h"
 
+
 void PhysicsEngine::draw(sf::RenderWindow &window) {
     for (PhysicsObject &physics_obj: objects) {
         physics_obj.update();
@@ -13,32 +14,16 @@ void PhysicsEngine::update(const float &delta_time) {
     for (int object_index = 0; object_index < objects_size; object_index++) {
         PhysicsObject &object = objects[object_index];
 
-        const sf::Vector2f position_previous = object.getLastPosition();
-        const int grid_index_previous = this->getGridPosition(position_previous);
-
         object.applyForce(sf::Vector2f(0.f, 1000.f));
         object.applyMovement(delta_time);
         object.applyBorder();
 
-        const sf::Vector2f position_final = object.getLastPosition();
-        const int grid_index_final = this->getGridPosition(position_final);
-
-        if (grid_index_final != grid_index_previous) {
-            if (grid_index_previous != -1 && grid_index_previous < size) {
-                grid[grid_index_previous].erase(object_index);
-            }
-            if (grid_index_final != -1 && grid_index_final < size) {
-                grid[grid_index_final].insert(object_index);
-            }
-        }
+        const int final_grid_index = this->getGridPosition(object.getPosition());
+        this->updateGridPosition(object_index, final_grid_index);
     }
     // Daarna collisions berekenen
     for (int object_index = 0; object_index < objects_size; object_index++) {
-        PhysicsObject &object = objects[object_index];
-
-        const sf::Vector2f position_current = object.getPosition();
-        const int grid_index = this->getGridPosition(position_current);
-
+        const int grid_index = this->objects_grid_indices[object_index];
         if (grid_index == -1 || grid_index >= size) {
             continue;
         }
@@ -56,17 +41,43 @@ void PhysicsEngine::calculateObjectCollision(const int &object_index, const int 
     if (grid_index == -1 || grid_index >= size) return;
     PhysicsObject &object = objects[object_index];
 
-    for (const int &other_index: grid[grid_index]) {
-        if (object_index == other_index) { continue; }
+    const std::unordered_set<unsigned int> &grid_indices = grid[grid_index];
+    for (auto it = grid_indices.begin(); it != grid_indices.end(); ++it) {
+        const int other_index = *it;
+        if (object_index == other_index) {
+            continue;
+        }
         PhysicsObject &other = objects[other_index];
-        object.applyCollision(other);
+        const bool has_collided = object.applyCollision(other);
+        if (has_collided == true) {
+            const int &other_grid_index = this->getGridPosition(other.getPosition());
+            this->updateGridPosition(other_index, other_grid_index);
+            const int &object_grid_index = this->getGridPosition(object.getPosition());
+            this->updateGridPosition(object_index, object_grid_index);
+        }
     }
 }
 
 void PhysicsEngine::spawnObject(sf::Vector2f position) {
+    this->objects_grid_indices.emplace_back(this->getGridPosition(position));
     this->objects.emplace_back(position);
 }
 
+
+bool PhysicsEngine::updateGridPosition(const int &object_index, const int &final_grid_index) {
+    const int previous_grid_index = this->objects_grid_indices[object_index];
+    if (final_grid_index != previous_grid_index) {
+        if (previous_grid_index != -1 && previous_grid_index < size) {
+            grid[previous_grid_index].erase(object_index);
+        }
+        if (final_grid_index != -1 && final_grid_index < size) {
+            grid[final_grid_index].insert(object_index);
+        }
+        objects_grid_indices[object_index] = final_grid_index;
+        return true;
+    }
+    return false;
+}
 
 int PhysicsEngine::getGridPosition(const float &x, const float &y) const {
     if (x >= width || y >= height || x < 0 || y < 0) {
