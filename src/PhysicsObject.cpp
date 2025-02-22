@@ -87,6 +87,31 @@ bool PhysicsObject::applyBorder() {
     return has_collision;
 }
 
+bool PhysicsObject::applySoftBorder() {
+    // Berekening van stuiteren tegen muren
+    constexpr float energy_conversion = 0.5f;
+    bool has_collision = false;
+    if (positionCurrent.y > 750.0f) {
+        const float distance = positionCurrent.y - 750.0f;
+        positionPrevious.y = positionPrevious.y + energy_conversion * distance;
+        positionCurrent.y = positionCurrent.y - energy_conversion * distance;
+        has_collision = true;
+    }
+    if (positionCurrent.x < 50.0f) {
+        const float distance = positionCurrent.x - 50.0f;
+        positionPrevious.x = positionPrevious.x + energy_conversion * distance;
+        positionCurrent.x = positionCurrent.x - energy_conversion * distance;
+        has_collision = true;
+    }
+    if (positionCurrent.x > 1230.0f) {
+        const float distance = positionCurrent.x - 1230.0f;
+        positionPrevious.x = positionPrevious.x + energy_conversion * distance;
+        positionCurrent.x = positionCurrent.x - energy_conversion * distance;
+        has_collision = true;
+    }
+    return has_collision;
+}
+
 sf::Vector2f PhysicsObject::getVelocity() const {
     return positionCurrent - positionPrevious;
 }

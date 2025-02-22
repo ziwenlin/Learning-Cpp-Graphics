@@ -28,6 +28,8 @@ public:
 
     bool applyBorder();
 
+    bool applySoftBorder();
+
     bool applyCollision(PhysicsObject &other);
 
     bool applyMovement(const float &deltaTime);
