@@ -68,22 +68,23 @@ bool PhysicsObject::applyBorder() {
     // Berekening van stuiteren tegen muren
     constexpr float constant_multiplier = 1.8f;
     constexpr float energy_conversion = 0.8f;
+    bool has_collision = false;
     if (positionCurrent.y > 750.0f) {
         positionPrevious.y = constant_multiplier * 750.0f - energy_conversion * positionPrevious.y;
         positionCurrent.y = constant_multiplier * 750.0f - energy_conversion * positionCurrent.y;
-        return true;
+        has_collision = true;
     }
     if (positionCurrent.x < 50.0f) {
         positionPrevious.x = constant_multiplier * 50.0f - energy_conversion * positionPrevious.x;
         positionCurrent.x = constant_multiplier * 50.0f - energy_conversion * positionCurrent.x;
-        return true;
+        has_collision = true;
     }
     if (positionCurrent.x > 1230.0f) {
         positionPrevious.x = constant_multiplier * 1230.0f - energy_conversion * positionPrevious.x;
         positionCurrent.x = constant_multiplier * 1230.0f - energy_conversion * positionCurrent.x;
-        return true;
+        has_collision = true;
     }
-    return false;
+    return has_collision;
 }
 
 sf::Vector2f PhysicsObject::getVelocity() const {
