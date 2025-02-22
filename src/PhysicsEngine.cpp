@@ -59,7 +59,11 @@ void PhysicsEngine::calculateObjectCollision(const int &object_index, const int 
 }
 
 void PhysicsEngine::spawnObject(sf::Vector2f position) {
-    this->objects_grid_indices.emplace_back(this->getGridPosition(position));
+    int grid_index = this->getGridPosition(position);
+    if (grid_index != -1 && grid_index < size) {
+        this->grid[grid_index].insert(this->objects.size());
+    }
+    this->objects_grid_indices.emplace_back(grid_index);
     this->objects.emplace_back(position);
 }
 
