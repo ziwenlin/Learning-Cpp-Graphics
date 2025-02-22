@@ -1,5 +1,7 @@
 #include "PhysicsObject.h"
 
+#include <complex>
+
 PhysicsObject::PhysicsObject(const sf::Vector2f &position) {
     this->positionCurrent = position;
     this->positionPrevious = position;
@@ -13,9 +15,16 @@ PhysicsObject::PhysicsObject(const sf::Vector2f &position, const sf::Vector2f &s
     this->shape.setOrigin(shape / 2.f);
 }
 
-void PhysicsObject::draw(sf::RenderWindow &window) const { window.draw(shape); }
+void PhysicsObject::draw(sf::RenderWindow &window) {
+    const float speed = this->getVelocity().length();
+    const float color = std::tanh(speed * 0.5f);
+    shape.setFillColor(sf::Color(255 * color, 204 - 140 * color, 255 - 255 * color));
+    window.draw(shape);
+}
 
-void PhysicsObject::update() { shape.setPosition(positionCurrent); }
+void PhysicsObject::update() {
+    shape.setPosition(positionCurrent);
+}
 
 bool PhysicsObject::applyMovement(const float &deltaTime) {
     displacement = positionCurrent - positionPrevious;

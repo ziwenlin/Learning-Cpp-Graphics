@@ -22,7 +22,7 @@ public:
 
     PhysicsObject(const sf::Vector2f &position, const sf::Vector2f &shape);
 
-    void draw(sf::RenderWindow &window) const;
+    void draw(sf::RenderWindow &window);
 
     void update();
 
