@@ -109,6 +109,12 @@ bool PhysicsObject::applySoftBorder() {
         positionCurrent.x = positionCurrent.x - energy_conversion * distance;
         has_collision = true;
     }
+    if (positionCurrent.y < 50.0f) {
+        const float distance = positionCurrent.y - 50.0f;
+        positionPrevious.y = positionPrevious.y + energy_conversion * distance;
+        positionCurrent.y = positionCurrent.y - energy_conversion * distance;
+        has_collision = true;
+    }
     return has_collision;
 }
 
