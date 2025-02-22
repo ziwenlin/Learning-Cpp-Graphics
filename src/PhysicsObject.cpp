@@ -17,8 +17,14 @@ PhysicsObject::PhysicsObject(const sf::Vector2f &position, const sf::Vector2f &s
 
 void PhysicsObject::draw(sf::RenderWindow &window) {
     const float speed = this->getVelocity().length();
-    const float color = std::tanh(speed * 0.5f);
-    shape.setFillColor(sf::Color(255 * color, 204 - 140 * color, 255 - 255 * color));
+    if (speed > 0.5f) {
+        const float red = std::tanh(speed * 0.1f);
+        const float color = std::tanh(speed * 0.5f);
+        shape.setFillColor(sf::Color(255 * color, 160 - 160 * red, 255 - 255 * color));
+    } else {
+        const float color = std::tanh(speed * 50.0f);
+        shape.setFillColor(sf::Color(0, 160, 255 * color));
+    }
     window.draw(shape);
 }
 
