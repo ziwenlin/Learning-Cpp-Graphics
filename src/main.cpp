@@ -40,6 +40,8 @@ int main() {
         while (const std::optional event = window.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
                 window.close();
+            } else if (event->is<sf::Event::Resized>()) {
+                mouse.setWindowSize(window.getSize());
             }
         }
 
