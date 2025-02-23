@@ -37,3 +37,18 @@ TEST(PhysicsEngine, OutsideBoundsGetPosition) {
     value = collision_engine.getGridPosition(750, 1000);
     EXPECT_EQ(value, -1);
 }
+
+TEST(PhysicsEngine, stdFunctionTesting) {
+    std::unordered_set<unsigned int> custom_set;
+    std::unordered_set<unsigned int>::iterator set_iterator = custom_set.begin();
+    std::unordered_set<unsigned int>::iterator set_end = custom_set.end();
+    EXPECT_EQ(set_iterator, set_end);
+    custom_set.insert(1);
+
+    set_iterator = custom_set.begin();
+    set_end = custom_set.end();
+    EXPECT_NE(set_iterator, set_end);
+
+    ++set_iterator;
+    EXPECT_EQ(set_iterator, set_end);
+}
