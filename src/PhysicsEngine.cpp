@@ -55,16 +55,15 @@ void PhysicsEngine::update(const float &delta_time) {
         this->updateGridPosition(object_index, final_grid_index);
     }
     // Daarna collisions berekenen
-    for (int object_index = 0; object_index < objects_size; object_index++) {
-        const int grid_index = this->objects_grid_indices[object_index];
-        if (grid_index == -1 || grid_index >= size) {
-            continue;
-        }
-
-        for (int delta_x = -1; delta_x <= 1; delta_x++) {
-            for (int delta_y = -1; delta_y <= 1; delta_y++) {
-                int collision_grid_index = this->getGridPosition(grid_index, delta_x, delta_y);
-                this->calculateObjectCollision(object_index, collision_grid_index);
+    for (int grid_index = 0; grid_index < size; grid_index++) {
+        const std::unordered_set<unsigned int> &grid_cell = grid[grid_index];
+        for (auto it = grid_cell.begin(); it != grid_cell.end(); ++it) {
+            const int object_index = *it;
+            for (int delta_x = -1; delta_x <= 1; delta_x++) {
+                for (int delta_y = -1; delta_y <= 1; delta_y++) {
+                    int collision_grid_index = this->getGridPosition(grid_index, delta_x, delta_y);
+                    this->calculateObjectCollision(object_index, collision_grid_index);
+                }
             }
         }
     }
