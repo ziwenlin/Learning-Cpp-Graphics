@@ -75,15 +75,18 @@ void PhysicsEngine::calculateObjectCollision(const int &object_index, const int 
 
     const std::unordered_set<unsigned int> &grid_indices = grid[grid_index];
     for (auto it = grid_indices.begin(); it != grid_indices.end(); ++it) {
-        const int other_index = *it;
-        if (object_index == other_index) {
+        const int other_object_index = *it;
+        if (object_index == other_object_index) {
             continue;
         }
-        PhysicsObject &other = objects[other_index];
+        if (other_object_index == -1 || other_object_index >= size) {
+            continue;
+        }
+        PhysicsObject &other = objects[other_object_index];
         const bool has_collided = object.applyCollision(other);
         if (has_collided == true) {
             const int &other_grid_index = this->getGridPosition(other.getPosition());
-            this->updateGridPosition(other_index, other_grid_index);
+            this->updateGridPosition(other_object_index, other_grid_index);
             const int &object_grid_index = this->getGridPosition(object.getPosition());
             this->updateGridPosition(object_index, object_grid_index);
         }
