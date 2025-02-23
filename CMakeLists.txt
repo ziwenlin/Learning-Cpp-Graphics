@@ -15,6 +15,7 @@ set(SOURCES
         src/PhysicsObject.cpp
         src/SmartMouse.cpp
         src/PhysicsEngine.cpp
+        src/SmartKeyboard.cpp
 )
 
 set(TEST_SOURCES
@@ -22,6 +23,7 @@ set(TEST_SOURCES
         tests/test_PhysicsObject.cc
         tests/test_SmartMouse.cc
         tests/test_PhysicsEngine.cc
+        src/SmartKeyboard.cpp
 )
 
 add_executable(${PROJECT_NAME} src/main.cpp ${SOURCES})
