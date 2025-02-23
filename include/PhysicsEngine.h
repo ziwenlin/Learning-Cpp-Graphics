@@ -8,13 +8,13 @@
 
 class PhysicsEngine {
 public:
-    const float width = 1250.0f, height = 800.0f;
-    const int sizeX = 20, sizeY = 20;
+    const float width = 1280.0f, height = 800.0f;
+    const int sizeX = 25, sizeY = 16;
     const int size = sizeX * sizeY;
 
 private:
     // Tekenen van lijnen op het scherm
-    std::array<sf::Vertex[2], 42> draw_grid;
+    std::array<sf::Vertex[2], 43> draw_grid;
 
     std::vector<PhysicsObject> objects;
     std::array<std::unordered_set<unsigned int>, 400> grid;

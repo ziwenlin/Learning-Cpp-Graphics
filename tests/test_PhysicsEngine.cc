@@ -9,14 +9,17 @@ TEST(PhysicsEngine, InsideBoundsGetPosition) {
     unsigned int value = collision_engine.getGridPosition(0, 0);
     EXPECT_EQ(value, 0);
 
+    // Berekening: 75=>1 en 100=>0
     value = collision_engine.getGridPosition(75, 0);
     EXPECT_EQ(value, 1);
 
+    // Berekening: 75=>1 en 100=>50
     value = collision_engine.getGridPosition(75, 100);
-    EXPECT_EQ(value, 41);
+    EXPECT_EQ(value, 51);
 
-    value = collision_engine.getGridPosition(750, 500);
-    EXPECT_EQ(value, 252);
+    // Berekening: 768=>15 en 500=>250
+    value = collision_engine.getGridPosition(768, 500);
+    EXPECT_EQ(value, 265);
 }
 
 TEST(PhysicsEngine, OutsideBoundsGetPosition) {

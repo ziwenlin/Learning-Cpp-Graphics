@@ -4,10 +4,10 @@
 PhysicsEngine::PhysicsEngine() {
     constexpr int official_screen_width = 1280;
     constexpr int official_screen_height = 800;
-    constexpr int screen_offset = 20;
+    constexpr int screen_offset = 0;
     constexpr int screen_width = official_screen_width - screen_offset;
     constexpr int screen_height = official_screen_height - screen_offset;
-    constexpr int grid_offset = 50;
+    constexpr int grid_offset = 0;
     const float grid_width = (official_screen_width - 2 * grid_offset) / static_cast<float>(sizeX);
     const float grid_height = (official_screen_height - 2 * grid_offset) / static_cast<float>(sizeY);
     constexpr sf::Color color(32, 32, 32);
@@ -120,9 +120,9 @@ int PhysicsEngine::getGridPosition(const float &x, const float &y) const {
     if (x >= width || y >= height || x < 0 || y < 0) {
         return -1;
     }
-    const int position_x = static_cast<int>(x / width * static_cast<float>(sizeX));
-    const int position_y = static_cast<int>(y / height * static_cast<float>(sizeY));
-    return position_x + position_y * sizeY;
+    const int position_x = static_cast<int>(x) * sizeX / width;
+    const int position_y = static_cast<int>(y) * sizeY / height;
+    return position_x + position_y * sizeX;
 }
 
 int PhysicsEngine::getGridPosition(const sf::Vector2f position) const {
