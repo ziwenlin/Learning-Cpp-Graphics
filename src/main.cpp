@@ -39,18 +39,23 @@ int main() {
     sf::Text text_counter(font);
     // Informatie over simulatie
     sf::Text text_running(font);
-    sf::Text text_stepping(font);
-    text_running.setPosition(sf::Vector2f(0, 0));
+    text_counter.setPosition(sf::Vector2f(0, 0));
     text_running.setPosition(sf::Vector2f(0, 50));
-    text_stepping.setPosition(sf::Vector2f(0, 100));
+
+    // Simulatie variabelen
     unsigned int count_physics_objects = 0;
     bool simulation_running = true;
     bool simulation_stepping = false;
+    bool simulation_bursting = false;
 
     // Main window loop
     while (window.isOpen()) {
         const float delta_time = clock.restart().asSeconds();
-        keyboard.update();
+
+        // Update het toetsenbord als deze window focus heeft
+        if (window.hasFocus()) {
+            keyboard.update();
+        }
 
         // Poll events is belangrijk, want anders kan het venster niet sluiten
         while (const std::optional event = window.pollEvent()) {
@@ -76,33 +81,43 @@ int main() {
 
         // Kijkt naar het toetsenbord en stap door de simulatie van PhysicsEngine
         if (keyboard.getKey(key_J).isPressedDown() == true) {
+            simulation_bursting = true;
         }
         if (keyboard.getKey(key_K).isPressedDown() == true) {
             simulation_running = !simulation_running;
         }
         if (keyboard.getKey(key_L).isPressedDown() == true) {
-            simulation_stepping = !simulation_stepping;
+            simulation_stepping = true;
         }
 
         // Bereken alle nieuwe posities van PhysicsObject
         constexpr float step_time = 1.0f / 100.0f;
-        float total_step_time = 0.0f;
-        for (auto i = 0; i < 3 && total_step_time < delta_time; i++) {
-            engine.update(step_time);
-            total_step_time += step_time;
+        if (simulation_running == true) {
+            float total_step_time = 0.0f;
+            for (auto i = 0; i < 3 && total_step_time < delta_time; i++) {
+                engine.update(step_time);
+                total_step_time += step_time;
+            }
+        } else if (simulation_stepping == true) {
+            simulation_stepping = false;
+            engine.update(step_time * 0.5f);
+        } else if (simulation_bursting == true) {
+            simulation_bursting = false;
+            for (auto i = 0; i < 10; i++) {
+                engine.update(step_time * 0.5f);
+            }
         }
+
 
         // Bereid alle teksten voor
         text_counter.setString(fmt::format("Object: {}", count_physics_objects));
         text_running.setString(fmt::format("Running: {}", simulation_running));
-        text_stepping.setString(fmt::format("Stepping: {}", simulation_stepping));
 
         // Render een nieuwe frame
         window.clear(sf::Color::Black);
         engine.draw(window);
         window.draw(text_counter);
         window.draw(text_running);
-        window.draw(text_stepping);
         window.display();
     }
     return 0;
