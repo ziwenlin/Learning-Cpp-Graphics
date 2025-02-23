@@ -1,7 +1,40 @@
 #include "PhysicsEngine.h"
 
 
+PhysicsEngine::PhysicsEngine() {
+    constexpr int official_screen_width = 1280;
+    constexpr int official_screen_height = 800;
+    constexpr int screen_offset = 20;
+    constexpr int screen_width = official_screen_width - screen_offset;
+    constexpr int screen_height = official_screen_height - screen_offset;
+    constexpr int grid_offset = 50;
+    const float grid_width = (official_screen_width - 2 * grid_offset) / static_cast<float>(sizeX);
+    const float grid_height = (official_screen_height - 2 * grid_offset) / static_cast<float>(sizeY);
+    constexpr sf::Color color(32, 32, 32);
+    for (int x = 0; x <= sizeX; ++x) {
+        sf::Vertex (&line)[2] = this->draw_grid[x];
+        line[0].position = sf::Vector2f(grid_offset + x * grid_width, screen_offset);
+        line[1].position = sf::Vector2f(grid_offset + x * grid_width, screen_height);
+        line[0].color = color;
+        line[1].color = color;
+    }
+    for (int y = 0; y <= sizeY; ++y) {
+        sf::Vertex (&line)[2] = this->draw_grid[y + sizeX + 1];
+        line[0].position = sf::Vector2f(screen_offset, grid_offset + y * grid_height);
+        line[1].position = sf::Vector2f(screen_width, grid_offset + y * grid_height);
+        line[0].color = color;
+        line[1].color = color;
+    }
+}
+
+PhysicsEngine::~PhysicsEngine() {
+}
+
+
 void PhysicsEngine::draw(sf::RenderWindow &window) {
+    for (const sf::Vertex (&line)[2]: draw_grid) {
+        window.draw(line, 2, sf::PrimitiveType::LineStrip);
+    }
     for (PhysicsObject &physics_obj: objects) {
         physics_obj.update();
         physics_obj.draw(window);

@@ -13,11 +13,18 @@ public:
     const int size = sizeX * sizeY;
 
 private:
+    // Tekenen van lijnen op het scherm
+    std::array<sf::Vertex[2], 42> draw_grid;
+
     std::vector<PhysicsObject> objects;
     std::array<std::unordered_set<unsigned int>, 400> grid;
     std::vector<short> objects_grid_indices;
 
 public:
+    PhysicsEngine();
+
+    ~PhysicsEngine();
+
     void draw(sf::RenderWindow &window);
 
     void update(const float &delta_time);
@@ -37,7 +44,6 @@ public:
     [[nodiscard]] int getGridPosition(const int &grid_index, const int &delta_x, const int &delta_y) const;
 
 private:
-
 };
 
 
