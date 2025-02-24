@@ -95,30 +95,37 @@ bool PhysicsObject::applyBorder() {
 
 bool PhysicsObject::applySoftBorder() {
     // Berekening van stuiteren tegen muren
-    constexpr float energy_conversion = 0.5f;
+    constexpr float velocity_multiplier = 0.5f;
+    constexpr float energy_conversion = 2.5f;
+    constexpr float tanh_offset = 1.0f;
+    constexpr float border_force = 500.0f;
     bool has_collision = false;
     if (positionCurrent.y > 750.0f) {
-        const float distance = positionCurrent.y - 750.0f;
-        positionPrevious.y = positionPrevious.y + energy_conversion * distance;
-        positionCurrent.y = positionCurrent.y - energy_conversion * distance;
+        const float distance = positionCurrent.y + -750.0f;
+        const float velocity = std::tanh(this->getVelocity().y * velocity_multiplier) + tanh_offset;
+        const float acceleration = energy_conversion * border_force * velocity + border_force * distance;
+        this->applyForce(sf::Vector2f(0, -acceleration));
         has_collision = true;
     }
     if (positionCurrent.x < 50.0f) {
-        const float distance = positionCurrent.x - 50.0f;
-        positionPrevious.x = positionPrevious.x + energy_conversion * distance;
-        positionCurrent.x = positionCurrent.x - energy_conversion * distance;
+        const float distance = 50.0f + -positionCurrent.x;
+        const float velocity = std::tanh(-this->getVelocity().x * velocity_multiplier) + tanh_offset;
+        const float acceleration = energy_conversion * border_force * velocity + border_force * distance;
+        this->applyForce(sf::Vector2f(acceleration, 0));
         has_collision = true;
     }
     if (positionCurrent.x > 1230.0f) {
-        const float distance = positionCurrent.x - 1230.0f;
-        positionPrevious.x = positionPrevious.x + energy_conversion * distance;
-        positionCurrent.x = positionCurrent.x - energy_conversion * distance;
+        const float distance = positionCurrent.x + -1230.0f;
+        const float velocity = std::tanh(this->getVelocity().x * velocity_multiplier) + tanh_offset;
+        const float acceleration = energy_conversion * border_force * velocity + border_force * distance;
+        this->applyForce(sf::Vector2f(-acceleration, 0));
         has_collision = true;
     }
     if (positionCurrent.y < 50.0f) {
-        const float distance = positionCurrent.y - 50.0f;
-        positionPrevious.y = positionPrevious.y + energy_conversion * distance;
-        positionCurrent.y = positionCurrent.y - energy_conversion * distance;
+        const float distance = 50.0f + -positionCurrent.y;
+        const float velocity = std::tanh(-this->getVelocity().y * velocity_multiplier) + tanh_offset;
+        const float acceleration = energy_conversion * border_force * velocity + border_force * distance;
+        this->applyForce(sf::Vector2f(0, acceleration));
         has_collision = true;
     }
     return has_collision;
