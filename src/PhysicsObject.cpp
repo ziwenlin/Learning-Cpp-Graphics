@@ -32,10 +32,10 @@ void PhysicsObject::update() {
     shape.setPosition(positionCurrent);
 }
 
-bool PhysicsObject::applyMovement(const float &deltaTime) {
+bool PhysicsObject::applyMovement() {
     displacement = positionCurrent - positionPrevious;
     positionPrevious = positionCurrent;
-    displacement += acceleration * deltaTime * deltaTime;
+    displacement += acceleration * time_step * time_step;
     acceleration = ZERO;
     positionCurrent += displacement;
     return true;
@@ -129,6 +129,16 @@ bool PhysicsObject::applySoftBorder() {
         has_collision = true;
     }
     return has_collision;
+}
+
+void PhysicsObject::setTimeStep(const float &delta_time) {
+    const float ratio = delta_time / time_step;
+    this->time_step = delta_time;
+    this->positionPrevious = positionCurrent - (positionCurrent - positionPrevious) * ratio;
+}
+
+float PhysicsObject::getTimeStep() const {
+    return this->time_step;
 }
 
 sf::Vector2f PhysicsObject::getVelocity() const {

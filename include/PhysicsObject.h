@@ -11,6 +11,8 @@ public:
     const float shapeLength = 20.0f;
 
 private:
+    float time_step = 1.0f / 100.0f;
+
     sf::Vector2f positionCurrent;
     sf::Vector2f positionPrevious;
     sf::Vector2f displacement = ZERO;
@@ -32,9 +34,13 @@ public:
 
     bool applyCollision(PhysicsObject &other);
 
-    bool applyMovement(const float &deltaTime);
+    bool applyMovement();
 
     void applyForce(const sf::Vector2f &acceleration);
+
+    void setTimeStep(const float &delta_time);
+
+    float getTimeStep() const;
 
     sf::Vector2f getVelocity() const;
 

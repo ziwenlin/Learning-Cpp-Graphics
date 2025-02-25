@@ -48,7 +48,7 @@ void PhysicsEngine::update(const float &delta_time) {
         PhysicsObject &object = objects[object_index];
 
         object.applyForce(sf::Vector2f(0.f, 1000.f));
-        object.applyMovement(delta_time);
+        object.applyMovement();
         object.applySoftBorder();
 
         const int final_grid_index = this->getGridPosition(object.getPosition());
