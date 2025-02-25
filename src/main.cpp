@@ -65,15 +65,17 @@ int main() {
 
         // Kijkt naar de muis input en spawn een PhysicsObject op de locatie van
         // de muis
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-            const sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-            mouse.setMouseState(true);
-            while (mouse.isMousePressed(mousePosition) == true) {
-                engine.spawnObject(mouse.getPosition());
-                count_physics_objects++;
+        if (window.hasFocus()) {
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                const sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+                mouse.setMouseState(true);
+                while (mouse.isMousePressed(mousePosition) == true) {
+                    engine.spawnObject(mouse.getPosition());
+                    count_physics_objects++;
+                }
+            } else {
+                mouse.setMouseState(false);
             }
-        } else {
-            mouse.setMouseState(false);
         }
 
         // Kijkt naar het toetsenbord en stap door de simulatie van PhysicsEngine
