@@ -43,7 +43,7 @@ int main() {
     unsigned int count_physics_objects = 0;
     bool simulation_running = true;
     bool simulation_stepping = false;
-    bool simulation_bursting = false;
+    bool simulation_reseting = false;
 
     // Main window loop
     while (window.isOpen()) {
@@ -80,7 +80,7 @@ int main() {
 
         // Kijkt naar het toetsenbord en stap door de simulatie van PhysicsEngine
         if (keyboard.getKey(key_J).isPressedDown() == true) {
-            simulation_bursting = true;
+            simulation_reseting = true;
         }
         if (keyboard.getKey(key_K).isPressedDown() == true) {
             simulation_running = !simulation_running;
@@ -100,11 +100,11 @@ int main() {
         } else if (simulation_stepping == true) {
             simulation_stepping = false;
             engine.update(step_time * 0.5f);
-        } else if (simulation_bursting == true) {
-            simulation_bursting = false;
-            for (auto i = 0; i < 10; i++) {
-                engine.update(step_time * 0.5f);
-            }
+        }
+        if (simulation_reseting == true) {
+            simulation_reseting = false;
+            count_physics_objects = 0;
+            engine.reset();
         }
 
 

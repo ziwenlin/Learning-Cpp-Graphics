@@ -30,6 +30,10 @@ PhysicsEngine::PhysicsEngine() {
 PhysicsEngine::~PhysicsEngine() {
 }
 
+void PhysicsEngine::reset() {
+    this->objects.clear();
+}
+
 
 void PhysicsEngine::draw(sf::RenderWindow &window) {
     for (const sf::Vertex (&line)[2]: draw_grid) {

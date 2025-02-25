@@ -25,6 +25,8 @@ public:
 
     ~PhysicsEngine();
 
+    void reset();
+
     void draw(sf::RenderWindow &window);
 
     void update(const float &delta_time);
