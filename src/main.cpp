@@ -28,9 +28,9 @@ int main() {
 
     // Maak een smart toetsenbord aan
     SmartKeyboard keyboard;
-    const int key_J = keyboard.addKey(sf::Keyboard::Key::J);
-    const int key_K = keyboard.addKey(sf::Keyboard::Key::K);
-    const int key_L = keyboard.addKey(sf::Keyboard::Key::L);
+    const int key_reset = keyboard.addKey(sf::Keyboard::Key::I);
+    const int key_run_pause = keyboard.addKey(sf::Keyboard::Key::K);
+    const int key_run_step = keyboard.addKey(sf::Keyboard::Key::L);
 
     // Counter hoeveel PhysicsObject
     sf::Text text_counter(font);
@@ -75,13 +75,13 @@ int main() {
         }
 
         // Kijkt naar het toetsenbord en stap door de simulatie van PhysicsEngine
-        if (keyboard.getKey(key_J).isPressedDown() == true) {
+        if (keyboard.getKey(key_reset).isPressedDown() == true) {
             simulation_reseting = true;
         }
-        if (keyboard.getKey(key_K).isPressedDown() == true) {
+        if (keyboard.getKey(key_run_pause).isPressedDown() == true) {
             simulation_running = !simulation_running;
         }
-        if (keyboard.getKey(key_L).isPressedDown() == true) {
+        if (keyboard.getKey(key_run_step).isPressedDown() == true) {
             simulation_stepping = true;
         }
 
