@@ -16,6 +16,9 @@ private:
     // Tekenen van lijnen op het scherm
     std::array<sf::Vertex[2], 43> draw_grid;
 
+    // Tekenen van object_highlights op het scherm
+    std::vector<sf::Vector2f> draw_object_highlight;
+
     std::vector<PhysicsObject> objects;
     std::array<std::unordered_set<unsigned int>, 400> grid;
     std::vector<short> objects_grid_indices;

@@ -39,6 +39,17 @@ void PhysicsEngine::draw(sf::RenderWindow &window) {
     for (const sf::Vertex (&line)[2]: draw_grid) {
         window.draw(line, 2, sf::PrimitiveType::LineStrip);
     }
+    constexpr float size = 25.0f;
+    constexpr float origin = size / 2;
+    for (const sf::Vector2f &position: draw_object_highlight) {
+        sf::RectangleShape drawable(sf::Vector2f(size, size));
+        drawable.setPosition(position);
+        drawable.setOutlineThickness(2.0f);
+        drawable.setOutlineColor(sf::Color::White);
+        drawable.setFillColor(sf::Color::Transparent);
+        drawable.setOrigin(sf::Vector2f(origin, origin));
+        window.draw(drawable);
+    }
     for (PhysicsObject &physics_obj: objects) {
         physics_obj.update();
         physics_obj.draw(window);
@@ -47,13 +58,17 @@ void PhysicsEngine::draw(sf::RenderWindow &window) {
 
 void PhysicsEngine::update(const float &delta_time) {
     const unsigned int objects_size = objects.size();
+    draw_object_highlight.clear();
     // Eerst snelheid en versnelling berekenen
     for (int object_index = 0; object_index < objects_size; object_index++) {
         PhysicsObject &object = objects[object_index];
 
         object.applyForce(sf::Vector2f(0.f, 1000.f));
         object.applyMovement();
-        object.applySoftBorder();
+        const bool is_on_border = object.applySoftBorder();
+        if (is_on_border == true) {
+            draw_object_highlight.push_back(object.getPosition());
+        }
 
         const int final_grid_index = this->getGridPosition(object.getPosition());
         this->updateGridPosition(object_index, final_grid_index);
