@@ -132,11 +132,17 @@ bool PhysicsObject::applySoftBorder() {
 }
 
 void PhysicsObject::setTimeStep(const float &delta_time) {
+    assert(delta_time > 0.0f);
+
     const float ratio = delta_time / time_step;
+    const sf::Vector2f a = acceleration;
+    const sf::Vector2f dx = displacement + acceleration_movement;
+    const sf::Vector2f corrected_displacement = (2.0f * dx - a * (ratio - 1.0f)) * ratio / 2.0f;
+
     this->time_step = delta_time;
-    this->displacement *= ratio;
-    this->position_previous = position_current - acceleration_movement - displacement;
     this->acceleration_movement *= ratio * ratio;
+    this->displacement = corrected_displacement - acceleration_movement;
+    this->position_previous = position_current - corrected_displacement;
 }
 
 float PhysicsObject::getTimeStep() const {
