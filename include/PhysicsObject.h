@@ -13,10 +13,11 @@ public:
 private:
     float time_step = 1.0f / 100.0f;
 
-    sf::Vector2f positionCurrent;
-    sf::Vector2f positionPrevious;
+    sf::Vector2f position_current = ZERO;
+    sf::Vector2f position_previous = ZERO;
     sf::Vector2f displacement = ZERO;
     sf::Vector2f acceleration = ZERO;
+    sf::Vector2f acceleration_movement = ZERO;
     sf::RectangleShape shape{sf::Vector2f(10.0f, 10.0f)};
 
 public:
