@@ -50,9 +50,7 @@ int main() {
         const float delta_time = clock.restart().asSeconds();
 
         // Update het toetsenbord als deze window focus heeft
-        if (window.hasFocus()) {
-            keyboard.update();
-        }
+        keyboard.update(window.hasFocus());
 
         // Poll events is belangrijk, want anders kan het venster niet sluiten
         while (const std::optional event = window.pollEvent()) {
@@ -65,17 +63,15 @@ int main() {
 
         // Kijkt naar de muis input en spawn een PhysicsObject op de locatie van
         // de muis
-        if (window.hasFocus()) {
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-                const sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-                mouse.setMouseState(true);
-                while (mouse.isMousePressed(mousePosition) == true) {
-                    engine.spawnObject(mouse.getPosition());
-                    count_physics_objects++;
-                }
-            } else {
-                mouse.setMouseState(false);
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && window.hasFocus()) {
+            const sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+            mouse.setMouseState(true);
+            while (mouse.isMousePressed(mousePosition) == true) {
+                engine.spawnObject(mouse.getPosition());
+                count_physics_objects++;
             }
+        } else {
+            mouse.setMouseState(false);
         }
 
         // Kijkt naar het toetsenbord en stap door de simulatie van PhysicsEngine

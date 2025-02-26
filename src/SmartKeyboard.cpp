@@ -52,11 +52,11 @@ SmartKeyboard::SmartKeyboard() {
 SmartKeyboard::~SmartKeyboard() {
 }
 
-void SmartKeyboard::update() {
+void SmartKeyboard::update(const bool &has_focus) {
     for (int i = 0; i < mapped_keys.size(); ++i) {
         SmartKey &smart_key = mapped_keys[i];
         const bool input = isKeyPressed(smart_key.keybind);
-        smart_key.update(input);
+        smart_key.update(input && has_focus);
     }
 }
 

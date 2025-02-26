@@ -42,7 +42,7 @@ public:
 
     ~SmartKeyboard();
 
-    void update();
+    void update(const bool &has_focus);
 
     SmartKey &getKey(int key_index);;
 
