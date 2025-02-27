@@ -13,6 +13,9 @@ public:
     const int size = sizeX * sizeY;
 
 private:
+    int step_object_index = 0;
+
+
     // Tekenen van lijnen op het scherm
     std::array<sf::Vertex[2], 43> draw_grid;
 
@@ -33,6 +36,8 @@ public:
     void draw(sf::RenderWindow &window);
 
     void update(const float &delta_time);
+
+    void updateStep(const float &delta_time);
 
     void spawnObject(sf::Vector2f position);
 

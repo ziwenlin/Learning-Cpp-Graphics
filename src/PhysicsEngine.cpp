@@ -81,6 +81,34 @@ void PhysicsEngine::update(const float &delta_time) {
     }
 }
 
+void PhysicsEngine::updateStep(const float &delta_time) {
+    const unsigned int objects_size = objects.size();
+    if (step_object_index == 0) {
+        draw_object_highlight.clear();
+    }
+    if (step_object_index < objects_size) {
+        PhysicsObject &object = objects[step_object_index];
+
+        object.applyForce(sf::Vector2f(0.f, 1000.f));
+        object.applyMovement();
+        const bool is_on_border = object.applySoftBorder();
+        if (is_on_border == true) {
+            draw_object_highlight.push_back(object.getPosition());
+        }
+        step_object_index++;
+        return;
+    }
+    step_object_index = 0;
+    for (int object_index = 0; object_index < objects_size; object_index++) {
+        PhysicsObject &object = objects[object_index];
+        for (int other_index = 0; other_index < objects_size; other_index++) {
+            if (other_index == object_index) { continue; }
+            PhysicsObject &other_object = objects[other_index];
+            object.applyCollision(other_object);
+        }
+    }
+}
+
 void PhysicsEngine::calculateObjectCollision(const int &object_index, const int &grid_index) {
     if (grid_index == -1 || grid_index >= size) return;
     PhysicsObject &object = objects[object_index];

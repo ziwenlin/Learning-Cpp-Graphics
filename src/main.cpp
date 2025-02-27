@@ -32,6 +32,8 @@ int main() {
     const int key_reset = keyboard.addKey(sf::Keyboard::Key::I);
     const int key_run_pause = keyboard.addKey(sf::Keyboard::Key::K);
     const int key_run_step = keyboard.addKey(sf::Keyboard::Key::L);
+    const int key_run_step_in = keyboard.addKey(sf::Keyboard::Key::J);
+    const int key_run_stepping_in = keyboard.addKey(sf::Keyboard::Key::U);
 
     // Counter hoeveel PhysicsObject
     sf::Text text_counter(font);
@@ -45,6 +47,8 @@ int main() {
     bool simulation_running = true;
     bool simulation_stepping = false;
     bool simulation_reseting = false;
+    bool simulation_step_in = false;
+    bool simulation_stepping_in = false;
 
     // Main window loop
     while (window.isOpen()) {
@@ -79,11 +83,19 @@ int main() {
         if (keyboard.getKey(key_reset).isPressedDown() == true) {
             simulation_reseting = true;
         }
+        if (keyboard.getKey(key_run_step_in).isPressedDown() == true) {
+            simulation_step_in = true;
+        }
         if (keyboard.getKey(key_run_pause).isPressedDown() == true) {
             simulation_running = !simulation_running;
         }
         if (keyboard.getKey(key_run_step).isPressedDown() == true) {
             simulation_stepping = true;
+        }
+        if (keyboard.getKey(key_run_stepping_in).isPressedDown() == true) {
+            simulation_stepping_in = !simulation_stepping_in;
+            simulation_running = !simulation_stepping_in;
+            simulation_step_in = simulation_stepping_in;
         }
         if (keyboard.getKey(key_spawn).isPressedDown() == true) {
             for (int object_index = 0; object_index < 20; object_index++) {
@@ -108,6 +120,9 @@ int main() {
         } else if (simulation_stepping == true) {
             simulation_stepping = false;
             engine.update(step_time * 0.5f);
+        } else if (simulation_step_in == true) {
+            simulation_step_in = simulation_stepping_in;
+            engine.updateStep(delta_time);
         }
         if (simulation_reseting == true) {
             simulation_reseting = false;
