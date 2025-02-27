@@ -76,8 +76,35 @@ bool PhysicsObject::applyBorder() {
     constexpr float energy_conversion = 0.8f;
     bool has_collision = false;
     if (position_current.y > 750.0f) {
-        position_previous.y = constant_multiplier * 750.0f - energy_conversion * position_previous.y;
-        position_current.y = constant_multiplier * 750.0f - energy_conversion * position_current.y;
+        constexpr float bounce_position = 750.0f;
+        const float bounce_acceleration = acceleration_movement.y / std::pow(time_step, 2.0f);
+
+        const float begin_velocity = displacement.y / time_step;
+        const float begin_position = position_previous.y - bounce_position;
+        const float begin_acceleration = 0.5f * bounce_acceleration;
+
+        const float discriminant = std::pow(begin_velocity, 2.0f) - 4.0f * begin_acceleration * begin_position;
+
+        if (discriminant > 0.0f) {
+            const float time_before_bounce = (-begin_velocity + std::sqrt(discriminant)) / (2.0f * begin_acceleration);
+
+            if (time_before_bounce < time_step) {
+                const float time_after_bounce = time_step - time_before_bounce;
+
+                const float bounce_velocity = begin_velocity + bounce_acceleration * time_before_bounce;
+                const float final_position = bounce_position - bounce_velocity * time_after_bounce +
+                                             begin_acceleration * std::pow(time_after_bounce, 2.0f);
+                const float final_velocity = bounce_velocity - bounce_acceleration * time_after_bounce;
+                position_previous.y = final_position + final_velocity * time_step;
+                position_current.y = final_position;
+            } else {
+                position_previous.y = 750.0f - (position_previous.y - 750.0f);
+                position_current.y = 750.0f - (position_current.y - 750.0f);
+            }
+        } else {
+            position_previous.y = 750.0f - (position_previous.y - 750.0f);
+            position_current.y = 750.0f - (position_current.y - 750.0f);
+        }
         has_collision = true;
     }
     if (position_current.x < 50.0f) {
