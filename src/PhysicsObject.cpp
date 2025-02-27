@@ -125,13 +125,71 @@ bool PhysicsObject::applySoftBorder() {
     constexpr float velocity_multiplier = 0.5f;
     constexpr float energy_conversion = 2.5f;
     constexpr float tanh_offset = 1.0f;
-    constexpr float border_force = 500.0f;
+    constexpr float border_force = 5000.0f;
     bool has_collision = false;
-    if (position_current.y > 750.0f) {
-        const float distance = position_current.y + -750.0f;
-        const float velocity = std::tanh(this->getVelocity().y * velocity_multiplier) + tanh_offset;
-        const float acceleration = energy_conversion * border_force * velocity + border_force * distance;
-        this->applyForce(sf::Vector2f(0, -acceleration));
+    if (position_current.y > 500.0f || position_previous.y > 500.0f) {
+        constexpr float border_position = 500.0f;
+        const float begin_position = position_previous.y - border_position;
+        const float future_position = position_current.y - border_position;
+
+        if (begin_position < 0.0f) {
+            const float begin_velocity = displacement.y / time_step;
+            const float begin_acceleration = 0.5f * acceleration_movement.y / std::pow(time_step, 2.0f);
+            const float discriminant = std::pow(begin_velocity, 2.0f) - 4.0f * begin_acceleration * begin_position;
+
+            if (discriminant > 0.0f) {
+                const float sqrt_discriminant = std::sqrt(discriminant);
+                const float time_before_bounce = (-begin_velocity + sqrt_discriminant) / (2.0f * begin_acceleration);
+                const float time_after_bounce = time_step - time_before_bounce;
+
+                if (time_before_bounce < time_step) {
+                    const float border_acceleration =
+                            0.5f * acceleration_movement.y / std::pow(time_step, 2.0f) - border_force;
+
+                    const float border_velocity = begin_velocity + begin_acceleration * time_before_bounce;
+                    const float final_position = border_position + border_velocity * time_after_bounce +
+                                                 border_acceleration * std::pow(time_after_bounce, 2.0f);
+                    const float final_velocity = border_velocity + border_acceleration * time_after_bounce;
+                    position_previous.y = final_position - final_velocity * time_step;
+                    position_current.y = final_position;
+                } else {
+                    this->applyForce(sf::Vector2f(0, -border_force));
+                }
+            } else {
+                this->applyForce(sf::Vector2f(0, -border_force));
+            }
+        } else if (future_position < 0.0f) {
+            const float begin_velocity = displacement.y / time_step;
+            const float begin_acceleration = 0.5f * acceleration_movement.y / std::pow(time_step, 2.0f);
+            const float discriminant = std::pow(begin_velocity, 2.0f) - 4.0f * begin_acceleration * begin_position;
+
+            if (discriminant > 0.0f) {
+                const float sqrt_discriminant = std::sqrt(discriminant);
+                const float time_before_bounce = (-begin_velocity - sqrt_discriminant) / (2.0f * begin_acceleration);
+                const float time_after_bounce = time_step - time_before_bounce;
+
+                if (time_before_bounce < time_step) {
+                    const float border_acceleration = 0.5f * acceleration_movement.y / std::pow(time_step, 2.0f) + border_force;
+
+                    const float border_velocity = begin_velocity + begin_acceleration * time_before_bounce;
+                    const float final_position = border_position + border_velocity * time_after_bounce +
+                                                 border_acceleration * std::pow(time_after_bounce, 2.0f);
+                    const float final_velocity = border_velocity + border_acceleration * time_after_bounce;
+                    position_previous.y = final_position - final_velocity * time_step;
+                    position_current.y = final_position;
+                } else {
+                    this->applyForce(sf::Vector2f(0, -border_force));
+                }
+            }
+        } else {
+            this->applyForce(sf::Vector2f(0, -border_force));
+        }
+
+
+        // const float distance = position_current.y + -750.0f;
+        // const float velocity = std::tanh(this->getVelocity().y * velocity_multiplier) + tanh_offset;
+        // const float acceleration = energy_conversion * border_force * velocity + border_force * distance;
+        // this->applyForce(sf::Vector2f(0, -acceleration));
         has_collision = true;
     }
     if (position_current.x < 50.0f) {
