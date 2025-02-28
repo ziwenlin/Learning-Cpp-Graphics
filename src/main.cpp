@@ -28,6 +28,7 @@ int main() {
 
     // Maak een smart toetsenbord aan
     SmartKeyboard keyboard;
+    const int key_spawn = keyboard.addKey(sf::Keyboard::Key::J);
     const int key_reset = keyboard.addKey(sf::Keyboard::Key::I);
     const int key_run_pause = keyboard.addKey(sf::Keyboard::Key::K);
     const int key_run_step = keyboard.addKey(sf::Keyboard::Key::L);
@@ -83,6 +84,17 @@ int main() {
         }
         if (keyboard.getKey(key_run_step).isPressedDown() == true) {
             simulation_stepping = true;
+        }
+        if (keyboard.getKey(key_spawn).isPressedDown() == true) {
+            for (int object_index = 0; object_index < 20; object_index++) {
+                // || object_index == 22 || object_index == 34 || object_index == 45
+                if (object_index == 0 || object_index == 11) {
+                }
+                const auto index = static_cast<float>(object_index);
+                const float position = 60.0f + 20.0f * index;
+                engine.spawnObject(sf::Vector2f(position, 60.0f + index));
+                count_physics_objects++;
+            }
         }
 
         // Bereken alle nieuwe posities van PhysicsObject
