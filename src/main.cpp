@@ -1,6 +1,3 @@
-#include <iostream>
-#include <random>
-
 #include <SFML/Graphics.hpp>
 #include <fmt/format.h>
 
