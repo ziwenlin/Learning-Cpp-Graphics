@@ -39,7 +39,7 @@ bool SmartKey::isPressedDown() const {
     return is_pressed_down;
 }
 
-bool SmartKey::isUpPressed() const {
+bool SmartKey::isPressedUp() const {
     return is_pressed_up;
 }
 

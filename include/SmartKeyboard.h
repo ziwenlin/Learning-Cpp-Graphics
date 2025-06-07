@@ -25,7 +25,7 @@ public:
 
     bool isPressedDown() const;;
 
-    bool isUpPressed() const;;
+    bool isPressedUp() const;;
 
 private:
 };
