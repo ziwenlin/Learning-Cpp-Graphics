@@ -1,15 +1,20 @@
 #include <SFML/Graphics.hpp>
 #include <fmt/format.h>
 
+#include "DevInfoWindow.h"
 #include "PhysicsEngine.h"
 #include "SmartKeyboard.h"
 #include "SmartMouse.h"
 
+
 int main() {
     // Maak een render venster
-    sf::RenderWindow window(sf::VideoMode(sf::Vector2u(1280u, 800u)),
-                            "Learning SFML in C++", sf::Style::Default);
-    window.setFramerateLimit(120);
+    sf::RenderWindow window_main(sf::VideoMode(sf::Vector2u(1280u, 800u)),
+                                 "Learning SFML in C++", sf::Style::Default);
+    window_main.setFramerateLimit(120);
+
+    // Maak een info render venster
+    DevInfoWindow window_info;
 
     // Font om tekst op het scherm te zetten
     sf::Font font;
@@ -34,6 +39,8 @@ int main() {
     const int key_run_step = keyboard.addKey(sf::Keyboard::Key::L);
     const int key_run_step_in = keyboard.addKey(sf::Keyboard::Key::J);
     const int key_run_stepping_in = keyboard.addKey(sf::Keyboard::Key::U);
+    const int key_info = keyboard.addKey(sf::Keyboard::Key::P);
+    const int key_stop = keyboard.addKey(sf::Keyboard::Key::Escape);
 
     // Counter hoeveel PhysicsObject
     sf::Text text_counter(font);
@@ -51,25 +58,25 @@ int main() {
     bool simulation_stepping_in = false;
 
     // Main window loop
-    while (window.isOpen()) {
+    while (window_main.isOpen()) {
         const float delta_time = clock.restart().asSeconds();
 
         // Update het toetsenbord als deze window focus heeft
-        keyboard.update(window.hasFocus());
+        keyboard.update(window_main.hasFocus());
 
         // Poll events is belangrijk, want anders kan het venster niet sluiten
-        while (const std::optional event = window.pollEvent()) {
+        while (const std::optional event = window_main.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
-                window.close();
+                window_main.close();
             } else if (event->is<sf::Event::Resized>()) {
-                mouse.setWindowSize(window.getSize());
+                mouse.setWindowSize(window_main.getSize());
             }
         }
 
         // Kijkt naar de muis input en spawn een PhysicsObject op de locatie van
         // de muis
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && window.hasFocus()) {
-            const sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && window_main.hasFocus()) {
+            const sf::Vector2i mousePosition = sf::Mouse::getPosition(window_main);
             mouse.setMouseState(true);
             while (mouse.isMousePressed(mousePosition) == true) {
                 engine.spawnObject(mouse.getPosition());
@@ -136,11 +143,21 @@ int main() {
         text_running.setString(fmt::format("Running: {}", simulation_running));
 
         // Render een nieuwe frame
-        window.clear(sf::Color::Black);
-        engine.draw(window);
-        window.draw(text_counter);
-        window.draw(text_running);
-        window.display();
+        window_main.clear(sf::Color::Black);
+        engine.draw(window_main);
+        window_main.draw(text_counter);
+        window_main.draw(text_running);
+        window_main.display();
+
+        if (keyboard.getKey(key_info).isPressedUp() == true) {
+            window_info.toggle();
+        }
+        if (keyboard.getKey(key_stop).isPressedUp() == true) {
+            window_main.close();
+        }
+
+        window_info.update();
+        window_info.draw();
     }
     return 0;
 }
