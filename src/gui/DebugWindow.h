@@ -3,10 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "SmartKeyboard.h"
+#include "../devices/SmartKeyboard.h"
 
 
-class DevInfoWindow {
+class DebugWindow {
 public:
 
 private:
@@ -21,9 +21,9 @@ private:
     const int key_close = keyboard.addKey(sf::Keyboard::Key::P);
 
 public:
-    DevInfoWindow();
+    DebugWindow();
 
-    ~DevInfoWindow();
+    ~DebugWindow();
 
     bool update();
 

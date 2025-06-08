@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "test_Helpers.h"
-#include "PhysicsEngine.h"
+#include "../src/physics/PhysicsEngine.h"
 
 TEST(PhysicsEngine, InsideBoundsGetPosition) {
     const PhysicsEngine collision_engine;

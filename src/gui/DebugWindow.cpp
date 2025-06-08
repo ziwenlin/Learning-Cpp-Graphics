@@ -1,8 +1,8 @@
-#include "DevInfoWindow.h"
+#include "DebugWindow.h"
 
 #include "fmt/format.h"
 
-DevInfoWindow::DevInfoWindow() {
+DebugWindow::DebugWindow() {
     const bool font_success = this->font.openFromFile(R"(C:\Windows\Fonts\Verdana.ttf)");
     if (font_success == false) {
         fmt::println("Failed to load font file!");
@@ -13,11 +13,11 @@ DevInfoWindow::DevInfoWindow() {
     window.setVisible(false);
 }
 
-DevInfoWindow::~DevInfoWindow() {
+DebugWindow::~DebugWindow() {
     window.close();
 }
 
-bool DevInfoWindow::update() {
+bool DebugWindow::update() {
     if (is_active == false) {
         return false;
     }
@@ -37,7 +37,7 @@ bool DevInfoWindow::update() {
     return true;
 }
 
-bool DevInfoWindow::draw() {
+bool DebugWindow::draw() {
     if (is_active == false) {
         return false;
     }
@@ -53,7 +53,7 @@ bool DevInfoWindow::draw() {
     return true;
 }
 
-bool DevInfoWindow::toggle() {
+bool DebugWindow::toggle() {
     if (is_active == false) {
         enable();
         return false;
@@ -62,7 +62,7 @@ bool DevInfoWindow::toggle() {
     return true;
 }
 
-bool DevInfoWindow::enable() {
+bool DebugWindow::enable() {
     is_active = true;
     // window.setPosition(sf::Vector2i(-1000, -1000));
     window.clear(sf::Color::Black);
@@ -71,7 +71,7 @@ bool DevInfoWindow::enable() {
     return true;
 }
 
-bool DevInfoWindow::disable() {
+bool DebugWindow::disable() {
     is_active = false;
     is_hidden = true;
     window.setPosition(sf::Vector2i(-1000, -1000));

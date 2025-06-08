@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "test_Helpers.h"
-#include "SmartMouse.h"
+#include "../src/devices/SmartMouse.h"
 
 
 TEST(SmartMouse, UpdateGetPosition) {

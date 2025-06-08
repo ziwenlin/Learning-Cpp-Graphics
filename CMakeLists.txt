@@ -12,11 +12,11 @@ project(
         LANGUAGES CXX)
 
 set(SOURCES
-        src/PhysicsObject.cpp
-        src/SmartMouse.cpp
-        src/PhysicsEngine.cpp
-        src/SmartKeyboard.cpp
-        src/DevInfoWindow.cpp
+        src/physics/PhysicsObject.cpp
+        src/devices/SmartMouse.cpp
+        src/physics/PhysicsEngine.cpp
+        src/devices/SmartKeyboard.cpp
+        src/gui/DebugWindow.cpp
 )
 
 set(TEST_SOURCES

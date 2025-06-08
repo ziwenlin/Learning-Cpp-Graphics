@@ -1,10 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <fmt/format.h>
 
-#include "DevInfoWindow.h"
-#include "PhysicsEngine.h"
-#include "SmartKeyboard.h"
-#include "SmartMouse.h"
+#include "gui/DebugWindow.h"
+#include "physics/PhysicsEngine.h"
+#include "devices/SmartKeyboard.h"
+#include "devices/SmartMouse.h"
 
 
 int main() {
@@ -14,7 +14,7 @@ int main() {
     window_main.setFramerateLimit(120);
 
     // Maak een info render venster
-    DevInfoWindow window_info;
+    DebugWindow window_info;
 
     // Font om tekst op het scherm te zetten
     sf::Font font;

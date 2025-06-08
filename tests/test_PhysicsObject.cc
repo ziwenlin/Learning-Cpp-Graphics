@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "test_Helpers.h"
-#include "PhysicsObject.h"
+#include "../src/physics/PhysicsObject.h"
 
 std::string position;
 
