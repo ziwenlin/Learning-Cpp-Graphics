@@ -17,6 +17,7 @@ set(SOURCES
         src/physics/PhysicsEngine.cpp
         src/devices/SmartKeyboard.cpp
         src/gui/DebugWindow.cpp
+        src/gui/RoundedButton.cpp
 )
 
 set(TEST_SOURCES
