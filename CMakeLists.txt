@@ -13,11 +13,17 @@ project(
 
 set(SOURCES
         src/physics/PhysicsObject.cpp
+        src/physics/PhysicsObject.h
         src/devices/SmartMouse.cpp
+        src/physics/PhysicsEngine.h
         src/physics/PhysicsEngine.cpp
+        src/devices/SmartMouse.h
         src/devices/SmartKeyboard.cpp
+        src/devices/SmartKeyboard.h
         src/gui/DebugWindow.cpp
+        src/gui/DebugWindow.h
         src/gui/RoundedButton.cpp
+        src/gui/RoundedButton.h
 )
 
 set(TEST_SOURCES
