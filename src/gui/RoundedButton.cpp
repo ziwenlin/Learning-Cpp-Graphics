@@ -6,18 +6,21 @@ RoundedButton::RoundedButton(const sf::Vector2f position, const std::string &tex
     if (!text_font.openFromFile(R"(C:\Windows\Fonts\Verdana.ttf)")) {
         fmt::println("Failed to load font");
     }
+    constexpr float padding = 10;
+    constexpr int character_size = 32;
+    constexpr float corner_radius = 24.f;
+    constexpr int corner_precision = 60;
     button_body.setPosition(position);
     button_body.setFillColor(sf::Color::Cyan);
     button_text.setString(text);
+    button_text.setCharacterSize(character_size);
 
-    sf::FloatRect local_bounds = button_text.getLocalBounds();
-    constexpr float padding = 20;
-    const float height = local_bounds.size.y + padding;
-    const float width = local_bounds.size.x + padding;
-
-    button_text.setPosition(position + sf::Vector2f(padding / 2, padding / 4));
-    setButtonShape(width, height, 12.f, 32);
-    fmt::println("width: {} \t height {}", width, height);
+    constexpr float text_offset = character_size / 6.0f;
+    const float text_width = button_text.getLocalBounds().size.x;
+    const float width = text_width + 2 * padding + 5 * text_offset;
+    constexpr float height = character_size + 2 * padding + 2 * text_offset;
+    button_text.setPosition(position + sf::Vector2f(padding + 2 * text_offset, padding));
+    setButtonShape(width, height, corner_radius, corner_precision);
 }
 
 void RoundedButton::setButtonShape(const float width, const float height, float corner_radius, const unsigned int precision) {
