@@ -18,7 +18,7 @@ private:
 public:
     RoundedButton(sf::Vector2f position, const std::string &text);
 
-    void setButtonShape(float width, float height, float corner_radius, unsigned int precision);
+    void setButtonShape(float width, float height, float corner_radius, int precision);
 
     ~RoundedButton() = default;
 

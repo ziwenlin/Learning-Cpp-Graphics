@@ -23,7 +23,7 @@ RoundedButton::RoundedButton(const sf::Vector2f position, const std::string &tex
     setButtonShape(width, height, corner_radius, corner_precision);
 }
 
-void RoundedButton::setButtonShape(const float width, const float height, float corner_radius, const unsigned int precision) {
+void RoundedButton::setButtonShape(const float width, const float height, float corner_radius, int precision) {
     button_body.setPointCount(precision);
     if (2 * corner_radius > width) {
         corner_radius = width / 2;
@@ -31,7 +31,10 @@ void RoundedButton::setButtonShape(const float width, const float height, float 
     if (2 * corner_radius > height) {
         corner_radius = height / 2;
     }
-    double point_division = 2.f * std::numbers::pi / static_cast<float>(precision - 4);
+    if ((precision - 4) % 4 != 0) {
+        precision = precision + 4 - (precision - 4) % 4;
+    }
+    const double point_division = 2.f * std::numbers::pi / static_cast<float>(precision - 4);
     for (int i = 0; i < precision; i++) {
         constexpr float pos_x[] = {-0, 1, 1, -0};
         constexpr float pos_y[] = {-0, -0, 1, 1};
