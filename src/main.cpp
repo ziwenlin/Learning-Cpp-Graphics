@@ -9,8 +9,7 @@
 
 int main() {
     // Maak een render venster
-    sf::RenderWindow window_main(sf::VideoMode(sf::Vector2u(1280u, 800u)),
-                                 "Learning SFML in C++", sf::Style::Default);
+    sf::RenderWindow window_main(sf::VideoMode(sf::Vector2u(1280u, 800u)), "Learning SFML in C++", sf::Style::Default);
     window_main.setFramerateLimit(120);
 
     // Maak een info render venster
@@ -63,6 +62,7 @@ int main() {
 
         // Update het toetsenbord als deze window focus heeft
         keyboard.update(window_main.hasFocus());
+        mouse.update(window_main);
 
         // Poll events is belangrijk, want anders kan het venster niet sluiten
         while (const std::optional event = window_main.pollEvent()) {
@@ -75,15 +75,9 @@ int main() {
 
         // Kijkt naar de muis input en spawn een PhysicsObject op de locatie van
         // de muis
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && window_main.hasFocus()) {
-            const sf::Vector2i mousePosition = sf::Mouse::getPosition(window_main);
-            mouse.setMouseState(true);
-            while (mouse.isMousePressed(mousePosition) == true) {
-                engine.spawnObject(mouse.getPosition());
-                count_physics_objects++;
-            }
-        } else {
-            mouse.setMouseState(false);
+        if (mouse.button_left.isMouseDragPressed()) {
+            engine.spawnObject(mouse.button_left.getMouseDragPosition());
+            count_physics_objects++;
         }
 
         // Kijkt naar het toetsenbord en stap door de simulatie van PhysicsEngine
