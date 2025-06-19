@@ -44,11 +44,19 @@ sf::Vector2f SmartMouse::getPosition() const {
 
 void SmartMouse::setWindowSize(const sf::Vector2u &window_size) {
     this->window_size = window_size;
+    view_scale.x = view_size.x / window_size.x;
+    view_scale.y = view_size.y / window_size.y;
+}
+
+void SmartMouse::setViewSize(const sf::Vector2u &view_size) {
+    this->view_size = sf::Vector2f(view_size);
+    view_scale.x = view_size.x / window_size.x;
+    view_scale.y = view_size.y / window_size.y;
 }
 
 sf::Vector2f SmartMouse::getMousePosition(const sf::Vector2i &mouse_position) const {
     auto position = static_cast<sf::Vector2f>(mouse_position);
-    position.x *= view_size.x / window_size.x;
-    position.y *= view_size.y / window_size.y;
+    position.x *= view_scale.x;
+    position.y *= view_scale.y;
     return position;
 }
