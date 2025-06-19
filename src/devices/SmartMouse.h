@@ -4,8 +4,34 @@
 #include <SFML/System/Vector2.hpp>
 
 
+class MouseButton {
+public:
+private:
+    bool is_dragging = false;
+    bool is_dragged = false;
+    bool is_pressed = false;
+
+    float drag_length = 50.0f;
+    sf::Vector2f drag_position = sf::Vector2f(0, 0);
+    sf::Vector2i mouse_position = sf::Vector2i(0, 0);
+
+public:
+    void update(const sf::Vector2i &position, const bool &is_pressed);
+
+    bool isMouseDragPressed() const;
+
+    sf::Vector2f getMouseDragPosition() const;
+
+private:
+};
+
+
 class SmartMouse {
 public:
+    MouseButton button_left;
+    MouseButton button_middle;
+    MouseButton button_right;
+
 private:
     bool isActive = false;
     bool isStarted = false;
@@ -20,7 +46,9 @@ public:
 
     bool isMousePressed(const sf::Vector2i &mousePosition);
 
-    [[nodiscard]] sf::Vector2f getPosition() const;;
+    [[nodiscard]] sf::Vector2f getPosition() const;
+
+    void update(sf::RenderWindow &window);
 
     void setWindowSize(const sf::Vector2u &window_size);
 
