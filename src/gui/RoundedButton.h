@@ -2,12 +2,13 @@
 #define ROUNDEDBUTTON_H
 
 #include <string>
-#include "SFML/Graphics.hpp"
-
+#include <SFML/Graphics.hpp>
+#include "../devices/SmartMouse.h"
 
 class RoundedButton {
 public:
-
+    bool is_inside = false;
+    bool is_pressed = false;
 
 private:
     sf::Font text_font;
@@ -28,6 +29,8 @@ public:
     void setButtonOutline(float width, float height, float corner_radius, float thickness);
 
     ~RoundedButton() = default;
+
+    void update(const SmartMouse &mouse);
 
     void draw(sf::RenderWindow &window) const;
 

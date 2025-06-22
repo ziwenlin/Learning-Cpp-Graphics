@@ -78,6 +78,30 @@ void RoundedButton::setButtonOutline(const float width, const float height, floa
         outline_body.setPoint(i, position);
     }
 }
+
+void RoundedButton::update(const SmartMouse &mouse) {
+    is_inside = button_body.getGlobalBounds().contains(mouse.getPosition());
+    if (is_inside) {
+        if (mouse.button_left.is_pressed_begin) {
+            is_pressed = true;
+        }
+        if (is_pressed) {
+            button_body.setFillColor(color_body_on);
+            if (mouse.button_left.is_pressed_end) {
+                is_pressed = false;
+                fmt::println("Clicked: {}", button_text.getString().toAnsiString());
+            }
+        } else {
+            button_body.setFillColor(color_body_hover);
+        }
+    } else if (is_pressed && mouse.button_left.is_pressed) {
+        button_body.setFillColor(color_body_on);
+    } else {
+        button_body.setFillColor(color_body_off);
+        is_pressed = false;
+    }
+}
+
 void RoundedButton::draw(sf::RenderWindow &window) const {
     window.draw(outline_body);
     window.draw(button_body);
