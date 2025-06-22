@@ -89,10 +89,11 @@ void RoundedButton::update(const SmartMouse &mouse) {
             button_body.setFillColor(color_body_on);
             if (mouse.button_left.is_pressed_end) {
                 is_pressed = false;
-                fmt::println("Clicked: {}", button_text.getString().toAnsiString());
+                is_activated = true;
             }
         } else {
             button_body.setFillColor(color_body_hover);
+            is_activated = false;
         }
     } else if (is_pressed && mouse.button_left.is_pressed) {
         button_body.setFillColor(color_body_on);

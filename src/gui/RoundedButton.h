@@ -9,6 +9,7 @@ class RoundedButton {
 public:
     bool is_inside = false;
     bool is_pressed = false;
+    bool is_activated = false;
 
 private:
     sf::Font text_font;
