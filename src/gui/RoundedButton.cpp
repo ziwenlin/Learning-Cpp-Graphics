@@ -2,10 +2,7 @@
 
 #include <fmt/format.h>
 
-RoundedButton::RoundedButton(const sf::Vector2f position, const std::string &text): button_text(text_font) {
-    if (!text_font.openFromFile(R"(C:\Windows\Fonts\Verdana.ttf)")) {
-        fmt::println("Failed to load font");
-    }
+RoundedButton::RoundedButton(const sf::Vector2f position, const std::string &text, const sf::Font& font): button_text(font) {
     constexpr float padding = 10;
     constexpr int character_size = 32;
     constexpr float corner_radius = 10.f;

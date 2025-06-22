@@ -5,6 +5,7 @@
 #include "physics/PhysicsEngine.h"
 #include "devices/SmartKeyboard.h"
 #include "devices/SmartMouse.h"
+#include "gui/RoundedButton.h"
 
 
 int main() {
@@ -41,6 +42,11 @@ int main() {
     const int key_info = keyboard.addKey(sf::Keyboard::Key::P);
     const int key_stop = keyboard.addKey(sf::Keyboard::Key::Escape);
 
+    // Klikbare GUI buttons
+    std::vector<RoundedButton> buttons;
+    buttons.emplace_back(sf::Vector2f(20.f, 100.f), "Play now!", font);
+    buttons.emplace_back(sf::Vector2f(20.f, 200.f), "Click here!", font);
+
     // Counter hoeveel PhysicsObject
     sf::Text text_counter(font);
     // Informatie over simulatie
@@ -75,7 +81,12 @@ int main() {
 
         // Kijkt naar de muis input en spawn een PhysicsObject op de locatie van
         // de muis
-        if (mouse.button_left.isMouseDragPressed()) {
+        bool buttons_pressed = false;
+        for (auto &button: buttons) {
+            button.update(mouse);
+            buttons_pressed |= button.is_pressed;
+        }
+        if (!buttons_pressed && mouse.button_left.is_dragged) {
             engine.spawnObject(mouse.button_left.getMouseDragPosition());
             count_physics_objects++;
         }
@@ -141,6 +152,9 @@ int main() {
         engine.draw(window_main);
         window_main.draw(text_counter);
         window_main.draw(text_running);
+        for (auto &button: buttons) {
+            button.draw(window_main);
+        }
         window_main.display();
 
         if (keyboard.getKey(key_info).isPressedUp() == true) {
