@@ -5,13 +5,23 @@
 
 void MouseButton::update(const sf::Vector2i &position, const bool &is_pressed) {
     if (is_pressed == false) {
+        if (this->is_pressed == true) {
+            is_pressed_end = true;
+        } else {
+            is_pressed_end = false;
+        }
         this->is_pressed = false;
         is_dragging = false;
         is_dragged = false;
         return;
     }
+    if (this->is_pressed == false) {
+        is_pressed_begin = true;
+    } else {
+        is_pressed_begin = false;
+    }
     this->is_pressed = true;
-    sf::Vector2f current_position(position);
+    const sf::Vector2f current_position(position);
     if (is_dragging == false) {
         drag_position = current_position;
         is_dragging = true;
@@ -26,10 +36,6 @@ void MouseButton::update(const sf::Vector2i &position, const bool &is_pressed) {
     } else {
         is_dragged = false;
     }
-}
-
-bool MouseButton::isMouseDragPressed() const {
-    return is_dragged;
 }
 
 sf::Vector2f MouseButton::getMouseDragPosition() const {

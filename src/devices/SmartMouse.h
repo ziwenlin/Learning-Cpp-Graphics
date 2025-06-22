@@ -6,19 +6,19 @@
 
 class MouseButton {
 public:
-private:
     bool is_dragging = false;
     bool is_dragged = false;
     bool is_pressed = false;
+    bool is_pressed_begin = false;
+    bool is_pressed_end = false;
 
+private:
     float drag_length = 50.0f;
     sf::Vector2f drag_position = sf::Vector2f(0, 0);
     sf::Vector2i mouse_position = sf::Vector2i(0, 0);
 
 public:
     void update(const sf::Vector2i &position, const bool &is_pressed);
-
-    bool isMouseDragPressed() const;
 
     sf::Vector2f getMouseDragPosition() const;
 
