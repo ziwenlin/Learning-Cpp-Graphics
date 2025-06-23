@@ -23,7 +23,7 @@ private:
     sf::Color color_body_hover = sf::Color(64, 222, 64);
 
 public:
-    RoundedButton(sf::Vector2f position, const std::string &text, const sf::Font& font);
+    RoundedButton(sf::Vector2f position, const std::string &text, const sf::Font &font);
 
     void setButtonShape(float width, float height, float corner_radius, int precision);
 
