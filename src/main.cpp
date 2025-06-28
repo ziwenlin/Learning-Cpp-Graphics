@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <fmt/format.h>
 
+#include "birdgame/Game.h"
 #include "gui/DebugWindow.h"
 #include "physics/PhysicsEngine.h"
 #include "devices/SmartKeyboard.h"
@@ -27,6 +28,8 @@ int main() {
     sf::Clock clock;
     // Houdt alle instanties van PhysicsObject bij
     PhysicsEngine engine;
+    // Bird Game object
+    Game game;
 
     // Maakt een smart muis aan
     SmartMouse mouse;
@@ -70,6 +73,8 @@ int main() {
         keyboard.update(window_main.hasFocus());
         mouse.update(window_main);
 
+        game.update(delta_time);
+
         // Poll events is belangrijk, want anders kan het venster niet sluiten
         while (const std::optional event = window_main.pollEvent()) {
             if (event->is<sf::Event::Closed>()) {
@@ -86,10 +91,10 @@ int main() {
             button.update(mouse);
             buttons_pressed |= button.is_pressed;
         }
-        if (!buttons_pressed && mouse.button_left.is_dragged) {
-            engine.spawnObject(mouse.button_left.getMouseDragPosition());
-            count_physics_objects++;
-        }
+        // if (!buttons_pressed && mouse.button_left.is_dragged) {
+        //     engine.spawnObject(mouse.button_left.getMouseDragPosition());
+        //     count_physics_objects++;
+        // }
 
         // Kijkt naar het toetsenbord en stap door de simulatie van PhysicsEngine
         if (keyboard.getKey(key_reset).isPressedDown() == true) {
@@ -155,6 +160,7 @@ int main() {
         for (auto &button: buttons) {
             button.draw(window_main);
         }
+        game.draw(window_main);
         window_main.display();
 
         if (keyboard.getKey(key_info).isPressedUp() == true) {

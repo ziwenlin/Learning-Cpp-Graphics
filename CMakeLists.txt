@@ -24,6 +24,13 @@ set(SOURCES
         src/gui/DebugWindow.h
         src/gui/RoundedButton.cpp
         src/gui/RoundedButton.h
+        src/birdgame/Game.cpp
+        src/birdgame/Game.h
+        src/birdgame/Pipes.cpp
+        src/birdgame/Pipes.h
+        src/birdgame/Bird.cpp
+        src/birdgame/Bird.h
+        src/birdgame/Constants.h
 )
 
 set(TEST_SOURCES
