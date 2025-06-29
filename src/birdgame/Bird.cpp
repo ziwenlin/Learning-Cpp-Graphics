@@ -4,7 +4,7 @@
 
 #include "Constants.h"
 
-Bird::Bird() {
+void Bird::reload() {
     body.setSize({body_size, body_size * 0.8f});
     body.setPosition({300, body_last_position});
     setJumpStrength(200.0f);

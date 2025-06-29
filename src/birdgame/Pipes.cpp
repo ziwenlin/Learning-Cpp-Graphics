@@ -1,6 +1,6 @@
 #include "Pipes.h"
 
-Pipes::Pipes() {
+void Pipes::reload() {
     const auto randomness = static_cast<long>(bg::screen_y - offset_y - spacing_y) * 10;
     const auto size = sf::Vector2f(pipe_width, bg::screen_y);
     for (int i = 0; i < bg::pipe_count; i++) {

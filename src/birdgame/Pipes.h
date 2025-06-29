@@ -19,9 +19,7 @@ private:
     float offset_y = 40.0f;
 
 public:
-    Pipes();
-
-    ~Pipes() = default;
+    void reload();
 
     void update(const float &dt);
 

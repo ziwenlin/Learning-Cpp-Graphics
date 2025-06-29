@@ -67,13 +67,17 @@ int main() {
 
     // Main window loop
     while (window_main.isOpen()) {
+        // Handles screen freezes
+        if (clock.getElapsedTime().asSeconds() >= 0.1) {
+            clock.restart();
+        }
         const float delta_time = clock.restart().asSeconds();
 
         // Update het toetsenbord als deze window focus heeft
         keyboard.update(window_main.hasFocus());
         mouse.update(window_main);
 
-        game.update(delta_time);
+        game.update(delta_time, window_main.hasFocus());
 
         // Poll events is belangrijk, want anders kan het venster niet sluiten
         while (const std::optional event = window_main.pollEvent()) {

@@ -16,9 +16,7 @@ private:
     sf::RectangleShape body;
 
 public:
-    Bird();
-
-    ~Bird() = default;
+    void reload();
 
     void update(const float &dt);
 
