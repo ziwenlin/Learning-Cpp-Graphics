@@ -7,7 +7,6 @@
 class Bird {
 public:
     float body_size = 100.0;
-    float body_gravity = 1000.0;
     float body_last_position = 100.0;
     float jump_start_velocity = 10.0f;
     float delta_time = 1.0f / 60.0f;

@@ -30,7 +30,8 @@ set(SOURCES
         src/birdgame/Pipes.h
         src/birdgame/Bird.cpp
         src/birdgame/Bird.h
-        src/birdgame/Constants.h
+        src/birdgame/Variables.cpp
+        src/birdgame/Variables.h
 )
 
 set(TEST_SOURCES
@@ -65,10 +66,18 @@ FetchContent_Declare(
         GIT_TAG 10.2.1) # 10.2.1
 FetchContent_MakeAvailable(fmt)
 
+include(FetchContent)
+FetchContent_Declare(
+        json
+        GIT_REPOSITORY https://github.com/nlohmann/json
+        GIT_TAG v3.12.0)
+FetchContent_MakeAvailable(json)
+
 # Link externe libraries
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
 target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics)
 target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+target_link_libraries(${PROJECT_NAME} PRIVATE nlohmann_json::nlohmann_json)
 
 # ##############################################################################
 # CTest

@@ -1,8 +1,11 @@
 #include "Game.h"
 
+#include "fmt/core.h"
+
 
 Game::Game() {
     key_reload = keyboard.addKey(sf::Keyboard::Key::R);
+    bg.load();
     pipes.reload();
     bird.reload();
 }
@@ -10,6 +13,8 @@ Game::Game() {
 void Game::update(const float &delta_time, const bool &has_focus) {
     keyboard.update(has_focus);
     if (keyboard.getKey(key_reload).isPressedUp()) {
+        fmt::println("Reloading...");
+        bg.load();
         pipes.reload();
         bird.reload();
         return;
