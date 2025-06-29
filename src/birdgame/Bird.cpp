@@ -5,30 +5,30 @@
 #include "Variables.h"
 
 void Bird::reload() {
-    body.setSize({body_size, body_size * 0.8f});
-    body.setPosition({300, body_last_position});
-    setJumpStrength(200.0f);
+    body.setSize({bg.bird.width, bg.bird.height});
+    body.setPosition({bg.bird.start_x, last_position});
+    setJumpStrength(bg.bird.jump_height);
 }
 
 void Bird::update(const float &dt) {
-    if (body.getPosition().y >= bg.screen_y - body_size * 0.8f) {
+    const float position = body.getPosition().y;
+    if (position >= bg.screen_y - bg.bird.height) {
         jump();
     }
-    if (delta_time != dt) {
+    if (delta_time != dt && delta_time != 0) {
         delta_time = dt;
     }
-    const float position = body.getPosition().y;
-    const float movement = position - body_last_position;
+    const float movement = position - last_position;
     body.move({0.0f, movement + bg.bird.gravity * dt * dt});
-    body_last_position = position;
+    last_position = position;
 }
 
 void Bird::jump() {
-    body_last_position = body.getPosition().y + jump_start_velocity * delta_time + bg.bird.gravity * delta_time * delta_time;
+    last_position = body.getPosition().y + jump_velocity * delta_time + bg.bird.gravity * delta_time * delta_time;
 }
 
 void Bird::setJumpStrength(const float &height) {
-    jump_start_velocity = std::sqrt(2.0f * height * bg.bird.gravity);
+    jump_velocity = std::sqrt(2.0f * height * bg.bird.gravity);
 }
 
 void Bird::draw(sf::RenderWindow &window) const {

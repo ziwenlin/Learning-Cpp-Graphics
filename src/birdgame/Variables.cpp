@@ -21,7 +21,11 @@ void Variables::load() {
     pipe.offset_y = pipes["offset_y"];
 
     basic_json<> birdo = j["bird"];
+    bird.start_x = birdo["position"];
+    bird.width = birdo["width"];
+    bird.height = birdo["height"];
     bird.gravity = birdo["gravity"];
+    bird.jump_height = birdo["jump_height"];
 }
 
 void Variables::save() {
@@ -41,7 +45,11 @@ void Variables::save() {
     };
 
     j["bird"] = {
+        {"position", bird.start_x},
+        {"width", bird.width},
+        {"height", bird.height},
         {"gravity", bird.gravity},
+        {"jump_height", bird.jump_height},
     };
 
     fmt::print("Saving...\n {}\n", j.dump());

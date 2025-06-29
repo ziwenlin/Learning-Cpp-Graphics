@@ -8,7 +8,7 @@ public:
     static constexpr float screen_y = 800.f;
     static constexpr float screen_x = 1280.f;
 
-    struct {
+    struct Pipe {
         float speed = 400;
         float width = 200;
         float spacing_x = 400;
@@ -16,8 +16,12 @@ public:
         float offset_y = 40;
     } pipe;
 
-    struct {
+    struct Bird {
+        float start_x = 300;
+        float width = 40;
+        float height = 25;
         float gravity = 200;
+        float jump_height = 200;
     } bird;
 
 private:
