@@ -18,7 +18,12 @@ private:
     float size_delta_time = 30;
     float average_delta_time = 0.0f;
 
+    sf::RectangleShape outline;
     int key_reload = -1;
+    int key_jump = -1;
+    int key_auto_play = -1;
+
+    bool is_auto_running = false;
 
 public:
     Game();
@@ -26,6 +31,8 @@ public:
     void update(const float &delta_time, const bool &has_focus);
 
     void draw(sf::RenderWindow &window) const;
+
+    void processAutoPlay();
 
 private:
 };

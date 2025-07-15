@@ -24,6 +24,12 @@ public:
 
     void setJumpStrength(const float &height);
 
+    float getPosition() const;
+
+    float getVelocity() const;
+
+    float getNextPosition() const;
+
 private:
 };
 

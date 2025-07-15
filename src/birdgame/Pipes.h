@@ -19,6 +19,8 @@ public:
 
     void draw(sf::RenderWindow &window) const;
 
+    sf::RectangleShape &getNearestFloorPipe();
+
 private:
 };
 

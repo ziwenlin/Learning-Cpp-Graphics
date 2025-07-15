@@ -12,10 +12,11 @@ void Bird::reload() {
 
 void Bird::update(const float &dt) {
     const float position = body.getPosition().y;
-    if (position >= bg.screen_y - bg.bird.height) {
+    const float velocity = getVelocity();
+    if (position >= bg.screen_y - bg.bird.height && velocity > 0.0f) {
         jump();
     }
-    if (delta_time != dt && delta_time != 0) {
+    if (delta_time != dt && dt != 0) {
         delta_time = dt;
     }
     const float movement = position - last_position;
@@ -24,11 +25,26 @@ void Bird::update(const float &dt) {
 }
 
 void Bird::jump() {
-    last_position = body.getPosition().y + jump_velocity * delta_time + bg.bird.gravity * delta_time * delta_time;
+    last_position = body.getPosition().y + jump_velocity * delta_time - bg.bird.gravity * delta_time * delta_time;
 }
 
 void Bird::setJumpStrength(const float &height) {
     jump_velocity = std::sqrt(2.0f * height * bg.bird.gravity);
+}
+
+float Bird::getPosition() const {
+    return body.getPosition().y + bg.bird.height;
+}
+
+float Bird::getVelocity() const {
+    if (delta_time > 0.0f)
+        return (body.getPosition().y - last_position) / delta_time;
+    return 0.0f;
+}
+
+float Bird::getNextPosition() const {
+    const float movement = body.getPosition().y - last_position;
+    return getPosition() + movement + bg.bird.gravity * delta_time * delta_time;
 }
 
 void Bird::draw(sf::RenderWindow &window) const {
