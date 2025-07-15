@@ -19,11 +19,14 @@ private:
     float average_delta_time = 0.0f;
 
     sf::RectangleShape outline;
+    sf::RectangleShape death;
     int key_reload = -1;
+    int key_reset = -1;
     int key_jump = -1;
     int key_auto_play = -1;
 
     bool is_auto_running = false;
+    bool is_alive = true;
 
 public:
     Game();
@@ -33,6 +36,8 @@ public:
     void draw(sf::RenderWindow &window) const;
 
     void processAutoPlay();
+
+    void processCollisions();
 
 private:
 };

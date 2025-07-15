@@ -61,3 +61,16 @@ sf::RectangleShape &Pipes::getNearestFloorPipe() {
     // Fallback otherwise should be an exception thrown
     return pipes_floor[0];
 }
+
+sf::RectangleShape &Pipes::getNearestCeilingPipe() {
+    const float left_edge = bg.bird.start_x - bg.pipe.width;
+    const float bird_space = bg.bird.start_x + bg.pipe.spacing_x;
+    for (sf::RectangleShape &pipe: pipes_ceiling) {
+        const float pipe_position = pipe.getPosition().x;
+        if (pipe_position > left_edge && pipe_position < bird_space) {
+            return pipe;
+        }
+    }
+    // Fallback otherwise should be an exception thrown
+    return pipes_ceiling[0];
+}

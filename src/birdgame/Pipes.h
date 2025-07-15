@@ -21,6 +21,8 @@ public:
 
     sf::RectangleShape &getNearestFloorPipe();
 
+    sf::RectangleShape &getNearestCeilingPipe();
+
 private:
 };
 
