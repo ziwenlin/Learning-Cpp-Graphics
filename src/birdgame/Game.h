@@ -15,6 +15,9 @@ public:
     SmartKeyboard keyboard;
 
 private:
+    float size_delta_time = 30;
+    float average_delta_time = 0.0f;
+
     int key_reload = -1;
 
 public:

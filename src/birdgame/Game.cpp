@@ -12,6 +12,8 @@ Game::Game() {
 
 void Game::update(const float &delta_time, const bool &has_focus) {
     keyboard.update(has_focus);
+    if (average_delta_time <= 0.0f) average_delta_time = 1.0f / size_delta_time;
+    average_delta_time = (average_delta_time * (size_delta_time - 1.0f) + delta_time) / size_delta_time;
     if (keyboard.getKey(key_reload).isPressedUp()) {
         fmt::println("Reloading...");
         bg.load();
@@ -19,8 +21,8 @@ void Game::update(const float &delta_time, const bool &has_focus) {
         bird.reload();
         return;
     }
-    pipes.update(delta_time);
-    bird.update(delta_time);
+    pipes.update(average_delta_time);
+    bird.update(average_delta_time);
 }
 
 void Game::draw(sf::RenderWindow &window) const {
