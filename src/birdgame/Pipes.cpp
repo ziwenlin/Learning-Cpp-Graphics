@@ -50,27 +50,29 @@ void Pipes::draw(sf::RenderWindow &window) const {
 }
 
 sf::RectangleShape &Pipes::getNearestFloorPipe() {
+    sf::RectangleShape &pipe = pipes_floor[index_nearest_pipe];
     const float left_edge = bg.bird.start_x - bg.pipe.width;
-    const float bird_space = bg.bird.start_x + bg.pipe.spacing_x;
-    for (sf::RectangleShape &pipe: pipes_floor) {
-        const float pipe_position = pipe.getPosition().x;
-        if (pipe_position > left_edge && pipe_position < bird_space) {
-            return pipe;
-        }
+    const float pipe_position = pipe.getPosition().x;
+    if (pipe_position > left_edge) {
+        return pipe;
     }
-    // Fallback otherwise should be an exception thrown
-    return pipes_floor[0];
+    index_nearest_pipe += 1;
+    if (index_nearest_pipe >= Variables::pipe_count) {
+        index_nearest_pipe = 0;
+    }
+    return pipes_floor[index_nearest_pipe];
 }
 
 sf::RectangleShape &Pipes::getNearestCeilingPipe() {
+    sf::RectangleShape &pipe = pipes_ceiling[index_nearest_pipe];
     const float left_edge = bg.bird.start_x - bg.pipe.width;
-    const float bird_space = bg.bird.start_x + bg.pipe.spacing_x;
-    for (sf::RectangleShape &pipe: pipes_ceiling) {
-        const float pipe_position = pipe.getPosition().x;
-        if (pipe_position > left_edge && pipe_position < bird_space) {
-            return pipe;
-        }
+    const float pipe_position = pipe.getPosition().x;
+    if (pipe_position > left_edge) {
+        return pipe;
     }
-    // Fallback otherwise should be an exception thrown
-    return pipes_ceiling[0];
+    index_nearest_pipe += 1;
+    if (index_nearest_pipe >= Variables::pipe_count) {
+        index_nearest_pipe = 0;
+    }
+    return pipes_ceiling[index_nearest_pipe];
 }

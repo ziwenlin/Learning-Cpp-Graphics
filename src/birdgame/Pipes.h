@@ -9,6 +9,7 @@
 class Pipes {
 public:
 private:
+    unsigned int index_nearest_pipe = 0;
     sf::RectangleShape pipes_floor[bg.pipe_count];
     sf::RectangleShape pipes_ceiling[bg.pipe_count];
 
