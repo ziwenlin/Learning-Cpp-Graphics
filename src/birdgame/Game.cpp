@@ -37,6 +37,9 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     if (keyboard.getKey(key_jump).isPressedDown()) {
         bird.jump();
     }
+    if (is_alive == false) {
+        return;
+    }
     pipes.update(average_delta_time);
     bird.update(average_delta_time);
     processAutoPlay();
@@ -75,6 +78,10 @@ void Game::processAutoPlay() {
 
 void Game::processCollisions() {
     const float position = bird.getPosition();
+    if (position >= bg.screen_y) {
+        is_alive = false;
+        return;
+    }
     const sf::RectangleShape &floor = pipes.getNearestFloorPipe();
     const sf::RectangleShape &ceiling = pipes.getNearestCeilingPipe();
 
@@ -84,9 +91,11 @@ void Game::processCollisions() {
     if (bg.bird.start_x + bg.bird.width > floor_x && bg.bird.start_x < floor_x + bg.pipe.width) {
         if (position > floor_height) {
             is_alive = false;
+            return;
         }
         if (position - bg.bird.height < ceiling_height) {
             is_alive = false;
+            return;
         }
     }
 }

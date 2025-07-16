@@ -12,10 +12,6 @@ void Bird::reload() {
 
 void Bird::update(const float &dt) {
     const float position = body.getPosition().y;
-    const float velocity = getVelocity();
-    if (position >= bg.screen_y - bg.bird.height && velocity > 0.0f) {
-        jump();
-    }
     if (delta_time != dt && dt != 0) {
         delta_time = dt;
     }
