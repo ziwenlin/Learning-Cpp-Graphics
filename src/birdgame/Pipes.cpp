@@ -1,7 +1,8 @@
 #include "Pipes.h"
 
 void Pipes::reload() {
-    const long randomness = static_cast<long>(bg.screen_y - bg.pipe.offset_y - bg.pipe.spacing_y) * 10;
+    index_front_pipe = 0;
+    index_nearest_pipe = 0;
     const auto size = sf::Vector2f(bg.pipe.width, bg.screen_y);
     for (int i = 0; i < bg.pipe_count; i++) {
         sf::RectangleShape &pipe_floor = pipes_floor[i];
@@ -10,20 +11,24 @@ void Pipes::reload() {
         pipe_floor.setSize(size);
         pipe_ceiling.setSize(size);
 
-        sf::Color color(std::rand() % 255, std::rand() % 255, std::rand() % 255);
+        const sf::Color color(std::rand() % 255, std::rand() % 255, std::rand() % 255);
         pipe_floor.setFillColor(color);
         pipe_ceiling.setFillColor(color);
 
-        const float random = std::rand() % randomness / 10.0f;
-        const float spawn_x = bg.screen_x + (bg.pipe.width + bg.pipe.spacing_x) * static_cast<float>(i);
-        pipe_floor.setPosition({spawn_x, bg.pipe.offset_y + bg.pipe.spacing_y + random});
-        pipe_ceiling.setPosition({spawn_x, bg.pipe.offset_y - bg.screen_y + random});
+        resetFrontPipes();
+    }
+    if (pipes_floor[index_front_pipe].getPosition().x < Variables::screen_x) {
+        constexpr sf::Vector2f offset(Variables::screen_x, 0.0f);
+        for (int i = 0; i < Variables::pipe_count; i++) {
+            sf::RectangleShape &pipe_floor = pipes_floor[i];
+            sf::RectangleShape &pipe_ceiling = pipes_ceiling[i];
+            pipe_floor.setPosition(pipe_floor.getPosition() + offset);
+            pipe_ceiling.setPosition(pipe_ceiling.getPosition() + offset);
+        }
     }
 }
 
 void Pipes::update(const float &dt) {
-    const float spawn_x = static_cast<float>(bg.pipe_count) * (bg.pipe.width + bg.pipe.spacing_x) - bg.pipe.width;
-    const long randomness = static_cast<long>(bg.screen_y - bg.pipe.offset_y - bg.pipe.spacing_y) * 10;
     const sf::Vector2f movement(-bg.pipe.speed * dt, 0.0f);
     for (int i = 0; i < bg.pipe_count; i++) {
         sf::RectangleShape &pipe_floor = pipes_floor[i];
@@ -32,10 +37,8 @@ void Pipes::update(const float &dt) {
         pipe_floor.move(movement);
         pipe_ceiling.move(movement);
 
-        const float random = std::rand() % randomness / 10.0f;
         if (pipe_floor.getPosition().x < -bg.pipe.width) {
-            pipe_floor.setPosition({spawn_x, bg.pipe.offset_y + bg.pipe.spacing_y + random});
-            pipe_ceiling.setPosition({spawn_x, bg.pipe.offset_y - bg.screen_y + random});
+            resetFrontPipes();
         }
     }
 }
@@ -46,6 +49,30 @@ void Pipes::draw(sf::RenderWindow &window) const {
     }
     for (const sf::RectangleShape &pipe: pipes_ceiling) {
         window.draw(pipe);
+    }
+}
+
+void Pipes::resetFrontPipes() {
+    index_back_pipe = index_front_pipe > 0 ? index_front_pipe - 1 : Variables::pipe_count - 1;
+    const long randomness = static_cast<long>(Variables::screen_y - 2 * bg.pipe.offset_y - bg.pipe.spacing_y) * 10;
+    const float random = std::rand() % randomness / 10.0f;
+
+    const float back_x = pipes_ceiling[index_back_pipe].getPosition().x;
+    const float spawn_x = back_x + bg.pipe.spacing_x + bg.pipe.width;
+
+    sf::RectangleShape &pipe_floor = pipes_floor[index_front_pipe];
+    sf::RectangleShape &pipe_ceiling = pipes_ceiling[index_front_pipe];
+
+    pipe_floor.setPosition({spawn_x, bg.pipe.offset_y + bg.pipe.spacing_y + random});
+    pipe_ceiling.setPosition({spawn_x, bg.pipe.offset_y - Variables::screen_y + random});
+
+    index_front_pipe += 1;
+    if (index_front_pipe >= Variables::pipe_count) {
+        index_front_pipe = 0;
+    }
+    index_back_pipe += 1;
+    if (index_back_pipe >= Variables::pipe_count) {
+        index_back_pipe = 0;
     }
 }
 

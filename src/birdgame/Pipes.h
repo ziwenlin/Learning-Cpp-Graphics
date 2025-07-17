@@ -10,6 +10,8 @@ class Pipes {
 public:
 private:
     unsigned int index_nearest_pipe = 0;
+    unsigned int index_front_pipe = 0;
+    unsigned int index_back_pipe = 0;
     sf::RectangleShape pipes_floor[bg.pipe_count];
     sf::RectangleShape pipes_ceiling[bg.pipe_count];
 
@@ -19,6 +21,8 @@ public:
     void update(const float &dt);
 
     void draw(sf::RenderWindow &window) const;
+
+    void resetFrontPipes();
 
     sf::RectangleShape &getNearestFloorPipe();
 
