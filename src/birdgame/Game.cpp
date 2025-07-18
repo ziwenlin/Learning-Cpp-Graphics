@@ -78,7 +78,7 @@ void Game::processAutoPlay() {
 
 void Game::processCollisions() {
     const float position = bird.getPosition();
-    if (position >= bg.screen_y) {
+    if (position >= Variables::screen_y) {
         is_alive = false;
         return;
     }
@@ -87,7 +87,7 @@ void Game::processCollisions() {
 
     const float floor_x = floor.getPosition().x;
     const float floor_height = floor.getPosition().y;
-    const float ceiling_height = ceiling.getPosition().y + bg.screen_y;
+    const float ceiling_height = ceiling.getPosition().y + ceiling.getSize().y;
     if (bg.bird.start_x + bg.bird.width > floor_x && bg.bird.start_x < floor_x + bg.pipe.width) {
         if (position > floor_height) {
             is_alive = false;

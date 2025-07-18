@@ -25,7 +25,7 @@ private:
     int key_jump = -1;
     int key_auto_play = -1;
 
-    bool is_auto_running = false;
+    bool is_auto_running = true;
     bool is_alive = true;
 
 public:

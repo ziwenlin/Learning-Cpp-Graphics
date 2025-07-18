@@ -31,9 +31,10 @@ bool DebugWindow::update() {
         if (keyboard.getKey(key_close).isPressedUp() == true) {
             this->disable();
         }
+        if (keyboard.getKey(key_close_debugging).isPressedUp() == true) {
+            this->disable();
+        }
     }
-
-
     return true;
 }
 
@@ -64,7 +65,6 @@ bool DebugWindow::toggle() {
 
 bool DebugWindow::enable() {
     is_active = true;
-    // window.setPosition(sf::Vector2i(-1000, -1000));
     window.clear(sf::Color::Black);
     window.setVisible(true);
     window.display();

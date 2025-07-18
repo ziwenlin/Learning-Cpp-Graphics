@@ -19,6 +19,7 @@ private:
 
     SmartKeyboard keyboard;
     const int key_close = keyboard.addKey(sf::Keyboard::Key::P);
+    const int key_close_debugging = keyboard.addKey(sf::Keyboard::Key::Escape);
 
 public:
     DebugWindow();

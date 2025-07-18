@@ -3,8 +3,8 @@
 void Pipes::reload() {
     index_front_pipe = 0;
     index_nearest_pipe = 0;
-    const auto size = sf::Vector2f(bg.pipe.width, bg.screen_y);
-    for (int i = 0; i < bg.pipe_count; i++) {
+    const auto size = sf::Vector2f(bg.pipe.width, Variables::screen_y);
+    for (int i = 0; i < Variables::pipe_count; i++) {
         sf::RectangleShape &pipe_floor = pipes_floor[i];
         sf::RectangleShape &pipe_ceiling = pipes_ceiling[i];
 
@@ -17,20 +17,18 @@ void Pipes::reload() {
 
         resetFrontPipes();
     }
-    if (pipes_floor[index_front_pipe].getPosition().x < Variables::screen_x) {
-        constexpr sf::Vector2f offset(Variables::screen_x, 0.0f);
-        for (int i = 0; i < Variables::pipe_count; i++) {
-            sf::RectangleShape &pipe_floor = pipes_floor[i];
-            sf::RectangleShape &pipe_ceiling = pipes_ceiling[i];
-            pipe_floor.setPosition(pipe_floor.getPosition() + offset);
-            pipe_ceiling.setPosition(pipe_ceiling.getPosition() + offset);
-        }
+    const sf::Vector2f offset(Variables::screen_x - pipes_floor[index_front_pipe].getPosition().x, 0.0f);
+    for (int i = 0; i < Variables::pipe_count; i++) {
+        sf::RectangleShape &pipe_floor = pipes_floor[i];
+        sf::RectangleShape &pipe_ceiling = pipes_ceiling[i];
+        pipe_floor.setPosition(pipe_floor.getPosition() + offset);
+        pipe_ceiling.setPosition(pipe_ceiling.getPosition() + offset);
     }
 }
 
 void Pipes::update(const float &dt) {
     const sf::Vector2f movement(-bg.pipe.speed * dt, 0.0f);
-    for (int i = 0; i < bg.pipe_count; i++) {
+    for (int i = 0; i < Variables::pipe_count; i++) {
         sf::RectangleShape &pipe_floor = pipes_floor[i];
         sf::RectangleShape &pipe_ceiling = pipes_ceiling[i];
 

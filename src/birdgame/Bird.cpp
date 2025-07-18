@@ -6,7 +6,8 @@
 
 void Bird::reload() {
     body.setSize({bg.bird.width, bg.bird.height});
-    body.setPosition({bg.bird.start_x, last_position});
+    body.setPosition({bg.bird.start_x, bg.bird.start_x});
+    last_position = body.getPosition().y;
     setJumpStrength(bg.bird.jump_height);
 }
 
