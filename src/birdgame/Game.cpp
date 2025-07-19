@@ -79,7 +79,7 @@ void Game::processAutoPlay() {
 }
 
 void Game::processCollisions() {
-    const float position = bird.getPosition();
+    const float position = bird.getPositionY();
     if (position >= Variables::screen_y) {
         setDeath();
         return;

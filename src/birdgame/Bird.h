@@ -6,7 +6,7 @@
 
 class Bird {
 public:
-    float last_position = 100.0;
+    float last_position_y = 100.0;
     float jump_velocity = 10.0f;
     float delta_time = 1.0f / 60.0f;
 
@@ -24,7 +24,7 @@ public:
 
     void setJumpStrength(const float &height);
 
-    float getPosition() const;
+    float getPositionY() const;
 
     float getVelocity() const;
 
