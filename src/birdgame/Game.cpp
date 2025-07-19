@@ -45,6 +45,7 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     bird.update(average_delta_time);
     processAutoPlay();
     processCollisions();
+    processScoreboard();
 }
 
 void Game::draw(sf::RenderWindow &window) const {
@@ -107,4 +108,22 @@ void Game::setDeath() {
         return;
     }
     is_alive = false;
+}
+
+void Game::processScoreboard() {
+    sf::RectangleShape &pipe = pipes.getNearestFloorPipe();
+    const float pipe_x = pipe.getPosition().x;
+    if (bg.bird.start_x > pipe_x) {
+        if (is_scoring == false) {
+            // Ja, ik weet score++ bestaat ook
+            if (is_auto_running == true) {
+                score_machine += 1;
+            } else {
+                score_player += 1;
+            }
+        }
+        is_scoring = true;
+    } else {
+        is_scoring = false;
+    }
 }

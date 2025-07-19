@@ -14,6 +14,9 @@ public:
     Bird bird;
     SmartKeyboard keyboard;
 
+    int score_player = 0;
+    int score_machine = 0;
+
 private:
     float size_delta_time = 30;
     float average_delta_time = 0.0f;
@@ -28,6 +31,7 @@ private:
     bool is_auto_running = true;
     bool is_alive = true;
     bool is_invulnerable = false;
+    bool is_scoring = false;
 
 public:
     Game();
@@ -41,6 +45,8 @@ public:
     void processCollisions();
 
     void setDeath();
+
+    void processScoreboard();
 
 private:
 };

@@ -153,8 +153,8 @@ int main() {
 
 
         // Bereid alle teksten voor
-        text_counter.setString(fmt::format("Object: {}", count_physics_objects));
-        text_running.setString(fmt::format("Running: {}", simulation_running));
+        text_counter.setString(fmt::format("Machine: {}", game.score_machine));
+        text_running.setString(fmt::format("Score: {}", game.score_player));
 
         // Render een nieuwe frame
         window_main.clear(sf::Color::Black);
