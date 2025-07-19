@@ -29,6 +29,7 @@ void Game::update(const float &delta_time, const bool &has_focus) {
         return;
     }
     if (keyboard.getKey(key_reset).isPressedUp() == true) {
+        is_invulnerable = true;
         is_alive = true;
     }
     if (keyboard.getKey(key_auto_play).isPressedUp() == true) {
@@ -79,23 +80,31 @@ void Game::processAutoPlay() {
 void Game::processCollisions() {
     const float position = bird.getPosition();
     if (position >= Variables::screen_y) {
-        is_alive = false;
+        setDeath();
         return;
     }
     const sf::RectangleShape &floor = pipes.getNearestFloorPipe();
     const sf::RectangleShape &ceiling = pipes.getNearestCeilingPipe();
 
     const float floor_x = floor.getPosition().x;
-    const float floor_height = floor.getPosition().y;
-    const float ceiling_height = ceiling.getPosition().y + ceiling.getSize().y;
     if (bg.bird.start_x + bg.bird.width > floor_x && bg.bird.start_x < floor_x + bg.pipe.width) {
+        const float floor_height = floor.getPosition().y;
         if (position > floor_height) {
-            is_alive = false;
+            setDeath();
             return;
         }
+        const float ceiling_height = ceiling.getPosition().y + ceiling.getSize().y;
         if (position - bg.bird.height < ceiling_height) {
-            is_alive = false;
+            setDeath();
             return;
         }
     }
+    is_invulnerable = false;
+}
+
+void Game::setDeath() {
+    if (is_invulnerable == true) {
+        return;
+    }
+    is_alive = false;
 }

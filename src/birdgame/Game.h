@@ -27,6 +27,7 @@ private:
 
     bool is_auto_running = true;
     bool is_alive = true;
+    bool is_invulnerable = false;
 
 public:
     Game();
@@ -38,6 +39,8 @@ public:
     void processAutoPlay();
 
     void processCollisions();
+
+    void setDeath();
 
 private:
 };
