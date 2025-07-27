@@ -23,7 +23,8 @@ private:
     float size_delta_time = 30;
     float average_delta_time = 0.0f;
 
-    sf::RectangleShape outline;
+    sf::RectangleShape outline_floor;
+    sf::RectangleShape outline_ceiling;
     sf::RectangleShape death;
     int key_reload = -1;
     int key_reset = -1;

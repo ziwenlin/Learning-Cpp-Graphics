@@ -9,7 +9,8 @@ Game::Game() {
     key_auto_play = keyboard.addKey(sf::Keyboard::Key::T);
     key_reset = keyboard.addKey(sf::Keyboard::Key::E);
     this->reload();
-    outline.setFillColor(sf::Color::White);
+    outline_floor.setFillColor(sf::Color::White);
+    outline_ceiling.setFillColor(sf::Color::White);
     death.setFillColor(sf::Color::Red);
     death.setSize(sf::Vector2f(bg.bird.width, bg.bird.height));
 }
@@ -58,21 +59,26 @@ void Game::draw(sf::RenderWindow &window) const {
     if (is_alive == false) {
         window.draw(death);
     }
-    if (is_auto_running == true) {
-        window.draw(outline);
-    }
     pipes.draw(window);
+    if (is_auto_running == true) {
+        window.draw(outline_floor);
+        window.draw(outline_ceiling);
+    }
     bird.draw(window);
 }
 
 void Game::processAutoPlay() {
     if (is_auto_running == false) {
-        outline.setPosition({Variables::screen_x, 0.0f});
+        outline_floor.setPosition({Variables::screen_x, 0.0f});
+        outline_ceiling.setPosition({Variables::screen_x, 0.0f});
         return;
     }
     const sf::RectangleShape &floor = pipes.getNearestFloorPipe();
-    outline.setSize(floor.getSize() + sf::Vector2f(20.0f, 10.0f));
-    outline.setPosition(floor.getPosition() - sf::Vector2f(10.0f, 10.0f));
+    outline_floor.setSize(floor.getSize() - sf::Vector2f(40.0f, 20.0f));
+    outline_floor.setPosition(floor.getPosition() + sf::Vector2f(20.0f, 20.0f));
+    const sf::RectangleShape &ceiling = pipes.getNearestCeilingPipe();
+    outline_ceiling.setSize(ceiling.getSize() - sf::Vector2f(40.0f, 20.0f));
+    outline_ceiling.setPosition(ceiling.getPosition() + sf::Vector2f(20.0f, 0.0f));
 
     const float prediction = bird.getNextPosition();
     const float pipe_height = floor.getPosition().y;
