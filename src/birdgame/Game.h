@@ -36,6 +36,8 @@ private:
 public:
     Game();
 
+    void reload();
+
     void update(const float &delta_time, const bool &has_focus);
 
     void draw(sf::RenderWindow &window) const;

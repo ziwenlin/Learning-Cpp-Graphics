@@ -1,6 +1,6 @@
 #include "Game.h"
 
-#include "fmt/core.h"
+#include <fmt/core.h>
 
 
 Game::Game() {
@@ -8,24 +8,27 @@ Game::Game() {
     key_jump = keyboard.addKey(sf::Keyboard::Key::Space);
     key_auto_play = keyboard.addKey(sf::Keyboard::Key::T);
     key_reset = keyboard.addKey(sf::Keyboard::Key::E);
-    bg.load();
-    pipes.reload();
-    bird.reload();
+    this->reload();
     outline.setFillColor(sf::Color::White);
     death.setFillColor(sf::Color::Red);
     death.setSize(sf::Vector2f(bg.bird.width, bg.bird.height));
 }
 
+void Game::reload() {
+    bg.load();
+    pipes.reload();
+    bird.reload();
+
+    is_alive = true;
+}
+
 void Game::update(const float &delta_time, const bool &has_focus) {
     keyboard.update(has_focus);
-    if (average_delta_time <= 0.0f) average_delta_time = 1.0f / size_delta_time;
+    if (average_delta_time <= 0.0f) average_delta_time = 1.0f / 100.0f / size_delta_time;
     average_delta_time = (average_delta_time * (size_delta_time - 1.0f) + delta_time) / size_delta_time;
     if (keyboard.getKey(key_reload).isPressedUp()) {
         fmt::println("Reloading...");
-        bg.load();
-        pipes.reload();
-        bird.reload();
-        is_alive = true;
+        this->reload();
         return;
     }
     if (keyboard.getKey(key_reset).isPressedUp() == true) {
