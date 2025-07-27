@@ -15,6 +15,9 @@ Game::Game() {
 }
 
 void Game::reload() {
+    sound.load(sound_score, "assets/sounds/score.mp3");
+    sound.load(sound_death, "assets/sounds/death.mp3");
+
     bg.load();
     pipes.reload();
     bird.reload();
@@ -110,6 +113,7 @@ void Game::setDeath() {
     if (is_invulnerable == true) {
         return;
     }
+    sound.play(sound_death);
     is_alive = false;
 }
 
@@ -124,6 +128,7 @@ void Game::processScoreboard() {
             } else {
                 score_player += 1;
             }
+            sound.play(sound_score);
         }
         is_scoring = true;
     } else {

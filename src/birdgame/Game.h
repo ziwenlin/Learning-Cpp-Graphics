@@ -6,6 +6,7 @@
 #include "Bird.h"
 #include "Pipes.h"
 #include "../devices/SmartKeyboard.h"
+#include "../devices/SmartSoundManager.h"
 
 
 class Game {
@@ -13,6 +14,7 @@ public:
     Pipes pipes;
     Bird bird;
     SmartKeyboard keyboard;
+    SmartSoundManager sound;
 
     int score_player = 0;
     int score_machine = 0;
@@ -27,6 +29,8 @@ private:
     int key_reset = -1;
     int key_jump = -1;
     int key_auto_play = -1;
+    int sound_score = -1;
+    int sound_death = -1;
 
     bool is_auto_running = true;
     bool is_alive = true;
