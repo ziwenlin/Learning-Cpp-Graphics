@@ -16,8 +16,9 @@ Game::Game() {
 }
 
 void Game::reload() {
-    sound.load(sound_score, "assets/sounds/score.mp3");
-    sound.load(sound_death, "assets/sounds/death.mp3");
+    sound.reload();
+    sound.load(sound_score, "score");
+    sound.load(sound_death, "death");
 
     bg.load();
     pipes.reload();
