@@ -18,7 +18,10 @@ Game::Game() {
 void Game::reload() {
     sound.reload();
     sound.load(sound_score, "score");
-    sound.load(sound_death, "death");
+    for (int i = 0; i < sound_death_size; i++) {
+        int &sound_id = sound_death_array[i];
+        sound.load(sound_id, "death_" + std::to_string(i));
+    }
 
     bg.load();
     pipes.reload();
@@ -116,10 +119,18 @@ void Game::processCollisions() {
     is_invulnerable = false;
 }
 
+void Game::nextSound(const int *array, const int &size, int &index) {
+    sound_death = array[index++];
+    if (index >= size) {
+        index = 0;
+    }
+}
+
 void Game::setDeath() {
     if (is_invulnerable == true) {
         return;
     }
+    nextSound(sound_death_array, sound_death_size, sound_death_index);
     sound.play(sound_death);
     is_alive = false;
 }

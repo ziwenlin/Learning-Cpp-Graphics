@@ -33,6 +33,10 @@ private:
     int sound_score = -1;
     int sound_death = -1;
 
+    static constexpr int sound_death_size = 5;
+    int sound_death_array[sound_death_size];
+    int sound_death_index = 0;
+
     bool is_auto_running = true;
     bool is_alive = true;
     bool is_invulnerable = false;
@@ -50,6 +54,8 @@ public:
     void processAutoPlay();
 
     void processCollisions();
+
+    void nextSound(const int *array, const int &size, int &index);
 
     void setDeath();
 
