@@ -10,8 +10,9 @@ SmartSoundManager::SmartSoundManager() {
 }
 
 void SmartSoundManager::reload() {
-    buffers.clear();
+    sounds_count = 0;
     sounds.clear();
+    buffers.clear();
 
     list_sound_names.clear();
     for (const std::filesystem::directory_entry &entry: std::filesystem::directory_iterator(str_path)) {
@@ -25,7 +26,7 @@ void SmartSoundManager::reload() {
 }
 
 void SmartSoundManager::play(const int &sound_id) {
-    if (sound_id == -1) {
+    if (sound_id < 0 || sound_id >= sounds.size()) {
         return;
     }
     sounds[sound_id].play();
