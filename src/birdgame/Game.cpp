@@ -17,7 +17,9 @@ Game::Game() {
 
 void Game::reload() {
     sound.reload();
+    sound.load(sound_jump, "jump");
     sound.load(sound_score, "score");
+    sound.load(sound_highscore, "highscore");
     for (int i = 0; i < sound_death_size; i++) {
         int &sound_id = sound_death_array[i];
         sound.load(sound_id, "death_" + std::to_string(i));
@@ -48,6 +50,7 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     }
     if (keyboard.getKey(key_jump).isPressedDown()) {
         bird.jump();
+        sound.play(sound_jump);
     }
     if (is_alive == false) {
         return;
@@ -90,6 +93,7 @@ void Game::processAutoPlay() {
         const float velocity = bird.getVelocity();
         if (velocity >= 0) {
             bird.jump();
+            sound.play(sound_jump);
         }
     }
 }
@@ -146,7 +150,12 @@ void Game::processScoreboard() {
             } else {
                 score_player += 1;
             }
-            sound.play(sound_score);
+            const int &score = is_auto_running ? score_machine : score_player;
+            if (score % 10 == 0) {
+                sound.play(sound_highscore);
+            } else {
+                sound.play(sound_score);
+            }
         }
         is_scoring = true;
     } else {

@@ -30,7 +30,10 @@ private:
     int key_reset = -1;
     int key_jump = -1;
     int key_auto_play = -1;
+
+    int sound_jump = -1;
     int sound_score = -1;
+    int sound_highscore = -1;
     int sound_death = -1;
 
     static constexpr int sound_death_size = 5;
