@@ -31,9 +31,19 @@ Interface:
 
 Gameplay:
 
+- Begin-scherm
+- Eind-scherm
+
+Systeem:
+
+- Sounds
+  - De game class moet zelf bijhouden welke geluiden mag worden afgespeeld.
+- Textures
+  - Class SmartTextureManager aanmaken
+
+Voltooid:
+
 - Geluid afspelen
   - Punten verzamelen feedback
   - Game-over feedback
   - Acties/handelingen feedback
-- Begin-scherm
-- Eind-scherm
