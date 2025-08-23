@@ -34,6 +34,8 @@ set(SOURCES
         src/birdgame/Variables.h
         src/devices/SmartSoundManager.cpp
         src/devices/SmartSoundManager.h
+        src/devices/SmartTextureManager.cpp
+        src/devices/SmartTextureManager.h
 )
 
 set(TEST_SOURCES
