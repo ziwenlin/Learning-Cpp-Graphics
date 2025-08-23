@@ -7,15 +7,14 @@
 
 class SmartSoundManager {
 public:
-    int sounds_count = 0;
     std::vector<sf::SoundBuffer> buffers;
     std::vector<sf::Sound> sounds;
-
-    std::string str_path = "./assets/sounds/";
-    std::string str_extension = ".mp3";
+    std::set<std::string> list_sound_names;
 
 private:
-    std::set<std::string> list_sound_names;
+    int sounds_count = 0;
+    std::string str_path = "./assets/sounds/";
+    std::string str_extension = ".mp3";
 
 public:
     SmartSoundManager();
