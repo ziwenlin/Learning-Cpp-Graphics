@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 class Bird {
 public:
@@ -17,6 +18,8 @@ public:
     void reload();
 
     void update(const float &dt);
+
+    void update(sf::Sprite &sprite) const;
 
     void draw(sf::RenderWindow &window) const;
 

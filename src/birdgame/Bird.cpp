@@ -21,6 +21,20 @@ void Bird::update(const float &dt) {
     last_position_y = position_y;
 }
 
+void Bird::update(sf::Sprite &sprite) const {
+    const sf::Vector2f size = sprite.getLocalBounds().size;
+    const sf::Vector2f origin(size.x / 2, size.y / 2);
+    const sf::Vector2f offset(bg.bird.width / 2, bg.bird.height / 2);
+    float rotation = -30 + 0.05f * this->getVelocity();
+    rotation = rotation < -30 ? -30 : rotation;
+    rotation = rotation > 90 ? 90 : rotation;
+    const sf::Angle angle = sf::degrees(rotation);
+    sprite.setOrigin(origin);
+    sprite.setPosition(body.getPosition() + offset);
+    sprite.setScale(sf::Vector2f(bg.bird.width / size.x, bg.bird.height / size.y));
+    sprite.setRotation(angle);
+}
+
 void Bird::jump() {
     last_position_y = body.getPosition().y + jump_velocity * delta_time - bg.bird.gravity * delta_time * delta_time;
 }

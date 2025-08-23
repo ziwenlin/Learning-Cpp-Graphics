@@ -24,8 +24,15 @@ void Game::reload() {
         int &sound_id = sound_death_array[i];
         sound.load(sound_id, "death_" + std::to_string(i));
     }
+    fmt::println("Loaded sounds");
+
+    textures.reload();
+    textures.load(texture_bird, "bird");
+    fmt::println("Loaded textures");
 
     bg.load();
+    fmt::println("Loaded configurations");
+
     pipes.reload();
     bird.reload();
 
@@ -57,6 +64,8 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     }
     pipes.update(average_delta_time);
     bird.update(average_delta_time);
+    sf::Sprite &sprite_bird = textures.get(texture_bird);
+    bird.update(sprite_bird);
     processAutoPlay();
     processCollisions();
     processScoreboard();
@@ -71,7 +80,8 @@ void Game::draw(sf::RenderWindow &window) const {
         window.draw(outline_floor);
         window.draw(outline_ceiling);
     }
-    bird.draw(window);
+    // bird.draw(window);
+    textures.draw(window, texture_bird);
 }
 
 void Game::processAutoPlay() {

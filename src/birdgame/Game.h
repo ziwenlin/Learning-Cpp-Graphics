@@ -7,6 +7,7 @@
 #include "Pipes.h"
 #include "../devices/SmartKeyboard.h"
 #include "../devices/SmartSoundManager.h"
+#include "../devices/SmartTextureManager.h"
 
 
 class Game {
@@ -15,6 +16,7 @@ public:
     Bird bird;
     SmartKeyboard keyboard;
     SmartSoundManager sound;
+    SmartTextureManager textures;
 
     int score_player = 0;
     int score_machine = 0;
@@ -35,6 +37,8 @@ private:
     int sound_score = -1;
     int sound_highscore = -1;
     int sound_death = -1;
+
+    int texture_bird = -1;
 
     static constexpr int sound_death_size = 5;
     int sound_death_array[sound_death_size];
