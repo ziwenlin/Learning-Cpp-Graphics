@@ -40,6 +40,7 @@ private:
 
     int texture_bird = -1;
     int texture_pipe = -1;
+    int texture_background = -1;
 
     static constexpr int sound_death_size = 5;
     int sound_death_array[sound_death_size];

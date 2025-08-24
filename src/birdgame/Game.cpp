@@ -29,6 +29,11 @@ void Game::reload() {
     textures.reload();
     textures.load(texture_bird, "bird");
     textures.load(texture_pipe, "pipe");
+    textures.load(texture_background, "background");
+    sf::Sprite &background = textures.get(texture_background);
+    const sf::Vector2f &background_size = background.getLocalBounds().size;
+    const sf::Vector2f background_scale(Variables::screen_x / background_size.x, Variables::screen_y / background_size.y);
+    background.setScale(background_scale);
     fmt::println("Loaded textures");
 
     bg.load();
@@ -74,6 +79,7 @@ void Game::update(const float &delta_time, const bool &has_focus) {
 }
 
 void Game::draw(sf::RenderWindow &window) const {
+    textures.draw(window, texture_background);
     if (is_alive == false) {
         window.draw(death);
     }
