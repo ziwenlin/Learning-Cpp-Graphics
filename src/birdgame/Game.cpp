@@ -28,12 +28,14 @@ void Game::reload() {
 
     textures.reload();
     textures.load(texture_bird, "bird");
+    textures.load(texture_pipe, "pipe");
     fmt::println("Loaded textures");
 
     bg.load();
     fmt::println("Loaded configurations");
 
     pipes.reload();
+    pipes.reloadSprite(textures.get(texture_pipe));
     bird.reload();
 
     is_alive = true;

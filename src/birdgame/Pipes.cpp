@@ -1,6 +1,7 @@
 #include "Pipes.h"
 
 void Pipes::reload() {
+    has_sprite = false;
     index_front_pipe = 0;
     index_nearest_pipe = 0;
     const auto size = sf::Vector2f(bg.pipe.width, Variables::screen_y);
@@ -26,6 +27,20 @@ void Pipes::reload() {
     }
 }
 
+void Pipes::reloadSprite(const sf::Sprite &sprite) {
+    for (int i = 0; i < Variables::pipe_count * 2; i++) {
+        std::unique_ptr<sf::Sprite> &ptr_sprite = sprites_pipe[i];
+        ptr_sprite.reset(new sf::Sprite(sprite));
+        const sf::Vector2f size = ptr_sprite->getLocalBounds().size;
+        if (i < Variables::pipe_count) {
+            ptr_sprite->setOrigin(sf::Vector2f(size.x, size.y));
+            ptr_sprite->setRotation(sf::degrees(180));
+        }
+        ptr_sprite->setScale(sf::Vector2f(bg.pipe.width / size.x, bg.screen_y / size.y));
+    }
+    has_sprite = true;
+}
+
 void Pipes::update(const float &dt) {
     const sf::Vector2f movement(-bg.pipe.speed * dt, 0.0f);
     for (int i = 0; i < Variables::pipe_count; i++) {
@@ -38,10 +53,21 @@ void Pipes::update(const float &dt) {
         if (pipe_floor.getPosition().x < -bg.pipe.width) {
             resetFrontPipes();
         }
+
+        if (has_sprite == true) {
+            sprites_pipe[i]->setPosition(pipe_ceiling.getPosition());
+            sprites_pipe[Variables::pipe_count + i]->setPosition(pipe_floor.getPosition());
+        }
     }
 }
 
 void Pipes::draw(sf::RenderWindow &window) const {
+    if (has_sprite == true) {
+        for (const std::unique_ptr<sf::Sprite> &sprite: sprites_pipe) {
+            window.draw(*sprite);
+        }
+        return;
+    }
     for (const sf::RectangleShape &pipe: pipes_floor) {
         window.draw(pipe);
     }
