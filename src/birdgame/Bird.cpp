@@ -11,6 +11,15 @@ void Bird::reload() {
     setJumpStrength(bg.bird.jump_height);
 }
 
+void Bird::reloadSprite(const sf::Sprite &sprite) {
+    this->sprite.reset(new sf::Sprite(sprite));
+    const sf::Vector2f size = sprite.getLocalBounds().size;
+    const sf::Vector2f origin(size.x / 2, size.y / 2);
+
+    this->sprite->setOrigin(origin);
+    this->sprite->setScale(sf::Vector2f(bg.bird.width / size.x, bg.bird.height / size.y));
+}
+
 void Bird::update(const float &dt) {
     const float position_y = body.getPosition().y;
     if (delta_time != dt && dt != 0) {
@@ -19,20 +28,15 @@ void Bird::update(const float &dt) {
     const float movement_y = position_y - last_position_y;
     body.move({0.0f, movement_y + bg.bird.gravity * dt * dt});
     last_position_y = position_y;
-}
 
-void Bird::update(sf::Sprite &sprite) const {
-    const sf::Vector2f size = sprite.getLocalBounds().size;
-    const sf::Vector2f origin(size.x / 2, size.y / 2);
+    /* updating sprite */
     const sf::Vector2f offset(bg.bird.width / 2, bg.bird.height / 2);
     float rotation = -30 + 0.05f * this->getVelocity();
     rotation = rotation < -30 ? -30 : rotation;
     rotation = rotation > 90 ? 90 : rotation;
     const sf::Angle angle = sf::degrees(rotation);
-    sprite.setOrigin(origin);
-    sprite.setPosition(body.getPosition() + offset);
-    sprite.setScale(sf::Vector2f(bg.bird.width / size.x, bg.bird.height / size.y));
-    sprite.setRotation(angle);
+    sprite->setPosition(body.getPosition() + offset);
+    sprite->setRotation(angle);
 }
 
 void Bird::jump() {
@@ -59,5 +63,9 @@ float Bird::getNextPosition() const {
 }
 
 void Bird::draw(sf::RenderWindow &window) const {
-    window.draw(body);
+    if (sprite == nullptr) {
+        window.draw(body);
+    } else {
+        window.draw(*sprite);
+    }
 }

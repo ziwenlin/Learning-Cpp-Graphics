@@ -13,13 +13,14 @@ public:
 
 private:
     sf::RectangleShape body;
+    std::unique_ptr<sf::Sprite> sprite;
 
 public:
     void reload();
 
-    void update(const float &dt);
+    void reloadSprite(const sf::Sprite &sprite);
 
-    void update(sf::Sprite &sprite) const;
+    void update(const float &dt);
 
     void draw(sf::RenderWindow &window) const;
 

@@ -42,6 +42,7 @@ void Game::reload() {
     pipes.reload();
     pipes.reloadSprite(textures.get(texture_pipe));
     bird.reload();
+    bird.reloadSprite(textures.get(texture_bird));
 
     is_alive = true;
 }
@@ -71,8 +72,6 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     }
     pipes.update(average_delta_time);
     bird.update(average_delta_time);
-    sf::Sprite &sprite_bird = textures.get(texture_bird);
-    bird.update(sprite_bird);
     processAutoPlay();
     processCollisions();
     processScoreboard();
@@ -88,8 +87,7 @@ void Game::draw(sf::RenderWindow &window) const {
         window.draw(outline_floor);
         window.draw(outline_ceiling);
     }
-    // bird.draw(window);
-    textures.draw(window, texture_bird);
+    bird.draw(window);
 }
 
 void Game::processAutoPlay() {
