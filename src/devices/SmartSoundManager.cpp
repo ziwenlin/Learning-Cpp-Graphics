@@ -3,16 +3,14 @@
 #include <fstream>
 #include <fmt/format.h>
 
-
-SmartSoundManager::SmartSoundManager() {
-    buffers.reserve(100);
-    sounds.reserve(100);
-}
-
 void SmartSoundManager::reload() {
+    for (int i = 0; i < sounds_count; i++) {
+        delete sounds[i];
+        sounds[i] = nullptr;
+        delete buffers[i];
+        buffers[i] = nullptr;
+    }
     sounds_count = 0;
-    sounds.clear();
-    buffers.clear();
 
     list_sound_names.clear();
     for (const std::filesystem::directory_entry &entry: std::filesystem::directory_iterator(str_path)) {
@@ -25,11 +23,11 @@ void SmartSoundManager::reload() {
     }
 }
 
-void SmartSoundManager::play(const int &sound_id) {
-    if (sound_id < 0 || sound_id >= sounds.size()) {
+void SmartSoundManager::play(const int &sound_id) const {
+    if (sound_id < 0 || sound_id >= sounds_count) {
         return;
     }
-    sounds[sound_id].play();
+    sounds[sound_id]->play();
 }
 
 void SmartSoundManager::load(int &sound_id, const std::string &sound_name) {
@@ -38,13 +36,14 @@ void SmartSoundManager::load(int &sound_id, const std::string &sound_name) {
         sound_id = -1;
         return;
     }
-    sf::SoundBuffer &sound_buffer = buffers.emplace_back();
-    if (!sound_buffer.loadFromFile(str_path + sound_name + str_extension)) {
+    auto sound_buffer = new sf::SoundBuffer();
+    if (!sound_buffer->loadFromFile(str_path + sound_name + str_extension)) {
         fmt::println("Failed to load sound from file '{}'", sound_name);
-        buffers.pop_back();
+        delete sound_buffer;
         sound_id = -1;
         return;
     }
-    sounds.emplace_back(sound_buffer);
+    buffers[sounds_count] = sound_buffer;
+    sounds[sounds_count] = new sf::Sound(*sound_buffer);
     sound_id = sounds_count++;
 }

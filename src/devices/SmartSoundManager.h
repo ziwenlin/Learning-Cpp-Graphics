@@ -6,9 +6,11 @@
 
 
 class SmartSoundManager {
+    static constexpr int sounds_size = 10;
+
 public:
-    std::vector<sf::SoundBuffer> buffers;
-    std::vector<sf::Sound> sounds;
+    sf::SoundBuffer *buffers[sounds_size];
+    sf::Sound *sounds[sounds_size];
     std::set<std::string> list_sound_names;
 
 private:
@@ -17,13 +19,13 @@ private:
     std::string str_extension = ".mp3";
 
 public:
-    SmartSoundManager();
+    SmartSoundManager() = default;
 
     ~SmartSoundManager() = default;
 
     void reload();
 
-    void play(const int &sound_id);
+    void play(const int &sound_id) const;
 
     void load(int &sound_id, const std::string &sound_name);
 
