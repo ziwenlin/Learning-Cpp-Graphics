@@ -1,5 +1,6 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
+#include <nlohmann/json.hpp>
 
 
 inline class Variables {
@@ -27,12 +28,26 @@ public:
 private:
     const char *path_config = "bird_game.json";
 
+    int ptr_counter = 0;
+    static constexpr int ptr_size = 100;
+    float *ptr_vars[ptr_size]{};
+    std::string ptr_paths[ptr_size];
+
 public:
+    Variables();
+
+    ~Variables();
+
     void load();
 
     void save();
 
+    void print();
+
 private:
+    void link(const std::string &path, float &location, float value);
+
+    static void print_helper(nlohmann::basic_json<> j, std::string path);
 } bg;
 
 
