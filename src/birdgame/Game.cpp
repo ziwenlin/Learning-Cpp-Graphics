@@ -4,6 +4,9 @@
 
 
 Game::Game() {
+    key_debug = keyboard.addKey(sf::Keyboard::Key::Q);
+    key_save = keyboard.addKey(sf::Keyboard::Key::F);
+    key_config = keyboard.addKey(sf::Keyboard::Key::G);
     key_reload = keyboard.addKey(sf::Keyboard::Key::R);
     key_jump = keyboard.addKey(sf::Keyboard::Key::Space);
     key_auto_play = keyboard.addKey(sf::Keyboard::Key::T);
@@ -51,6 +54,15 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     keyboard.update(has_focus);
     if (average_delta_time <= 0.0f) average_delta_time = 1.0f / 100.0f / size_delta_time;
     average_delta_time = (average_delta_time * (size_delta_time - 1.0f) + delta_time) / size_delta_time;
+    if (keyboard.getKey(key_debug).isPressedUp()) {
+        is_debugging = !is_debugging;
+    }
+    if (keyboard.getKey(key_save).isPressedUp()) {
+        bg.save();
+    }
+    if (keyboard.getKey(key_config).isPressedDown()) {
+        bg.print();
+    }
     if (keyboard.getKey(key_reload).isPressedUp()) {
         fmt::println("Reloading...");
         this->reload();
@@ -83,7 +95,7 @@ void Game::draw(sf::RenderWindow &window) const {
         window.draw(death);
     }
     pipes.draw(window);
-    if (is_auto_running == true) {
+    if (is_debugging && is_auto_running == true) {
         window.draw(outline_floor);
         window.draw(outline_ceiling);
     }

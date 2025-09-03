@@ -28,6 +28,9 @@ private:
     sf::RectangleShape outline_floor;
     sf::RectangleShape outline_ceiling;
     sf::RectangleShape death;
+    int key_debug = -1;
+    int key_save = -1;
+    int key_config = -1;
     int key_reload = -1;
     int key_reset = -1;
     int key_jump = -1;
@@ -46,6 +49,7 @@ private:
     int sound_death_array[sound_death_size];
     int sound_death_index = 0;
 
+    bool is_debugging = false;
     bool is_auto_running = true;
     bool is_alive = true;
     bool is_invulnerable = false;
