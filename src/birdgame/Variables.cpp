@@ -32,19 +32,9 @@ void Variables::load() {
         return;
     }
     json j = json::parse(file);
-    basic_json<> pipes = j["pipes"];
-    pipe.speed = pipes["speed"];
-    pipe.width = pipes["width"];
-    pipe.spacing_x = pipes["spacing_x"];
-    pipe.spacing_y = pipes["spacing_y"];
-    pipe.offset_y = pipes["offset_y"];
-
-    basic_json<> birdo = j["bird"];
-    bird.start_x = birdo["position"];
-    bird.width = birdo["width"];
-    bird.height = birdo["height"];
-    bird.gravity = birdo["gravity"];
-    bird.jump_height = birdo["jump_height"];
+    for (int i = 0; i < ptr_counter; i++) {
+        load_helper(j, ptr_paths[i], *ptr_vars[i]);
+    }
 }
 
 void Variables::save() {
@@ -55,27 +45,15 @@ void Variables::save() {
         return;
     }
     json j;
-    j["pipes"] = {
-        {"speed", pipe.speed},
-        {"width", pipe.width},
-        {"spacing_x", pipe.spacing_x},
-        {"spacing_y", pipe.spacing_y},
-        {"offset_y", pipe.offset_y},
-    };
-
-    j["bird"] = {
-        {"position", bird.start_x},
-        {"width", bird.width},
-        {"height", bird.height},
-        {"gravity", bird.gravity},
-        {"jump_height", bird.jump_height},
-    };
+    for (int i = 0; i < ptr_counter; i++) {
+        save_helper(j, ptr_paths[i], *ptr_vars[i]);
+    }
 
     fmt::print("Saving...\n {}\n", j.dump());
     file << std::setw(4) << j << std::endl;
 }
 
-void Variables::print() {
+void Variables::print() const {
     using namespace nlohmann;
     std::ifstream file(path_config);
     if (file.fail()) {
@@ -108,6 +86,41 @@ void Variables::print_helper(nlohmann::basic_json<> j, std::string path) {
         fmt::print("{}\n", value.dump());
     }
 }
+
+nlohmann::basic_json<> &Variables::get_helper(nlohmann::basic_json<> &j, const std::string &path, const float &number) {
+    std::size_t a = path.find('.');
+    if (a != std::string::npos) {
+        const std::string key = path.substr(0, a);
+        const std::string value = path.substr(a + 1);
+        if (!j.contains(key)) {
+            j[key] = nlohmann::basic_json<>();
+        }
+        return get_helper(j[key], value, number);
+    }
+    if (!j.contains(path)) {
+        j[path] = number;
+    }
+    return j[path];
+}
+
+void Variables::load_helper(nlohmann::basic_json<> &j, const std::string &path, float &number) {
+    nlohmann::basic_json<> &basic_value = get_helper(j, path, number);
+    if (basic_value.is_number()) {
+        number = basic_value;
+    } else {
+        fmt::print("something went wrong at |{}|\n", path);
+    }
+}
+
+void Variables::save_helper(nlohmann::basic_json<> &j, const std::string &path, const float &number) {
+    nlohmann::basic_json<> &basic_value = get_helper(j, path, number);
+    if (basic_value.is_number()) {
+        basic_value = number;
+    } else {
+        fmt::print("something went wrong at |{}|\n", path);
+    }
+}
+
 
 void Variables::link(const std::string &path, float &location, const float value) {
     ptr_vars[ptr_counter] = &location;

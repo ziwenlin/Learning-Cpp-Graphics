@@ -42,12 +42,18 @@ public:
 
     void save();
 
-    void print();
+    void print() const;
 
 private:
     void link(const std::string &path, float &location, float value);
 
     static void print_helper(nlohmann::basic_json<> j, std::string path);
+
+    static nlohmann::basic_json<> &get_helper(nlohmann::basic_json<> &j, const std::string &path, const float &number);
+
+    static void load_helper(nlohmann::basic_json<> &j, const std::string &path, float &number);
+
+    static void save_helper(nlohmann::basic_json<> &j, const std::string &path, const float &number);
 } bg;
 
 
