@@ -18,8 +18,8 @@ int main() {
     DebugWindow window_info;
 
     // Font om tekst op het scherm te zetten
-    sf::Font font;
-    if (!font.openFromFile(R"(C:\Windows\Fonts\Verdana.ttf)")) {
+    const std::shared_ptr<sf::Font> font = std::make_shared<sf::Font>();
+    if (!font->openFromFile(R"(C:\Windows\Fonts\Verdana.ttf)")) {
         fmt::println("Failed to load font");
         return 1;
     }
@@ -47,15 +47,20 @@ int main() {
 
     // Klikbare GUI buttons
     std::vector<RoundedButton> buttons;
-    buttons.emplace_back(sf::Vector2f(20.f, 100.f), "Play now!", font);
-    buttons.emplace_back(sf::Vector2f(20.f, 200.f), "Click here!", font);
+    RoundedButton &button_test = buttons.emplace_back();
+    button_test.setFont(font);
+    button_test.setText("Play now!");
+    button_test.setPosition(sf::Vector2f(200, 20));
 
     // Counter hoeveel PhysicsObject
-    sf::Text text_counter(font);
+    sf::Text text_counter(*font);
     // Informatie over simulatie
-    sf::Text text_running(font);
+    sf::Text text_running(*font);
+    // Informatie over de button
+    sf::Text text_button(*font);
     text_counter.setPosition(sf::Vector2f(0, 0));
     text_running.setPosition(sf::Vector2f(0, 50));
+    text_button.setPosition(sf::Vector2f(0, 100));
 
     // Simulatie variabelen
     unsigned int count_physics_objects = 0;
@@ -155,16 +160,21 @@ int main() {
         // Bereid alle teksten voor
         text_counter.setString(fmt::format("Machine: {}", game.score_machine));
         text_running.setString(fmt::format("Score: {}", game.score_player));
+        text_button.setString(fmt::format(
+            "Button pressed: {}\nButton active: {}",
+            button_test.is_pressed, button_test.is_activated
+        ));
 
         // Render een nieuwe frame
         window_main.clear(sf::Color::Black);
+        game.draw(window_main);
         engine.draw(window_main);
         window_main.draw(text_counter);
         window_main.draw(text_running);
+        window_main.draw(text_button);
         for (auto &button: buttons) {
             button.draw(window_main);
         }
-        game.draw(window_main);
         window_main.display();
 
         if (keyboard.getKey(key_info).isPressedUp() == true) {
