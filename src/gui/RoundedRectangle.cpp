@@ -21,7 +21,7 @@ void RoundedRectangle::setShape(const float width, const float height, const flo
     this->width = width;
     this->height = height;
     changeInnerShape();
-    inner_shape.setFillColor(color_inner);
+    changeOuterShape();
 }
 
 void RoundedRectangle::setOutline(const float thickness) {
@@ -34,6 +34,19 @@ void RoundedRectangle::setOutline(const float thickness) {
     }
     changeInnerShape();
     changeOuterShape();
+}
+
+void RoundedRectangle::setPosition(const sf::Vector2f &position) {
+    inner_shape.setPosition(position);
+    outer_shape.setPosition(position);
+}
+
+sf::ConvexShape &RoundedRectangle::getInnerBody() {
+    return inner_shape;
+}
+
+sf::ConvexShape &RoundedRectangle::getOuterBody() {
+    return outer_shape;
 }
 
 void RoundedRectangle::changeInnerShape() {

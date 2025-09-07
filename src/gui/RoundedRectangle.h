@@ -26,6 +26,12 @@ public:
 
     void setOutline(float thickness);
 
+    void setPosition(const sf::Vector2f &position);
+
+    sf::ConvexShape &getInnerBody();
+
+    sf::ConvexShape &getOuterBody();
+
 private:
     void changeInnerShape();
 
