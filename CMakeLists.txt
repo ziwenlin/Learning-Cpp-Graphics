@@ -36,6 +36,8 @@ set(SOURCES
         src/devices/SmartSoundManager.h
         src/devices/SmartTextureManager.cpp
         src/devices/SmartTextureManager.h
+        src/gui/RoundedRectangle.cpp
+        src/gui/RoundedRectangle.h
 )
 
 set(TEST_SOURCES
