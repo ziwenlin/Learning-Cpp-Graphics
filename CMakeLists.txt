@@ -38,6 +38,8 @@ set(SOURCES
         src/devices/SmartTextureManager.h
         src/gui/RoundedRectangle.cpp
         src/gui/RoundedRectangle.h
+        src/gui/RoundedStatusBar.cpp
+        src/gui/RoundedStatusBar.h
 )
 
 set(TEST_SOURCES

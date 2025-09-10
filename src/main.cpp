@@ -7,6 +7,7 @@
 #include "devices/SmartKeyboard.h"
 #include "devices/SmartMouse.h"
 #include "gui/RoundedButton.h"
+#include "gui/RoundedStatusBar.h"
 
 
 int main() {
@@ -44,6 +45,12 @@ int main() {
     const int key_run_stepping_in = keyboard.addKey(sf::Keyboard::Key::U);
     const int key_info = keyboard.addKey(sf::Keyboard::Key::P);
     const int key_stop = keyboard.addKey(sf::Keyboard::Key::Escape);
+
+    RoundedStatusBar statusbar;
+    statusbar.setFont(font);
+    statusbar.setSize(500, 100, 40);
+    statusbar.setPosition(sf::Vector2f(500, 100));
+    double status = 0;
 
     // Klikbare GUI buttons
     std::vector<RoundedButton> buttons;
@@ -175,6 +182,14 @@ int main() {
         for (auto &button: buttons) {
             button.draw(window_main);
         }
+        if (button_test.is_pressed == true) {
+            statusbar.update(status);
+            status += 0.1;
+            if (status > 100) {
+                status = 0;
+            }
+        }
+        statusbar.draw(window_main);
         window_main.display();
 
         if (keyboard.getKey(key_info).isPressedUp() == true) {
