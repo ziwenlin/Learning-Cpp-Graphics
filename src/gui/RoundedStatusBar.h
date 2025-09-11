@@ -15,13 +15,16 @@ public:
     float body_padding = 10;
     float inner_thickness = 1;
 
-    sf::Color border_color = sf::Color::Black;
-    sf::Color body_color = sf::Color::White;
-    sf::Color inner_color = sf::Color::Yellow;
+    sf::Color color_border = sf::Color::Black;
+    sf::Color color_body = sf::Color::White;
+    sf::Color color_inner = sf::Color::Yellow;
+    sf::Color color_text = sf::Color::Black;
 
 private:
+    float percentage = 100;
+    float inner_width = 180;
+    float inner_height = 30;
     std::shared_ptr<sf::Font> text_font;
-    std::unique_ptr<sf::Text> text_label;
     std::unique_ptr<sf::Text> text_status;
 
     sf::Vector2f position;
@@ -35,9 +38,7 @@ public:
 
     void setFont(const std::shared_ptr<sf::Font> &font);
 
-    void setLabel(const std::string &text);
-
-    void setSize(const float &width, const float &height, const float &corner_radius);
+    void setSize(const float &width, const float &height, const float &thickness, const float &radius);
 
     void setPosition(sf::Vector2f position);
 

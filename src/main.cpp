@@ -48,9 +48,9 @@ int main() {
 
     RoundedStatusBar statusbar;
     statusbar.setFont(font);
-    statusbar.setSize(500, 100, 40);
+    statusbar.setSize(500, 100, 8, 10);
     statusbar.setPosition(sf::Vector2f(500, 100));
-    double status = 0;
+    double status = 80;
 
     // Klikbare GUI buttons
     std::vector<RoundedButton> buttons;
