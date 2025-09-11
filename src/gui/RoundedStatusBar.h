@@ -24,6 +24,7 @@ private:
     float percentage = 100;
     float inner_width = 180;
     float inner_height = 30;
+    float text_offset = 5;
     std::shared_ptr<sf::Font> text_font;
     std::unique_ptr<sf::Text> text_status;
 
@@ -47,6 +48,7 @@ public:
     void draw(sf::RenderWindow &window);
 
 private:
+    void updateText(const float &percentage) const;
 };
 
 
