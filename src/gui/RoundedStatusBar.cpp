@@ -69,9 +69,11 @@ void RoundedStatusBar::update(const float &percentage) {
     if (text_font != nullptr) {
         updateText(percentage);
     }
+    rectangle_body.update();
+    rectangle_inner.update();
 }
 
-void RoundedStatusBar::draw(sf::RenderWindow &window) {
+void RoundedStatusBar::draw(sf::RenderWindow &window) const {
     rectangle_body.draw(window);
     rectangle_inner.draw(window);
     if (text_font != nullptr) {

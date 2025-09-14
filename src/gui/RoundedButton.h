@@ -47,7 +47,7 @@ public:
 
     void update(const SmartMouse &mouse);
 
-    void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &window) const;
 
 private:
 };

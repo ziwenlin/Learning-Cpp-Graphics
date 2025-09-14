@@ -45,7 +45,7 @@ public:
 
     void update(const float &percentage);
 
-    void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &window) const;
 
 private:
     void updateText(const float &percentage) const;

@@ -2,9 +2,12 @@
 
 #include <cmath>
 
-void RoundedRectangle::draw(sf::RenderWindow &window) {
+void RoundedRectangle::update() {
     inner_shape.setFillColor(color_inner);
     outer_shape.setFillColor(color_outer);
+}
+
+void RoundedRectangle::draw(sf::RenderWindow &window) const {
     window.draw(outer_shape);
     window.draw(inner_shape);
 }

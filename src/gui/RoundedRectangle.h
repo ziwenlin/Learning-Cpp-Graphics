@@ -20,7 +20,9 @@ private:
     float thickness = 0;
 
 public:
-    void draw(sf::RenderWindow &window);
+    void update();
+
+    void draw(sf::RenderWindow &window) const;
 
     void setShape(float width, float height, float corner_radius, int precision);
 

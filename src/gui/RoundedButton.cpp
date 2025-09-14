@@ -70,9 +70,12 @@ void RoundedButton::update(const SmartMouse &mouse) {
         rectangle_body.color_inner = color_body_off;
         is_pressed = false;
     }
+    rectangle_body.update();
 }
 
-void RoundedButton::draw(sf::RenderWindow &window) {
+void RoundedButton::draw(sf::RenderWindow &window) const {
     rectangle_body.draw(window);
-    window.draw(*text_body);
+    if (text_font != nullptr) {
+        window.draw(*text_body);
+    }
 }
