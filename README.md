@@ -22,11 +22,13 @@ Debugging:
 - Game speed kunnen aanpassen met knoppen en/of slider.
 - Optie maken om textures uit te zetten en dan kleuren gebruiken.
 
+Bugs:
+
+- Mouse
+  - Als de framerate te laag is, kan de muis een snelle klik niet zien.
+
 Interface:
 
-- RoundedStatusBar afmaken.
-- RoundedButton heeft pointer font nodig.
-  - Dit is om de class niet gelijk alles hoeft te initialiseren.
 - InteractionController om globale inputs op te vangen en af te handelen.
 
 Gameplay:
@@ -36,12 +38,16 @@ Gameplay:
 
 Systeem:
 
+- Assets
+  - Een systeem die assets kan bijhouden.
 - Sounds
   - De game class moet zelf bijhouden welke geluiden mag worden afgespeeld.
-- Textures
-  - Class SmartTextureManager aanmaken
 
 Voltooid:
+
+- Class RoundedButton heeft pointer voor font.
+- Class RoundedStatusBar is klaar.
+- Class SmartTextureManager aanmaken
 
 - Geluid afspelen
   - Punten verzamelen feedback
