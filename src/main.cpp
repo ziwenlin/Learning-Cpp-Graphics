@@ -27,8 +27,7 @@ int main() {
 
     // Houdt de tijd en ticks bij
     sf::Clock clock;
-    // Houdt alle instanties van PhysicsObject bij
-    PhysicsEngine engine;
+
     // Bird Game object
     Game game;
     game.window = &window_main;
@@ -38,12 +37,6 @@ int main() {
 
     // Maak een smart toetsenbord aan
     SmartKeyboard keyboard;
-    const int key_spawn = keyboard.addKey(sf::Keyboard::Key::J);
-    const int key_reset = keyboard.addKey(sf::Keyboard::Key::I);
-    const int key_run_pause = keyboard.addKey(sf::Keyboard::Key::K);
-    const int key_run_step = keyboard.addKey(sf::Keyboard::Key::L);
-    const int key_run_step_in = keyboard.addKey(sf::Keyboard::Key::J);
-    const int key_run_stepping_in = keyboard.addKey(sf::Keyboard::Key::U);
     const int key_info = keyboard.addKey(sf::Keyboard::Key::P);
     const int key_stop = keyboard.addKey(sf::Keyboard::Key::Escape);
 
@@ -69,14 +62,6 @@ int main() {
     text_counter.setPosition(sf::Vector2f(0, 0));
     text_running.setPosition(sf::Vector2f(0, 50));
     text_button.setPosition(sf::Vector2f(0, 100));
-
-    // Simulatie variabelen
-    unsigned int count_physics_objects = 0;
-    bool simulation_running = true;
-    bool simulation_stepping = false;
-    bool simulation_reseting = false;
-    bool simulation_step_in = false;
-    bool simulation_stepping_in = false;
 
     // Main window loop
     while (window_main.isOpen()) {
@@ -108,62 +93,6 @@ int main() {
             button.update(mouse);
             buttons_pressed |= button.is_pressed;
         }
-        // if (!buttons_pressed && mouse.button_left.is_dragged) {
-        //     engine.spawnObject(mouse.button_left.getMouseDragPosition());
-        //     count_physics_objects++;
-        // }
-
-        // Kijkt naar het toetsenbord en stap door de simulatie van PhysicsEngine
-        if (keyboard.getKey(key_reset).isPressedDown() == true) {
-            simulation_reseting = true;
-        }
-        if (keyboard.getKey(key_run_step_in).isPressedDown() == true) {
-            simulation_step_in = true;
-        }
-        if (keyboard.getKey(key_run_pause).isPressedDown() == true) {
-            simulation_running = !simulation_running;
-        }
-        if (keyboard.getKey(key_run_step).isPressedDown() == true) {
-            simulation_stepping = true;
-        }
-        if (keyboard.getKey(key_run_stepping_in).isPressedDown() == true) {
-            simulation_stepping_in = !simulation_stepping_in;
-            simulation_running = !simulation_stepping_in;
-            simulation_step_in = simulation_stepping_in;
-        }
-        if (keyboard.getKey(key_spawn).isPressedDown() == true) {
-            for (int object_index = 0; object_index < 20; object_index++) {
-                // || object_index == 22 || object_index == 34 || object_index == 45
-                if (object_index == 0 || object_index == 11) {
-                }
-                const auto index = static_cast<float>(object_index);
-                const float position = 60.0f + 20.0f * index;
-                engine.spawnObject(sf::Vector2f(position, 60.0f + index));
-                count_physics_objects++;
-            }
-        }
-
-        // Bereken alle nieuwe posities van PhysicsObject
-        constexpr float step_time = 1.0f / 100.0f;
-        if (simulation_running == true) {
-            float total_step_time = 0.0f;
-            for (auto i = 0; i < 3 && total_step_time < delta_time; i++) {
-                engine.update(step_time);
-                total_step_time += step_time;
-            }
-        } else if (simulation_stepping == true) {
-            simulation_stepping = false;
-            engine.update(step_time * 0.5f);
-        } else if (simulation_step_in == true) {
-            simulation_step_in = simulation_stepping_in;
-            engine.updateStep(delta_time);
-        }
-        if (simulation_reseting == true) {
-            simulation_reseting = false;
-            count_physics_objects = 0;
-            engine.reset();
-        }
-
 
         // Bereid alle teksten voor
         text_counter.setString(fmt::format("Machine: {}", game.score_machine));
