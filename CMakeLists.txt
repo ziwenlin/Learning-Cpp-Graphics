@@ -40,6 +40,10 @@ set(SOURCES
         src/gui/RoundedRectangle.h
         src/gui/RoundedStatusBar.cpp
         src/gui/RoundedStatusBar.h
+        src/birdgame/Menu.cpp
+        src/birdgame/Menu.h
+        src/physics/PhysicsSimulation.cpp
+        src/physics/PhysicsSimulation.h
 )
 
 set(TEST_SOURCES

@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "Bird.h"
+#include "Menu.h"
 #include "Pipes.h"
 #include "../devices/SmartKeyboard.h"
 #include "../devices/SmartSoundManager.h"
@@ -12,8 +13,11 @@
 
 class Game {
 public:
+    sf::RenderWindow *window;
     Pipes pipes;
     Bird bird;
+    Menu menu;
+    SmartMouse mouse;
     SmartKeyboard keyboard;
     SmartSoundManager sound;
     SmartTextureManager textures;
@@ -57,6 +61,8 @@ private:
 
 public:
     Game();
+
+    ~Game();
 
     void reload();
 

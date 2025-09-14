@@ -2,8 +2,11 @@
 
 #include <fmt/core.h>
 
+#include "Menu.h"
+
 
 Game::Game() {
+    menu.setKeys(keyboard);
     key_debug = keyboard.addKey(sf::Keyboard::Key::Q);
     key_save = keyboard.addKey(sf::Keyboard::Key::F);
     key_config = keyboard.addKey(sf::Keyboard::Key::G);
@@ -16,6 +19,10 @@ Game::Game() {
     outline_ceiling.setFillColor(sf::Color::White);
     death.setFillColor(sf::Color::Red);
     death.setSize(sf::Vector2f(bg.bird.width, bg.bird.height));
+}
+
+Game::~Game() {
+    window = nullptr;
 }
 
 void Game::reload() {
@@ -48,10 +55,15 @@ void Game::reload() {
     bird.reloadSprite(textures.get(texture_bird));
 
     is_alive = true;
+    menu.is_visible = true;
 }
 
 void Game::update(const float &delta_time, const bool &has_focus) {
     keyboard.update(has_focus);
+    if (window != nullptr) {
+        mouse.update(*window);
+    }
+    menu.update(mouse, keyboard);
     if (average_delta_time <= 0.0f) average_delta_time = 1.0f / 100.0f / size_delta_time;
     average_delta_time = (average_delta_time * (size_delta_time - 1.0f) + delta_time) / size_delta_time;
     if (keyboard.getKey(key_debug).isPressedUp()) {
@@ -100,6 +112,7 @@ void Game::draw(sf::RenderWindow &window) const {
         window.draw(outline_ceiling);
     }
     bird.draw(window);
+    menu.draw(window);
 }
 
 void Game::processAutoPlay() {
@@ -164,6 +177,7 @@ void Game::setDeath() {
     }
     nextSound(sound_death_array, sound_death_size, sound_death_index);
     sound.play(sound_death);
+    menu.setMenu(Menu::screen_end);
     is_alive = false;
 }
 

@@ -31,6 +31,7 @@ int main() {
     PhysicsEngine engine;
     // Bird Game object
     Game game;
+    game.window = &window_main;
 
     // Maakt een smart muis aan
     SmartMouse mouse;
