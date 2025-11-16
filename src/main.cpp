@@ -43,7 +43,7 @@ int main() {
     RoundedStatusBar statusbar;
     statusbar.setFont(font);
     statusbar.setSize(500, 100, 8, 10);
-    statusbar.setPosition(sf::Vector2f(500, 100));
+    statusbar.setPosition(sf::Vector2f(10, 200));
     double status = 80;
 
     // Klikbare GUI buttons
@@ -105,13 +105,6 @@ int main() {
         // Render een nieuwe frame
         window_main.clear(sf::Color::Black);
         game.draw(window_main);
-        engine.draw(window_main);
-        window_main.draw(text_counter);
-        window_main.draw(text_running);
-        window_main.draw(text_button);
-        for (auto &button: buttons) {
-            button.draw(window_main);
-        }
         if (button_test.is_pressed == true) {
             statusbar.update(status);
             status += 0.1;
@@ -119,15 +112,23 @@ int main() {
                 status = 0;
             }
         }
-        statusbar.draw(window_main);
         window_main.display();
 
+        // Render frame in info window
         if (keyboard.getKey(key_info).isPressedUp() == true) {
             window_info.toggle();
         }
         if (keyboard.getKey(key_stop).isPressedUp() == true) {
             window_main.close();
         }
+        window_info.window.clear(sf::Color::Black);
+        window_info.window.draw(text_counter);
+        window_info.window.draw(text_running);
+        window_info.window.draw(text_button);
+        for (auto &button: buttons) {
+            button.draw(window_info.window);
+        }
+        statusbar.draw(window_info.window);
 
         window_info.update();
         window_info.draw();

@@ -8,9 +8,9 @@
 
 class DebugWindow {
 public:
+    sf::RenderWindow window;
 
 private:
-    sf::RenderWindow window;
     sf::Font font;
     std::vector<sf::Text> texts;
 

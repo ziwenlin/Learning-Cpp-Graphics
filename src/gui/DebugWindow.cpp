@@ -46,7 +46,6 @@ bool DebugWindow::draw() {
         window.setPosition(sf::Vector2i(10, 10));
         is_hidden = false;
     }
-    window.clear(sf::Color::Black);
     for (const auto &text: this->texts) {
         window.draw(text);
     }
