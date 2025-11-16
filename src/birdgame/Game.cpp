@@ -91,6 +91,9 @@ void Game::update(const float &delta_time, const bool &has_focus) {
         bird.jump();
         sound.play(sound_jump);
     }
+    if (menu.is_visible == true) {
+        return;
+    }
     if (is_alive == false) {
         return;
     }
