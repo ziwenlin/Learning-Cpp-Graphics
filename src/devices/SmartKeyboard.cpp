@@ -12,35 +12,35 @@ SmartKey::~SmartKey() {
 }
 
 void SmartKey::update(const bool input) {
-    if (is_pressed_down == true) {
-        is_pressed_down = false;
+    if (m_is_pressed_down == true) {
+        m_is_pressed_down = false;
     }
-    if (is_pressed_up == true) {
-        is_pressed_up = false;
+    if (m_is_pressed_up == true) {
+        m_is_pressed_up = false;
     }
     if (input == true) {
-        if (is_pressed == false) {
-            is_pressed_down = true;
-            is_pressed = true;
+        if (m_is_pressed == false) {
+            m_is_pressed_down = true;
+            m_is_pressed = true;
         }
     } else {
-        if (is_pressed == true) {
-            is_pressed_up = true;
-            is_pressed = false;
+        if (m_is_pressed == true) {
+            m_is_pressed_up = true;
+            m_is_pressed = false;
         }
     }
 }
 
 bool SmartKey::isPressed() const {
-    return is_pressed;
+    return m_is_pressed;
 }
 
 bool SmartKey::isPressedDown() const {
-    return is_pressed_down;
+    return m_is_pressed_down;
 }
 
 bool SmartKey::isPressedUp() const {
-    return is_pressed_up;
+    return m_is_pressed_up;
 }
 
 // ##########################################################################

@@ -1,5 +1,5 @@
-#ifndef SMARTKEYBOARD_H
-#define SMARTKEYBOARD_H
+#ifndef SMART_KEYBOARD_H
+#define SMART_KEYBOARD_H
 #include <vector>
 
 #include "SFML/Window/Keyboard.hpp"
@@ -10,22 +10,22 @@ public:
     const sf::Keyboard::Key keybind;
 
 private:
-    bool is_pressed = false;
-    bool is_pressed_down = false;
-    bool is_pressed_up = false;
+    bool m_is_pressed = false;
+    bool m_is_pressed_down = false;
+    bool m_is_pressed_up = false;
 
 public:
-    explicit SmartKey(sf::Keyboard::Key key);;
+    explicit SmartKey(sf::Keyboard::Key key);
 
     ~SmartKey();
 
-    void update(bool input);;
+    void update(bool input);
 
     bool isPressed() const;
 
-    bool isPressedDown() const;;
+    bool isPressedDown() const;
 
-    bool isPressedUp() const;;
+    bool isPressedUp() const;
 
 private:
 };
@@ -51,4 +51,4 @@ public:
 private:
 };
 
-#endif //SMARTKEYBOARD_H
+#endif //SMART_KEYBOARD_H

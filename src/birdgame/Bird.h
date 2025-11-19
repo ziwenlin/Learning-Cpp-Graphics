@@ -7,20 +7,20 @@
 
 class Bird {
 public:
-    float last_position_y = 100.0;
-    float jump_velocity = 10.0f;
-    float delta_time = 1.0f / 60.0f;
+    float m_last_position_y = 100.0;
+    float m_jump_velocity = 10.0f;
+    float m_delta_time = 1.0f / 60.0f;
 
 private:
-    sf::RectangleShape body;
-    std::unique_ptr<sf::Sprite> sprite;
+    sf::RectangleShape m_body;
+    std::unique_ptr<sf::Sprite> m_sprite;
 
 public:
     void reload();
 
     void reloadSprite(const sf::Sprite &sprite);
 
-    void update(const float &dt);
+    void update(const float &delta_time);
 
     void draw(sf::RenderWindow &window) const;
 
