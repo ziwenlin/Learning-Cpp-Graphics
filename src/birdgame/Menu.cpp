@@ -53,7 +53,7 @@ Menu::~Menu() {
 
 void Menu::initStartScreenTitle(const std::shared_ptr<sf::Font> &font) {
     m_screen_start.font_title = font;
-    m_screen_start.title.reset(new sf::Text(*m_screen_start.font_title));
+    m_screen_start.title = std::make_unique<sf::Text>(*m_screen_start.font_title);
     m_screen_start.title->setCharacterSize(text_title_height);
 
     m_screen_start.title->setString("Flappy Bird!");
@@ -65,7 +65,7 @@ void Menu::initStartScreenTitle(const std::shared_ptr<sf::Font> &font) {
 
 void Menu::initStartScreenText(const std::shared_ptr<sf::Font> &font) {
     m_screen_start.font_text = font;
-    m_screen_start.instruction.reset(new sf::Text(*font));
+    m_screen_start.instruction = std::make_unique<sf::Text>(*font);
     m_screen_start.instruction->setCharacterSize(text_height);
 
     setText(m_screen_start.instruction, 50, 75, "Press any key to continue");
@@ -92,11 +92,13 @@ void Menu::initEndScreenText(const std::shared_ptr<sf::Font> &font) {
     setText(m_screen_end.instruction_description, 50, 62, "Hold [Space] to restart...");
 }
 
-void Menu::setText(const std::unique_ptr<sf::Text> &text_object, const double viewX, const double viewY, const std::string &text) {
+void Menu::setText(const std::unique_ptr<sf::Text> &text_object, const double &viewX, const double &viewY, const std::string &text) {
     text_object->setString(text);
     const sf::Vector2<float> size = text_object->getLocalBounds().size;
-    const float x = (Variables::screen_x - size.x) * static_cast<float>(viewX / 100.0);
-    const float y = (Variables::screen_y - size.y) * static_cast<float>(viewY / 100.0);
+    const auto scaleX = static_cast<float>(viewX / 100.0);
+    const auto scaleY = static_cast<float>(viewY / 100.0);
+    const float x = (Variables::screen_x - size.x) * scaleX;
+    const float y = (Variables::screen_y - size.y) * scaleY;
     text_object->setPosition(sf::Vector2f(x, y));
 }
 
@@ -106,7 +108,7 @@ void Menu::setKeys(SmartKeyboard &keyboard) {
 }
 
 void Menu::setMenu(const Screen screen) {
-    this->screen = screen;
+    this->m_screen = screen;
     is_visible = true;
 }
 
@@ -114,11 +116,11 @@ void Menu::update(SmartMouse &mouse, SmartKeyboard &keyboard) {
     if (!is_visible) {
         return;
     }
-    if (screen == screen_start) {
+    if (m_screen == screen_start) {
         if (keyboard.getKey(key_play).isPressedUp()) {
             is_visible = false;
         }
-    } else if (screen == screen_end) {
+    } else if (m_screen == screen_end) {
         m_screen_end.button_restart.update(mouse);
         m_screen_end.button_resurrect.update(mouse);
         if (m_screen_end.font_text != nullptr) {
@@ -126,7 +128,7 @@ void Menu::update(SmartMouse &mouse, SmartKeyboard &keyboard) {
             setText(m_screen_end.highscore_number, 75, 50, fmt::format("{}", 0));
         }
         if (keyboard.getKey(key_continue).isPressedUp() || m_screen_end.button_restart.is_pressed == true) {
-            screen = screen_start;
+            m_screen = screen_start;
         }
     }
 }
@@ -136,14 +138,14 @@ void Menu::draw(sf::RenderWindow &window) const {
     if (!is_visible) {
         return;
     }
-    if (screen == screen_start) {
+    if (m_screen == screen_start) {
         if (m_screen_start.font_title != nullptr) {
             window.draw(*m_screen_start.title);
         }
         if (m_screen_start.font_text != nullptr) {
             window.draw(*m_screen_start.instruction);
         }
-    } else if (screen == screen_end) {
+    } else if (m_screen == screen_end) {
         m_screen_end.background.draw(window);
         m_screen_end.button_restart.draw(window);
         m_screen_end.button_resurrect.draw(window);

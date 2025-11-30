@@ -15,7 +15,7 @@ public:
     enum Screen {
         screen_start,
         screen_end
-    } screen = screen_start;
+    } m_screen = screen_start;
 
     bool is_visible = true;
     int text_title_height = 100;
@@ -61,7 +61,7 @@ public:
 
     void initEndScreenText(const std::shared_ptr<sf::Font> &font);
 
-    static void setText(const std::unique_ptr<sf::Text> &text_object, const double viewX, const double viewY, const std::string &text);
+    static void setText(const std::unique_ptr<sf::Text> &text_object, const double &viewX, const double &viewY, const std::string &text);
 
     void setKeys(SmartKeyboard &keyboard);
 
