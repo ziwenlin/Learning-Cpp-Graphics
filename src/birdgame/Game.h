@@ -1,5 +1,5 @@
-#ifndef BIRDGAME_H
-#define BIRDGAME_H
+#ifndef BIRD_GAME_H
+#define BIRD_GAME_H
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -13,14 +13,14 @@
 
 class Game {
 public:
-    sf::RenderWindow *window;
-    Pipes pipes;
-    Bird bird;
-    Menu menu;
-    SmartMouse mouse;
-    SmartKeyboard keyboard;
-    SmartSoundManager sound;
-    SmartTextureManager textures;
+    sf::RenderWindow *m_window;
+    Pipes m_pipes;
+    Bird m_bird;
+    Menu m_menu;
+    SmartMouse m_mouse;
+    SmartKeyboard m_keyboard;
+    SmartSoundManager m_sound;
+    SmartTextureManager m_textures;
 
     int score_player = 0;
     int score_machine = 0;
@@ -83,4 +83,4 @@ public:
 private:
 };
 
-#endif //BIRDGAME_H
+#endif //BIRD_GAME_H
