@@ -22,10 +22,12 @@ public:
     int text_height = 40;
 
 private:
-    std::shared_ptr<sf::Font> font_title;
-    std::shared_ptr<sf::Font> font_text;
-    std::unique_ptr<sf::Text> screen_begin_title;
-    std::unique_ptr<sf::Text> screen_begin_instruction;
+    struct ScreenGameBegin {
+        std::shared_ptr<sf::Font> font_title;
+        std::shared_ptr<sf::Font> font_text;
+        std::unique_ptr<sf::Text> title;
+        std::unique_ptr<sf::Text> instruction;
+    } m_screen_start;
 
     struct ScreenGameOver {
         std::shared_ptr<sf::Font> font_title;

@@ -34,11 +34,11 @@ Menu::Menu() {
 }
 
 Menu::~Menu() {
-    screen_begin_title.reset();
-    screen_begin_instruction.reset();
+    m_screen_start.title.reset();
+    m_screen_start.instruction.reset();
 
-    font_title.reset();
-    font_text.reset();
+    m_screen_start.font_title.reset();
+    m_screen_start.font_text.reset();
 
     m_screen_end.title.reset();
     m_screen_end.instruction_description.reset();
@@ -52,23 +52,23 @@ Menu::~Menu() {
 }
 
 void Menu::initStartScreenTitle(const std::shared_ptr<sf::Font> &font) {
-    this->font_title = font;
-    screen_begin_title.reset(new sf::Text(*font_title));
-    screen_begin_title->setCharacterSize(text_title_height);
+    m_screen_start.font_title = font;
+    m_screen_start.title.reset(new sf::Text(*m_screen_start.font_title));
+    m_screen_start.title->setCharacterSize(text_title_height);
 
-    screen_begin_title->setString("Flappy Bird!");
-    const sf::Vector2<float> size = screen_begin_title->getLocalBounds().size;
+    m_screen_start.title->setString("Flappy Bird!");
+    const sf::Vector2<float> size = m_screen_start.title->getLocalBounds().size;
     const double x = (Variables::screen_x - size.x) * 0.5;
     const double y = (Variables::screen_y - size.y) * 0.3;
-    screen_begin_title->setPosition(sf::Vector2f(x, y));
+    m_screen_start.title->setPosition(sf::Vector2f(x, y));
 }
 
 void Menu::initStartScreenText(const std::shared_ptr<sf::Font> &font) {
-    this->font_text = font;
-    screen_begin_instruction.reset(new sf::Text(*font));
-    screen_begin_instruction->setCharacterSize(text_height);
+    m_screen_start.font_text = font;
+    m_screen_start.instruction.reset(new sf::Text(*font));
+    m_screen_start.instruction->setCharacterSize(text_height);
 
-    setText(screen_begin_instruction, 50, 75, "Press any key to continue");
+    setText(m_screen_start.instruction, 50, 75, "Press any key to continue");
 }
 
 void Menu::initEndScreenTitle(const std::shared_ptr<sf::Font> &font) {
@@ -137,11 +137,11 @@ void Menu::draw(sf::RenderWindow &window) const {
         return;
     }
     if (screen == screen_start) {
-        if (font_title != nullptr) {
-            window.draw(*screen_begin_title);
+        if (m_screen_start.font_title != nullptr) {
+            window.draw(*m_screen_start.title);
         }
-        if (font_text != nullptr) {
-            window.draw(*screen_begin_instruction);
+        if (m_screen_start.font_text != nullptr) {
+            window.draw(*m_screen_start.instruction);
         }
     } else if (screen == screen_end) {
         m_screen_end.background.draw(window);
