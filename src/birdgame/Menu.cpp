@@ -19,18 +19,18 @@ Menu::Menu() {
     } else {
         fmt::println("Failed to load font{}", std::string(font_file_location));
     }
-    end_screen.background.setShape(Variables::screen_x * 0.7, Variables::screen_y * 0.6, 30, 64);
-    end_screen.background.setOutline(30);
-    end_screen.background.setPosition(sf::Vector2f(Variables::screen_x * 0.3 * 0.5, Variables::screen_y * 0.5 * 0.3));
-    end_screen.background.color_inner = sf::Color(99, 66, 66, 255);
-    end_screen.background.color_outer = sf::Color(255, 255, 255, 255);
-    end_screen.background.update();
-    end_screen.button_restart.setFont(font);
-    end_screen.button_restart.setText("Restart");
-    end_screen.button_restart.setPosition(sf::Vector2f(Variables::screen_x * 0.3, Variables::screen_y * 0.8));
-    end_screen.button_resurrect.setFont(font);
-    end_screen.button_resurrect.setText("Resurrect");
-    end_screen.button_resurrect.setPosition(sf::Vector2f(Variables::screen_x * 0.7, Variables::screen_y * 0.8));
+    m_screen_end.background.setShape(Variables::screen_x * 0.7, Variables::screen_y * 0.6, 30, 64);
+    m_screen_end.background.setOutline(30);
+    m_screen_end.background.setPosition(sf::Vector2f(Variables::screen_x * 0.3 * 0.5, Variables::screen_y * 0.5 * 0.3));
+    m_screen_end.background.color_inner = sf::Color(99, 66, 66, 255);
+    m_screen_end.background.color_outer = sf::Color(255, 255, 255, 255);
+    m_screen_end.background.update();
+    m_screen_end.button_restart.setFont(font);
+    m_screen_end.button_restart.setText("Restart");
+    m_screen_end.button_restart.setPosition(sf::Vector2f(Variables::screen_x * 0.3, Variables::screen_y * 0.8));
+    m_screen_end.button_resurrect.setFont(font);
+    m_screen_end.button_resurrect.setText("Resurrect");
+    m_screen_end.button_resurrect.setPosition(sf::Vector2f(Variables::screen_x * 0.7, Variables::screen_y * 0.8));
 }
 
 Menu::~Menu() {
@@ -40,15 +40,15 @@ Menu::~Menu() {
     font_title.reset();
     font_text.reset();
 
-    end_screen.title.reset();
-    end_screen.instruction_description.reset();
-    end_screen.score_number.reset();
-    end_screen.score_description.reset();
-    end_screen.highscore_number.reset();
-    end_screen.highscore_description.reset();
+    m_screen_end.title.reset();
+    m_screen_end.instruction_description.reset();
+    m_screen_end.score_number.reset();
+    m_screen_end.score_description.reset();
+    m_screen_end.highscore_number.reset();
+    m_screen_end.highscore_description.reset();
 
-    end_screen.font_title.reset();
-    end_screen.font_text.reset();
+    m_screen_end.font_title.reset();
+    m_screen_end.font_text.reset();
 }
 
 void Menu::initStartScreenTitle(const std::shared_ptr<sf::Font> &font) {
@@ -72,24 +72,24 @@ void Menu::initStartScreenText(const std::shared_ptr<sf::Font> &font) {
 }
 
 void Menu::initEndScreenTitle(const std::shared_ptr<sf::Font> &font) {
-    this->end_screen.font_title = font;
-    end_screen.title = std::make_unique<sf::Text>(*end_screen.font_title);
-    end_screen.title->setCharacterSize(text_title_height);
+    this->m_screen_end.font_title = font;
+    m_screen_end.title = std::make_unique<sf::Text>(*m_screen_end.font_title);
+    m_screen_end.title->setCharacterSize(text_title_height);
 
-    setText(end_screen.title, 50, 25, "Game over!");
+    setText(m_screen_end.title, 50, 25, "Game over!");
 }
 
 void Menu::initEndScreenText(const std::shared_ptr<sf::Font> &font) {
-    end_screen.font_text = font;
-    end_screen.score_number = std::make_unique<sf::Text>(*font);
-    end_screen.score_description = std::make_unique<sf::Text>(*font);
-    end_screen.highscore_number = std::make_unique<sf::Text>(*font);
-    end_screen.highscore_description = std::make_unique<sf::Text>(*font);
-    end_screen.instruction_description = std::make_unique<sf::Text>(*font);
+    m_screen_end.font_text = font;
+    m_screen_end.score_number = std::make_unique<sf::Text>(*font);
+    m_screen_end.score_description = std::make_unique<sf::Text>(*font);
+    m_screen_end.highscore_number = std::make_unique<sf::Text>(*font);
+    m_screen_end.highscore_description = std::make_unique<sf::Text>(*font);
+    m_screen_end.instruction_description = std::make_unique<sf::Text>(*font);
 
-    setText(end_screen.score_description, 25, 45, "Score");
-    setText(end_screen.highscore_description, 75, 45, "Highscore");
-    setText(end_screen.instruction_description, 50, 62, "Hold [Space] to restart...");
+    setText(m_screen_end.score_description, 25, 45, "Score");
+    setText(m_screen_end.highscore_description, 75, 45, "Highscore");
+    setText(m_screen_end.instruction_description, 50, 62, "Hold [Space] to restart...");
 }
 
 void Menu::setText(const std::unique_ptr<sf::Text> &text_object, const double viewX, const double viewY, const std::string &text) {
@@ -119,13 +119,13 @@ void Menu::update(SmartMouse &mouse, SmartKeyboard &keyboard) {
             is_visible = false;
         }
     } else if (screen == screen_end) {
-        end_screen.button_restart.update(mouse);
-        end_screen.button_resurrect.update(mouse);
-        if (end_screen.font_text != nullptr) {
-            setText(end_screen.score_number, 25, 50, fmt::format("{}", 0));
-            setText(end_screen.highscore_number, 75, 50, fmt::format("{}", 0));
+        m_screen_end.button_restart.update(mouse);
+        m_screen_end.button_resurrect.update(mouse);
+        if (m_screen_end.font_text != nullptr) {
+            setText(m_screen_end.score_number, 25, 50, fmt::format("{}", 0));
+            setText(m_screen_end.highscore_number, 75, 50, fmt::format("{}", 0));
         }
-        if (keyboard.getKey(key_continue).isPressedUp() || end_screen.button_restart.is_pressed == true) {
+        if (keyboard.getKey(key_continue).isPressedUp() || m_screen_end.button_restart.is_pressed == true) {
             screen = screen_start;
         }
     }
@@ -144,18 +144,18 @@ void Menu::draw(sf::RenderWindow &window) const {
             window.draw(*screen_begin_instruction);
         }
     } else if (screen == screen_end) {
-        end_screen.background.draw(window);
-        end_screen.button_restart.draw(window);
-        end_screen.button_resurrect.draw(window);
-        if (end_screen.font_title != nullptr) {
-            window.draw(*end_screen.title);
+        m_screen_end.background.draw(window);
+        m_screen_end.button_restart.draw(window);
+        m_screen_end.button_resurrect.draw(window);
+        if (m_screen_end.font_title != nullptr) {
+            window.draw(*m_screen_end.title);
         }
-        if (end_screen.font_text != nullptr) {
-            window.draw(*end_screen.score_number);
-            window.draw(*end_screen.highscore_number);
-            window.draw(*end_screen.score_description);
-            window.draw(*end_screen.highscore_description);
-            window.draw(*end_screen.instruction_description);
+        if (m_screen_end.font_text != nullptr) {
+            window.draw(*m_screen_end.score_number);
+            window.draw(*m_screen_end.highscore_number);
+            window.draw(*m_screen_end.score_description);
+            window.draw(*m_screen_end.highscore_description);
+            window.draw(*m_screen_end.instruction_description);
         }
     }
 }

@@ -41,7 +41,7 @@ private:
         RoundedRectangle background;
         RoundedButton button_restart;
         RoundedButton button_resurrect;
-    } end_screen;
+    } m_screen_end;
 
     int key_continue = -1;
     int key_play = -1;
