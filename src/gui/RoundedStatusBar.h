@@ -1,5 +1,5 @@
-#ifndef ROUNDEDLOADINGBAR_H
-#define ROUNDEDLOADINGBAR_H
+#ifndef ROUNDED_STATUSBAR_H
+#define ROUNDED_STATUSBAR_H
 
 #include <SFML/Graphics.hpp>
 
@@ -21,14 +21,14 @@ public:
     sf::Color color_text = sf::Color::Black;
 
 private:
-    float percentage = 100;
-    float inner_width = 180;
-    float inner_height = 30;
-    float text_offset = 5;
+    float m_percentage = 100;
+    float m_inner_width = 180;
+    float m_inner_height = 30;
+    float m_text_offset = 5;
     std::shared_ptr<sf::Font> text_font;
     std::unique_ptr<sf::Text> text_status;
 
-    sf::Vector2f position;
+    sf::Vector2f m_position;
     RoundedRectangle rectangle_body;
     RoundedRectangle rectangle_inner;
 
@@ -39,9 +39,9 @@ public:
 
     void setFont(const std::shared_ptr<sf::Font> &font);
 
-    void setSize(const float &width, const float &height, const float &thickness, const float &radius);
+    void setSize(const float &new_width, const float &new_height, const float &thickness, const float &radius);
 
-    void setPosition(sf::Vector2f position);
+    void setPosition(sf::Vector2f new_position);
 
     void update(const float &percentage);
 
@@ -52,4 +52,4 @@ private:
 };
 
 
-#endif //ROUNDEDLOADINGBAR_H
+#endif //ROUNDED_STATUSBAR_H

@@ -1,5 +1,5 @@
-#ifndef ROUNDEDRECTANGLE_H
-#define ROUNDEDRECTANGLE_H
+#ifndef ROUNDED_RECTANGLE_H
+#define ROUNDED_RECTANGLE_H
 
 #include <SFML/Graphics.hpp>
 
@@ -13,11 +13,11 @@ protected:
     sf::ConvexShape outer_shape;
 
 private:
-    float width = 0;
-    float height = 0;
-    int precision = 0;
-    float radius = 0;
-    float thickness = 0;
+    float m_width = 0;
+    float m_height = 0;
+    int m_precision = 0;
+    float m_radius = 0;
+    float m_thickness = 0;
 
 public:
     void update();
@@ -40,4 +40,4 @@ private:
     void changeOuterShape();
 };
 
-#endif //ROUNDEDRECTANGLE_H
+#endif //ROUNDED_RECTANGLE_H
