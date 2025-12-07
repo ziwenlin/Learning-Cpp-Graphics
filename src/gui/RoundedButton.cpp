@@ -51,12 +51,12 @@ void RoundedButton::update(const SmartMouse &mouse) {
     const sf::ConvexShape &button_body = rectangle_body.getInnerBody();
     is_inside = button_body.getGlobalBounds().contains(mouse.getPosition());
     if (is_inside) {
-        if (mouse.button_left.is_pressed_begin) {
+        if (mouse.button_left.m_is_pressed_begin) {
             is_pressed = true;
         }
         if (is_pressed) {
             rectangle_body.color_inner = color_body_on;
-            if (mouse.button_left.is_pressed_end) {
+            if (mouse.button_left.m_is_pressed_end) {
                 is_pressed = false;
                 is_activated = true;
             }
@@ -64,7 +64,7 @@ void RoundedButton::update(const SmartMouse &mouse) {
             rectangle_body.color_inner = color_body_hover;
             is_activated = false;
         }
-    } else if (is_pressed && mouse.button_left.is_pressed) {
+    } else if (is_pressed && mouse.button_left.m_is_pressed) {
         rectangle_body.color_inner = color_body_on;
     } else {
         rectangle_body.color_inner = color_body_off;
