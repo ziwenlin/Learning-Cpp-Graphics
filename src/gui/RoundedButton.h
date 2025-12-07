@@ -41,6 +41,8 @@ public:
 
     void setPosition(sf::Vector2f position);
 
+    void setCenterPosition(float viewX, float viewY);
+
     void setFont(const std::shared_ptr<sf::Font> &font);
 
     void setText(const std::string &text);

@@ -67,7 +67,7 @@ public:
 
     void setMenu(Screen screen);
 
-    void update(SmartMouse &mouse, SmartKeyboard &keyboard);
+    void update(const SmartMouse &mouse, SmartKeyboard &keyboard);
 
     void draw(sf::RenderWindow &window) const;
 

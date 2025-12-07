@@ -25,7 +25,7 @@ Debugging:
 Bugs:
 
 - Mouse
-  - Als de framerate te laag is, kan de muis een snelle klik niet zien.
+  - Als FPS te laag is, kan de muis een snelle klik niet zien.
 
 Interface:
 

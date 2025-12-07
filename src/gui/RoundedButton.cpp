@@ -19,6 +19,13 @@ void RoundedButton::setPosition(const sf::Vector2f position) {
     rectangle_body.setPosition(position);
 }
 
+void RoundedButton::setCenterPosition(float viewX, float viewY) {
+    sf::Vector2<float> size = rectangle_body.getOuterBody().getLocalBounds().size;
+    const float x = viewX - size.x * 0.5f;
+    const float y = viewY - size.y * 0.5f;
+    this->setPosition(sf::Vector2f(x, y));
+}
+
 void RoundedButton::setFont(const std::shared_ptr<sf::Font> &font) {
     text_font = font;
 }

@@ -27,10 +27,10 @@ Menu::Menu() {
     m_screen_end.background.update();
     m_screen_end.button_restart.setFont(font);
     m_screen_end.button_restart.setText("Restart");
-    m_screen_end.button_restart.setPosition(sf::Vector2f(Variables::screen_x * 0.3, Variables::screen_y * 0.8));
+    m_screen_end.button_restart.setCenterPosition(Variables::screen_x * 0.3, Variables::screen_y * 0.85);
     m_screen_end.button_resurrect.setFont(font);
     m_screen_end.button_resurrect.setText("Resurrect");
-    m_screen_end.button_resurrect.setPosition(sf::Vector2f(Variables::screen_x * 0.7, Variables::screen_y * 0.8));
+    m_screen_end.button_resurrect.setCenterPosition(Variables::screen_x * 0.7, Variables::screen_y * 0.85);
 }
 
 Menu::~Menu() {
@@ -87,8 +87,8 @@ void Menu::initEndScreenText(const std::shared_ptr<sf::Font> &font) {
     m_screen_end.highscore_description = std::make_unique<sf::Text>(*font);
     m_screen_end.instruction_description = std::make_unique<sf::Text>(*font);
 
-    setText(m_screen_end.score_description, 25, 45, "Score");
-    setText(m_screen_end.highscore_description, 75, 45, "Highscore");
+    setText(m_screen_end.score_description, 30, 45, "Score");
+    setText(m_screen_end.highscore_description, 70, 45, "Highscore");
     setText(m_screen_end.instruction_description, 50, 62, "Hold [Space] to restart...");
 }
 
@@ -97,8 +97,8 @@ void Menu::setText(const std::unique_ptr<sf::Text> &text_object, const double &v
     const sf::Vector2<float> size = text_object->getLocalBounds().size;
     const auto scaleX = static_cast<float>(viewX / 100.0);
     const auto scaleY = static_cast<float>(viewY / 100.0);
-    const float x = (Variables::screen_x - size.x) * scaleX;
-    const float y = (Variables::screen_y - size.y) * scaleY;
+    const float x = Variables::screen_x * scaleX - size.x * 0.5f;
+    const float y = Variables::screen_y * scaleY - size.y * 0.5f;
     text_object->setPosition(sf::Vector2f(x, y));
 }
 
@@ -112,7 +112,7 @@ void Menu::setMenu(const Screen screen) {
     is_visible = true;
 }
 
-void Menu::update(SmartMouse &mouse, SmartKeyboard &keyboard) {
+void Menu::update(const SmartMouse &mouse, SmartKeyboard &keyboard) {
     if (!is_visible) {
         return;
     }
@@ -124,8 +124,8 @@ void Menu::update(SmartMouse &mouse, SmartKeyboard &keyboard) {
         m_screen_end.button_restart.update(mouse);
         m_screen_end.button_resurrect.update(mouse);
         if (m_screen_end.font_text != nullptr) {
-            setText(m_screen_end.score_number, 25, 50, fmt::format("{}", 0));
-            setText(m_screen_end.highscore_number, 75, 50, fmt::format("{}", 0));
+            setText(m_screen_end.score_number, 30, 50, fmt::format("{}", 0));
+            setText(m_screen_end.highscore_number, 70, 50, fmt::format("{}", 0));
         }
         if (keyboard.getKey(key_continue).isPressedUp() || m_screen_end.button_restart.is_pressed == true) {
             m_screen = screen_start;
