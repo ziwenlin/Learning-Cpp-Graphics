@@ -28,15 +28,31 @@ void Pipes::reload() {
 }
 
 void Pipes::reloadSprite(const sf::Sprite &sprite) {
+    const float total_pipe_space_width = bg.pipe.spacing_x + bg.pipe.width;
+    int total_pipes = 0;
+    for (int i = 0; i < Variables::pipe_count; i++) {
+        const float pipe_space = bg.pipe.width + total_pipe_space_width * static_cast<float>(total_pipes);
+        if (pipe_space < Variables::screen_x) {
+            total_pipes++;
+            continue;
+        }
+        total_pipes++;
+        break;
+    }
+    const float offset_x = 0.5f * (Variables::screen_x - total_pipe_space_width * static_cast<float>(total_pipes) - bg.pipe.width);
     for (int i = 0; i < Variables::pipe_count * 2; i++) {
         std::unique_ptr<sf::Sprite> &ptr_sprite = sprites_pipe[i];
-        ptr_sprite.reset(new sf::Sprite(sprite));
+        ptr_sprite = std::make_unique<sf::Sprite>(sprite);
         const sf::Vector2f size = ptr_sprite->getLocalBounds().size;
         if (i < Variables::pipe_count) {
+            /* De onderste sprites */
             ptr_sprite->setOrigin(sf::Vector2f(size.x, size.y));
             ptr_sprite->setRotation(sf::degrees(180));
+            ptr_sprite->setPosition(sf::Vector2f(offset_x + total_pipe_space_width * static_cast<float>(i), -Variables::screen_y + bg.pipe.offset_y));
+        } else {
+            ptr_sprite->setPosition(sf::Vector2f(offset_x + total_pipe_space_width * static_cast<float>(i - Variables::pipe_count), Variables::screen_y - bg.pipe.offset_y));
         }
-        ptr_sprite->setScale(sf::Vector2f(bg.pipe.width / size.x, bg.screen_y / size.y));
+        ptr_sprite->setScale(sf::Vector2f(bg.pipe.width / size.x, Variables::screen_y / size.y));
     }
     has_sprite = true;
 }

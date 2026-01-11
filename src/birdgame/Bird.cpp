@@ -12,12 +12,13 @@ void Bird::reload() {
 }
 
 void Bird::reloadSprite(const sf::Sprite &sprite) {
-    this->m_sprite.reset(new sf::Sprite(sprite));
+    m_sprite = std::make_unique<sf::Sprite>(sprite);
     const sf::Vector2f size = sprite.getLocalBounds().size;
     const sf::Vector2f origin(size.x / 2, size.y / 2);
 
-    this->m_sprite->setOrigin(origin);
-    this->m_sprite->setScale(sf::Vector2f(bg.bird.width / size.x, bg.bird.height / size.y));
+    m_sprite->setOrigin(origin);
+    m_sprite->setScale(sf::Vector2f(bg.bird.width / size.x, bg.bird.height / size.y));
+    m_sprite->setPosition(sf::Vector2f(bg.bird.start_x, bg.bird.start_x));
 }
 
 void Bird::update(const float &delta_time) {
