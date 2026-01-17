@@ -3,6 +3,7 @@
 #include <fmt/core.h>
 
 #include "Menu.h"
+#include "../devices/FileManager.h"
 
 
 Game::Game() {
@@ -26,6 +27,7 @@ Game::~Game() {
 }
 
 void Game::reload() {
+    file_manager.reload();
     m_sound.reload();
     m_sound.load(sound_jump, "jump");
     m_sound.load(sound_score, "score");
