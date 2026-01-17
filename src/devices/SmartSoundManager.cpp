@@ -43,6 +43,21 @@ void SmartSoundManager::play(const int &sound_id) const {
     sounds[config.id + config.index]->play();
 }
 
+void SmartSoundManager::next(const int &sound_id) {
+    if (sound_id < 0 || sound_id >= config_count) {
+        return;
+    }
+    SoundConfig &config = m_configs[sound_id];
+    if (config.id < 0 || config.id >= sounds_count) {
+        return;
+    }
+    if (config.index + 1 < config.size) {
+        config.index += 1;
+    } else {
+        config.index = 0;
+    }
+}
+
 void SmartSoundManager::load(int &sound_id, const std::string &sound_name) {
     const std::vector<std::string> &list_sound = file_manager.request(sound_name, str_path);
     if (list_sound.empty()) {

@@ -35,6 +35,8 @@ public:
 
     void play(const int &sound_id) const;
 
+    void next(const int &sound_id);
+
     void load(int &sound_id, const std::string &sound_name);
 
 private:

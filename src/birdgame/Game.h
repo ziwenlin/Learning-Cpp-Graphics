@@ -49,10 +49,6 @@ private:
     int texture_pipe = -1;
     int texture_background = -1;
 
-    static constexpr int sound_death_size = 5;
-    int sound_death_array[sound_death_size];
-    int sound_death_index = 0;
-
     bool is_debugging = false;
     bool is_auto_running = true;
     bool is_alive = true;
@@ -73,8 +69,6 @@ public:
     void processAutoPlay();
 
     void processCollisions();
-
-    void nextSound(const int *array, const int &size, int &index);
 
     void setDeath();
 

@@ -168,19 +168,12 @@ void Game::processCollisions() {
     is_invulnerable = false;
 }
 
-void Game::nextSound(const int *array, const int &size, int &index) {
-    sound_death = array[index++];
-    if (index >= size) {
-        index = 0;
-    }
-}
-
 void Game::setDeath() {
     if (is_invulnerable == true) {
         return;
     }
-    nextSound(sound_death_array, sound_death_size, sound_death_index);
     m_sound.play(sound_death);
+    m_sound.next(sound_death);
     m_menu.setMenu(Menu::screen_end);
     is_alive = false;
 }
