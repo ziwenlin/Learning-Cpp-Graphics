@@ -1,10 +1,10 @@
-# Programmeren van Graphics in C++
+# Graphics in C++
 
-Welkom in mijn avontuur van het leren van Graphics in C++.
+Welkom in mijn avontuur bij het leren van Graphics programming in C++.
 
 ## Setup
 
-Dit project maakt gebruik van CMake.
+Dit project maakt gebruik van CMake. Alle benodigde bestanden zijn daar gedefineerd.
 
 ## Structuur van bestanden en mappen
 
@@ -28,7 +28,15 @@ Bugs:
 
 Interface:
 
-- [ ] InteractionController om globale inputs op te vangen en af te handelen.
+- [ ] Begin-scherm
+  - [ ] Een keer klikken met de muis moet het spel starten.
+  - [ ] Toevoegen van achtergrond achter de titel en de instructie.
+    - Note: Flappy bird moet nog naast de achtergrond te zien zijn.
+    - Als dat niet lukt moet je de vogel tijdelijk verplaatsen.
+- [ ] Eind-scherm
+  - [ ] Knoppen moeten even groot zijn.
+  - [ ] Spatiebalk ingedrukt houden, leidt je naar het hoofdmenu.
+  - [ ] Functionaliteit van 'resurrect'-knop toevoegen.
 
 - [x] Class RoundedButton heeft pointer voor font.
 - [x] Class RoundedStatusBar is klaar.
@@ -36,15 +44,19 @@ Interface:
 
 Gameplay:
 
-- [x] Begin-scherm
-- [x] Eind-scherm
+- [x] Springen met spatiebalk.
+- [ ] Springen met muis.
 
 Systeem:
 
-- [ ] Assets laadsysteem
+- [ ] Animatie systeem
+  - Gescripte verplaatsing van objecten na een event.
+- [ ] Interaction controller
+  - Opvangen van globale inputs en de inputs in de class afhandelen.
+- [x] Assets laadsysteem
   - Dit systeem zoekt op basis van een input-string naar het gewenste bestand.
   - Wanneer er meerdere bestanden zijn met deze naam, gaat die ze allemaal inladen.
-- [ ] Sounds afspeelsysteem
+- [x] Sounds afspeelsysteem
   - Zelfde laadsysteem als assets laadsysteem.
 
 Sounds:
