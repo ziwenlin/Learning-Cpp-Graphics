@@ -44,6 +44,8 @@ set(SOURCES
         src/birdgame/Menu.h
         src/physics/PhysicsSimulation.cpp
         src/physics/PhysicsSimulation.h
+        src/devices/FileManager.cpp
+        src/devices/FileManager.h
 )
 
 set(TEST_SOURCES
