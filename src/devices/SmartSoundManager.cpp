@@ -28,6 +28,8 @@ void SmartSoundManager::ready() const {
     if (sounds_count >= sounds_size) {
         fmt::println("Sounds size is {} items short on memory. Please increase the number.", sounds_count - sounds_size);
     }
+    fmt::println("\nLoaded sounds");
+    fmt::println(" - Configs: {}\n - Sounds: {}", config_count, sounds_count);
 }
 
 void SmartSoundManager::play(const int &sound_id) const {
@@ -42,7 +44,7 @@ void SmartSoundManager::play(const int &sound_id) const {
 }
 
 void SmartSoundManager::load(int &sound_id, const std::string &sound_name) {
-    const std::vector<std::string> &list_sound = file_manager.request(sound_name, str_path, str_extension);
+    const std::vector<std::string> &list_sound = file_manager.request(sound_name, str_path);
     if (list_sound.empty()) {
         fmt::println("Failed to find file '{}'", sound_name);
         sound_id = -1;

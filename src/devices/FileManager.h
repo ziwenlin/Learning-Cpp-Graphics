@@ -26,7 +26,7 @@ public:
 
     void reload();
 
-    ListFileNames &request(const std::string &file_name, const std::string &source_path, const std::string &file_extension);
+    ListFileNames &request(const std::string &file_name, const std::string &source_path);
 
 private:
     ListFiles &indexFolder(const std::string &source_path);

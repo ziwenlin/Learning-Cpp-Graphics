@@ -32,11 +32,8 @@ void Game::reload() {
     m_sound.load(sound_jump, "jump");
     m_sound.load(sound_score, "score");
     m_sound.load(sound_highscore, "highscore");
-    for (int i = 0; i < sound_death_size; i++) {
-        int &sound_id = sound_death_array[i];
-        m_sound.load(sound_id, "death_" + std::to_string(i));
-    }
-    fmt::println("Loaded sounds");
+    m_sound.load(sound_death, "death");
+    m_sound.ready();
 
     m_textures.reload();
     m_textures.load(texture_bird, "bird");
