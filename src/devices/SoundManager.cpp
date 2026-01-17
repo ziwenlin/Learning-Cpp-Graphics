@@ -1,11 +1,11 @@
-#include "SmartSoundManager.h"
+#include "SoundManager.h"
 
 #include <fstream>
 #include <fmt/format.h>
 
 #include "FileManager.h"
 
-void SmartSoundManager::reload() {
+void SoundManager::reload() {
     for (int i = 0; i < sounds_count; i++) {
         delete sounds[i];
         sounds[i] = nullptr;
@@ -21,7 +21,7 @@ void SmartSoundManager::reload() {
     config_count = 0;
 }
 
-void SmartSoundManager::ready() const {
+void SoundManager::ready() const {
     if (config_count >= config_size) {
         fmt::println("Config size is {} items short on memory. Please increase the number.", config_count - config_size);
     }
@@ -32,7 +32,7 @@ void SmartSoundManager::ready() const {
     fmt::println(" - Configs: {}\n - Sounds: {}", config_count, sounds_count);
 }
 
-void SmartSoundManager::play(const int &sound_id) const {
+void SoundManager::play(const int &sound_id) const {
     if (sound_id < 0 || sound_id >= config_count) {
         return;
     }
@@ -43,7 +43,7 @@ void SmartSoundManager::play(const int &sound_id) const {
     sounds[config.id + config.index]->play();
 }
 
-void SmartSoundManager::next(const int &sound_id) {
+void SoundManager::next(const int &sound_id) {
     if (sound_id < 0 || sound_id >= config_count) {
         return;
     }
@@ -58,7 +58,7 @@ void SmartSoundManager::next(const int &sound_id) {
     }
 }
 
-void SmartSoundManager::load(int &sound_id, const std::string &sound_name) {
+void SoundManager::load(int &sound_id, const std::string &sound_name) {
     const std::vector<std::string> &list_sound = file_manager.request(sound_name, str_path);
     if (list_sound.empty()) {
         fmt::println("Failed to find file '{}'", sound_name);

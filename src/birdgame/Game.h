@@ -7,8 +7,8 @@
 #include "Menu.h"
 #include "Pipes.h"
 #include "../devices/SmartKeyboard.h"
-#include "../devices/SmartSoundManager.h"
-#include "../devices/SmartTextureManager.h"
+#include "../devices/SoundManager.h"
+#include "../devices/TextureManager.h"
 
 
 class Game {
@@ -19,8 +19,8 @@ public:
     Menu m_menu;
     SmartMouse m_mouse;
     SmartKeyboard m_keyboard;
-    SmartSoundManager m_sound;
-    SmartTextureManager m_textures;
+    SoundManager m_sound;
+    TextureManager m_textures;
 
     int score_player = 0;
     int score_machine = 0;

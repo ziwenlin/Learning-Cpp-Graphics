@@ -3,7 +3,7 @@
 #include <SFML/Audio.hpp>
 
 
-class SmartSoundManager {
+class SoundManager {
     static constexpr int sounds_size = 50;
     static constexpr int config_size = sounds_size / 10;
 
@@ -25,9 +25,9 @@ private:
     std::string str_extension = ".mp3";
 
 public:
-    SmartSoundManager() = default;
+    SoundManager() = default;
 
-    ~SmartSoundManager() = default;
+    ~SoundManager() = default;
 
     void reload();
 

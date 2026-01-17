@@ -1,13 +1,13 @@
-#include "SmartTextureManager.h"
+#include "TextureManager.h"
 
 #include <fmt/format.h>
 
-SmartTextureManager::SmartTextureManager() {
+TextureManager::TextureManager() {
     textures.reserve(100);
     sprites.reserve(100);
 }
 
-void SmartTextureManager::reload() {
+void TextureManager::reload() {
     texture_count = 0;
     sprites.clear();
     textures.clear();
@@ -23,21 +23,21 @@ void SmartTextureManager::reload() {
     }
 }
 
-sf::Sprite &SmartTextureManager::get(const int &texture_id) {
+sf::Sprite &TextureManager::get(const int &texture_id) {
     if (texture_id < 0 || texture_id >= textures.size()) {
         throw std::out_of_range("Texture index out of range");
     }
     return sprites[texture_id];
 }
 
-void SmartTextureManager::draw(sf::RenderWindow &window, const int &texture_id) const {
+void TextureManager::draw(sf::RenderWindow &window, const int &texture_id) const {
     if (texture_id < 0 || texture_id >= textures.size()) {
         return;
     }
     window.draw(sprites[texture_id]);
 }
 
-void SmartTextureManager::load(int &texture_id, const std::string &texture_name) {
+void TextureManager::load(int &texture_id, const std::string &texture_name) {
     if (!list_texture_names.contains(texture_name)) {
         fmt::println("Failed to find file '{}'", texture_name);
         texture_id = -1;

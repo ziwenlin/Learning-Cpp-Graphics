@@ -32,10 +32,10 @@ set(SOURCES
         src/birdgame/Bird.h
         src/birdgame/Variables.cpp
         src/birdgame/Variables.h
-        src/devices/SmartSoundManager.cpp
-        src/devices/SmartSoundManager.h
-        src/devices/SmartTextureManager.cpp
-        src/devices/SmartTextureManager.h
+        src/devices/SoundManager.cpp
+        src/devices/SoundManager.h
+        src/devices/TextureManager.cpp
+        src/devices/TextureManager.h
         src/gui/RoundedRectangle.cpp
         src/gui/RoundedRectangle.h
         src/gui/RoundedStatusBar.cpp

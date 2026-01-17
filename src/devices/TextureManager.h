@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 
-class SmartTextureManager {
+class TextureManager {
 public:
     std::vector<sf::Texture> textures;
     std::vector<sf::Sprite> sprites;
@@ -17,9 +17,9 @@ private:
     std::string str_extension = ".png";
 
 public:
-    SmartTextureManager();
+    TextureManager();
 
-    ~SmartTextureManager() = default;
+    ~TextureManager() = default;
 
     void reload();
 
