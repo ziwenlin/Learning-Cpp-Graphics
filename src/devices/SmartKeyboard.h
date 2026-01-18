@@ -2,6 +2,7 @@
 #define SMART_KEYBOARD_H
 #include <vector>
 
+#include "SFML/System/Clock.hpp"
 #include "SFML/Window/Keyboard.hpp"
 
 
@@ -14,12 +15,26 @@ private:
     bool m_is_pressed_down = false;
     bool m_is_pressed_up = false;
 
+    sf::Clock m_timer_long_press;
+    float m_time_trigger = 1.0f;
+    float m_time_pressed = 0.0f;
+    bool m_is_long_pressed = false;
+    bool m_is_long_pressed_once = false;
+
 public:
     explicit SmartKey(sf::Keyboard::Key key);
 
     ~SmartKey();
 
     void update(bool input);
+
+    float getHoldStatus() const;
+
+    void setHoldTime(const float &time);
+
+    bool isLongPressedOnce() const;
+
+    bool isLongPressed() const;
 
     bool isPressed() const;
 
