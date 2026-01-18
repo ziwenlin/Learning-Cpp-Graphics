@@ -94,8 +94,8 @@ void Pipes::draw(sf::RenderWindow &window) const {
 
 void Pipes::resetFrontPipes() {
     index_back_pipe = index_front_pipe > 0 ? index_front_pipe - 1 : Variables::pipe_count - 1;
-    const long randomness = static_cast<long>(Variables::screen_y - 2 * bg.pipe.offset_y - bg.pipe.spacing_y) * 10;
-    const float random = std::rand() % randomness / 10.0f;
+    const float randomness = Variables::screen_y - 2 * bg.pipe.offset_y - bg.pipe.spacing_y;
+    const float random = static_cast<float>(std::rand()) / 32768.0f * randomness;
 
     const float back_x = pipes_ceiling[index_back_pipe].getPosition().x;
     const float spawn_x = back_x + bg.pipe.spacing_x + bg.pipe.width;
