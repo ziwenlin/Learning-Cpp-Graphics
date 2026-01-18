@@ -25,6 +25,8 @@ Tools/Debugging:
 Bugs:
 
 - [ ] Als FPS te laag is, kan de muis een snelle klik niet zien.
+- [ ] Vogel springt te hoog bij de eerste sprong.
+- [ ] Game-over eindscherm triggert niet bij death.
 
 Interface:
 
@@ -32,7 +34,7 @@ Interface:
   - [ ] Een keer klikken met de muis moet het spel starten.
   - [ ] Toevoegen van achtergrond achter de titel en de instructie.
     - Note: Flappy bird moet nog naast de achtergrond te zien zijn.
-    - Als dat niet lukt moet je de vogel tijdelijk verplaatsen.
+    - Als dat niet lukt moet de vogel op een andere plek komen.
 - [ ] Eind-scherm
   - [ ] Knoppen moeten even groot zijn.
   - [ ] Spatiebalk ingedrukt houden, leidt je naar het hoofdmenu.
@@ -51,6 +53,7 @@ Systeem:
 
 - [ ] Animatie systeem
   - Gescripte verplaatsing van objecten na een event.
+  - Keuzes: lineaire en/of smooth transitie.
 - [ ] Interaction controller
   - Opvangen van globale inputs en de inputs in de class afhandelen.
 - [x] Assets laadsysteem
