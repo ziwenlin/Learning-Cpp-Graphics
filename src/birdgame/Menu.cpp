@@ -116,19 +116,22 @@ void Menu::update(const SmartMouse &mouse, SmartKeyboard &keyboard) {
     if (!is_visible) {
         return;
     }
+    m_screen_end.button_restart.update(mouse);
+    m_screen_end.button_resurrect.update(mouse);
     if (m_screen == screen_start) {
-        if (keyboard.getKey(key_play).isPressedUp() && !keyboard.getKey(key_continue).isLongPressed()) {
+        if (mouse.button_left.m_is_pressed_begin || keyboard.getKey(key_play).isPressedUp() && !keyboard.getKey(key_continue).isLongPressed()) {
             is_visible = false;
         }
     } else if (m_screen == screen_end) {
-        m_screen_end.button_restart.update(mouse);
-        m_screen_end.button_resurrect.update(mouse);
         if (m_screen_end.font_text != nullptr) {
             setText(m_screen_end.score_number, 30, 50, fmt::format("{}", 0));
             setText(m_screen_end.highscore_number, 70, 50, fmt::format("{}", 0));
         }
-        if (keyboard.getKey(key_continue).isLongPressed()) {
+        if (m_screen_end.button_restart.is_activated || keyboard.getKey(key_continue).isLongPressed()) {
             m_screen = screen_start;
+        }
+        if (m_screen_end.button_resurrect.is_activated) {
+            is_visible = false;
         }
     }
 }

@@ -92,7 +92,7 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     if (m_keyboard.getKey(key_auto_play).isPressedDown()) {
         is_auto_running = !is_auto_running;
     }
-    if (m_keyboard.getKey(key_bird_jump).isPressedDown()) {
+    if (m_keyboard.getKey(key_bird_jump).isPressedDown() || m_mouse.button_left.m_is_pressed_begin) {
         m_bird.jump();
         m_sound.play(sound_jump);
     }
