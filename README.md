@@ -26,7 +26,8 @@ Bugs:
 
 - [ ] Als FPS te laag is, kan de muis een snelle klik niet zien.
 - [ ] Vogel springt te hoog bij de eerste sprong.
-- [ ] Game-over eindscherm triggert niet bij death.
+- [x] Game-over eindscherm triggert niet bij death.
+  - Dit kwam door het niet goed afhandelen van keyboard-events.
 
 Interface:
 
@@ -37,8 +38,8 @@ Interface:
     - Als dat niet lukt moet de vogel op een andere plek komen.
 - [ ] Eind-scherm
   - [ ] Knoppen moeten even groot zijn.
-  - [ ] Spatiebalk ingedrukt houden, leidt je naar het hoofdmenu.
   - [ ] Functionaliteit van 'resurrect'-knop toevoegen.
+  - [x] Spatiebalk ingedrukt houden, leidt je naar het hoofdmenu.
 
 - [x] Class RoundedButton heeft pointer voor font.
 - [x] Class RoundedStatusBar is klaar.

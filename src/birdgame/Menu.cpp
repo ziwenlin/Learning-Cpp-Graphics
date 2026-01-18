@@ -104,7 +104,7 @@ void Menu::setText(const std::unique_ptr<sf::Text> &text_object, const double &v
 
 void Menu::setKeys(SmartKeyboard &keyboard) {
     key_play = keyboard.addKey(sf::Keyboard::Key::Space);
-    key_continue = keyboard.addKey(sf::Keyboard::Key::Enter);
+    key_continue = keyboard.addKey(sf::Keyboard::Key::Space);
 }
 
 void Menu::setMenu(const Screen screen) {
@@ -117,7 +117,7 @@ void Menu::update(const SmartMouse &mouse, SmartKeyboard &keyboard) {
         return;
     }
     if (m_screen == screen_start) {
-        if (keyboard.getKey(key_play).isPressedUp()) {
+        if (keyboard.getKey(key_play).isPressedUp() && !keyboard.getKey(key_continue).isLongPressed()) {
             is_visible = false;
         }
     } else if (m_screen == screen_end) {
@@ -127,7 +127,7 @@ void Menu::update(const SmartMouse &mouse, SmartKeyboard &keyboard) {
             setText(m_screen_end.score_number, 30, 50, fmt::format("{}", 0));
             setText(m_screen_end.highscore_number, 70, 50, fmt::format("{}", 0));
         }
-        if (keyboard.getKey(key_continue).isPressedUp() || m_screen_end.button_restart.is_pressed == true) {
+        if (keyboard.getKey(key_continue).isLongPressed()) {
             m_screen = screen_start;
         }
     }
