@@ -37,6 +37,8 @@ public:
 
     void next(const int &sound_id);
 
+    void random(const int &sound_id, const bool &always_different = false);
+
     void load(int &sound_id, const std::string &sound_name);
 
 private:

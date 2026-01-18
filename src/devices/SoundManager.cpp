@@ -58,6 +58,26 @@ void SoundManager::next(const int &sound_id) {
     }
 }
 
+void SoundManager::random(const int &sound_id, const bool &always_different) {
+    if (sound_id < 0 || sound_id >= config_count) {
+        return;
+    }
+    SoundConfig &config = m_configs[sound_id];
+    if (config.id < 0 || config.id >= sounds_count) {
+        return;
+    }
+    if (config.size > 1) {
+        if (always_different) {
+            const int index = config.index;
+            while (config.index == index) {
+                config.index = static_cast<float>(std::rand()) / 32768.0f * config.size;
+            }
+        } else {
+            config.index = static_cast<float>(std::rand()) / 32768.0f * config.size;
+        }
+    }
+}
+
 void SoundManager::load(int &sound_id, const std::string &sound_name) {
     const std::vector<std::string> &list_sound = file_manager.request(sound_name, str_path);
     if (list_sound.empty()) {
