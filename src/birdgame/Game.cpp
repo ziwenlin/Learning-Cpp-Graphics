@@ -8,13 +8,14 @@
 
 Game::Game() {
     m_menu.setKeys(m_keyboard);
-    key_debug = m_keyboard.addKey(sf::Keyboard::Key::Q);
-    key_save = m_keyboard.addKey(sf::Keyboard::Key::F);
-    key_config = m_keyboard.addKey(sf::Keyboard::Key::G);
+    key_show_debugger = m_keyboard.addKey(sf::Keyboard::Key::Q);
+    key_save_config = m_keyboard.addKey(sf::Keyboard::Key::F);
+    key_print_config = m_keyboard.addKey(sf::Keyboard::Key::G);
     key_reload = m_keyboard.addKey(sf::Keyboard::Key::R);
-    key_jump = m_keyboard.addKey(sf::Keyboard::Key::Space);
+    key_bird_jump = m_keyboard.addKey(sf::Keyboard::Key::Space);
     key_auto_play = m_keyboard.addKey(sf::Keyboard::Key::T);
-    key_reset = m_keyboard.addKey(sf::Keyboard::Key::E);
+    key_trigger_undeath = m_keyboard.addKey(sf::Keyboard::Key::E);
+    key_trigger_death = m_keyboard.addKey(sf::Keyboard::Key::D);
     this->reload();
     outline_floor.setFillColor(sf::Color::White);
     outline_ceiling.setFillColor(sf::Color::White);
@@ -67,28 +68,31 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     m_menu.update(m_mouse, m_keyboard);
     if (average_delta_time <= 0.0f) average_delta_time = 1.0f / 100.0f / size_delta_time;
     average_delta_time = (average_delta_time * (size_delta_time - 1.0f) + delta_time) / size_delta_time;
-    if (m_keyboard.getKey(key_debug).isPressedUp()) {
+    if (m_keyboard.getKey(key_show_debugger).isPressedUp()) {
         is_debugging = !is_debugging;
     }
-    if (m_keyboard.getKey(key_save).isPressedUp()) {
+    if (m_keyboard.getKey(key_save_config).isPressedUp()) {
         bg.save();
     }
-    if (m_keyboard.getKey(key_config).isPressedDown()) {
+    if (m_keyboard.getKey(key_print_config).isPressedDown()) {
         bg.print();
     }
-    if (m_keyboard.getKey(key_reload).isPressedUp()) {
+    if (m_keyboard.getKey(key_reload).isLongPressedOnce()) {
         fmt::println("Reloading...");
         this->reload();
         return;
     }
-    if (m_keyboard.getKey(key_reset).isPressedUp() == true) {
+    if (m_keyboard.getKey(key_trigger_undeath).isLongPressedOnce()) {
         is_invulnerable = true;
         is_alive = true;
     }
-    if (m_keyboard.getKey(key_auto_play).isPressedUp() == true) {
+    if (m_keyboard.getKey(key_trigger_death).isLongPressedOnce()) {
+        setDeath();
+    }
+    if (m_keyboard.getKey(key_auto_play).isPressedDown()) {
         is_auto_running = !is_auto_running;
     }
-    if (m_keyboard.getKey(key_jump).isPressedDown()) {
+    if (m_keyboard.getKey(key_bird_jump).isPressedDown()) {
         m_bird.jump();
         m_sound.play(sound_jump);
     }

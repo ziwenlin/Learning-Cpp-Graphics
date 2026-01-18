@@ -32,13 +32,14 @@ private:
     sf::RectangleShape outline_floor;
     sf::RectangleShape outline_ceiling;
     sf::RectangleShape death;
-    int key_debug = -1;
-    int key_save = -1;
-    int key_config = -1;
+    int key_show_debugger = -1;
+    int key_save_config = -1;
+    int key_print_config = -1;
     int key_reload = -1;
-    int key_reset = -1;
-    int key_jump = -1;
+    int key_trigger_undeath = -1;
+    int key_bird_jump = -1;
     int key_auto_play = -1;
+    int key_trigger_death = -1;
 
     int sound_jump = -1;
     int sound_score = -1;
