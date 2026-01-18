@@ -26,32 +26,43 @@ Bugs:
 
 - [ ] Als FPS te laag is, kan de muis een snelle klik niet zien.
 - [ ] Vogel springt te hoog bij de eerste sprong.
+  - Dit komt door delta time. Deze verandert met meer dan factor 2 bij de start.
 - [x] Game-over eindscherm triggert niet bij death.
   - Dit kwam door het niet goed afhandelen van keyboard-events.
 
 Interface:
 
+- [ ] Scoreboard
+  - Punten bijhouden ergens op het scherm.
+  - Highscore daaronder ook tonen.
+- [ ] Keyboard indicatie
+  - Als je een long press actie uitvoert, is het handig om te zien hoe lang je deze moet indrukken.
+  - Toon deze ergens onder het scherm.
 - [ ] Begin-scherm
-  - [ ] Een keer klikken met de muis moet het spel starten.
+  - [x] Een keer klikken met de muis moet het spel starten.
   - [ ] Toevoegen van achtergrond achter de titel en de instructie.
     - Note: Flappy bird moet nog naast de achtergrond te zien zijn.
     - Als dat niet lukt moet de vogel op een andere plek komen.
 - [ ] Eind-scherm
   - [ ] Knoppen moeten even groot zijn.
   - [ ] Functionaliteit van 'resurrect'-knop toevoegen.
+    - Deze scherm moet met de game-state communiceren om verder te mogen gaan.
+    - Eerst bedenken hoe de communicatie moet gaan verlopen.
   - [x] Spatiebalk ingedrukt houden, leidt je naar het hoofdmenu.
-
-- [x] Class RoundedButton heeft pointer voor font.
-- [x] Class RoundedStatusBar is klaar.
-- [x] Class SmartTextureManager aanmaken
 
 Gameplay:
 
 - [x] Springen met spatiebalk.
-- [ ] Springen met muis.
+- [x] Springen met muis.
 
 Systeem:
 
+- [ ] Screen layer systeem
+  - Dit systeem zorgt voor het afhandelen van schermlagen.
+  - Elke class hoeft niet zijn bij te houden welke dat die de voorgrond staat.
+- [ ] User interface builder
+  - Zorgt voor het plaatsen en behouden van UI-elementen in een grid.
+  - Nu is alles hardcoded geplaatst met variabele meetstaven, dat is niet zo makkelijk te onderhouden.
 - [ ] Animatie systeem
   - Gescripte verplaatsing van objecten na een event.
   - Keuzes: lineaire en/of smooth transitie.
