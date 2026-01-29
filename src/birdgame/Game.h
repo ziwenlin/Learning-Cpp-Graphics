@@ -82,6 +82,7 @@ public:
     void processScoreboard();
 
 private:
+    void processKeyboard();
 };
 
 #endif //BIRD_GAME_H

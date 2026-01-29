@@ -67,10 +67,43 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     if (m_window != nullptr) {
         m_mouse.update(*m_window);
     }
-    keyboard_status_activated = false;
     m_menu.update(m_mouse, m_keyboard);
     if (average_delta_time <= 0.0f) average_delta_time = 1.0f / 100.0f / size_delta_time;
     average_delta_time = (average_delta_time * (size_delta_time - 1.0f) + delta_time) / size_delta_time;
+    processKeyboard();
+    if (m_menu.is_visible == true) {
+        return;
+    }
+    if (is_alive == false) {
+        return;
+    }
+    m_pipes.update(average_delta_time);
+    m_bird.update(average_delta_time);
+    processAutoPlay();
+    processCollisions();
+    processScoreboard();
+}
+
+void Game::draw(sf::RenderWindow &window) const {
+    m_textures.draw(window, texture_background);
+    if (is_alive == false) {
+        window.draw(death);
+    }
+    m_pipes.draw(window);
+    if (is_debugging && is_auto_running == true) {
+        window.draw(outline_floor);
+        window.draw(outline_ceiling);
+    }
+    m_bird.draw(window);
+    m_menu.draw(window);
+    if (keyboard_status_visible) {
+        keyboard_status_bar.draw(window);
+    }
+}
+
+void Game::processKeyboard() {
+    keyboard_status_activated = false;
+
     if (m_keyboard.getKey(key_show_debugger).isPressedUp()) {
         is_debugging = !is_debugging;
     }
@@ -90,7 +123,6 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     if (key_reload_.isLongPressedOnce()) {
         fmt::println("Reloading...");
         this->reload();
-        return;
     }
     SmartKey const &key_undeath = m_keyboard.getKey(key_trigger_undeath);
     if (key_undeath.isPressed()) {
@@ -131,34 +163,6 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     }
     if (!keyboard_status_activated) {
         keyboard_status_visible = false;
-    }
-    if (m_menu.is_visible == true) {
-        return;
-    }
-    if (is_alive == false) {
-        return;
-    }
-    m_pipes.update(average_delta_time);
-    m_bird.update(average_delta_time);
-    processAutoPlay();
-    processCollisions();
-    processScoreboard();
-}
-
-void Game::draw(sf::RenderWindow &window) const {
-    m_textures.draw(window, texture_background);
-    if (is_alive == false) {
-        window.draw(death);
-    }
-    m_pipes.draw(window);
-    if (is_debugging && is_auto_running == true) {
-        window.draw(outline_floor);
-        window.draw(outline_ceiling);
-    }
-    m_bird.draw(window);
-    m_menu.draw(window);
-    if (keyboard_status_visible) {
-        keyboard_status_bar.draw(window);
     }
 }
 
