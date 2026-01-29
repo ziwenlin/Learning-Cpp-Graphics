@@ -21,6 +21,8 @@ Game::Game() {
     outline_ceiling.setFillColor(sf::Color::White);
     death.setFillColor(sf::Color::Red);
     death.setSize(sf::Vector2f(bg.bird.width, bg.bird.height));
+    keyboard_status_bar.setSize(200, 10, 2, 10);
+    keyboard_status_bar.setPosition(sf::Vector2f(0.5 * bg.screen_x - 100, bg.screen_y - 55));
 }
 
 Game::~Game() {
@@ -65,6 +67,7 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     if (m_window != nullptr) {
         m_mouse.update(*m_window);
     }
+    keyboard_status_activated = false;
     m_menu.update(m_mouse, m_keyboard);
     if (average_delta_time <= 0.0f) average_delta_time = 1.0f / 100.0f / size_delta_time;
     average_delta_time = (average_delta_time * (size_delta_time - 1.0f) + delta_time) / size_delta_time;
@@ -77,24 +80,57 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     if (m_keyboard.getKey(key_print_config).isPressedDown()) {
         bg.print();
     }
-    if (m_keyboard.getKey(key_reload).isLongPressedOnce()) {
+    SmartKey const &key_reload_ = m_keyboard.getKey(key_reload);
+    if (key_reload_.isPressed()) {
+        keyboard_status_activated = true;
+        keyboard_status_visible = true;
+        keyboard_status_progress = key_reload_.getHoldStatus();
+        keyboard_status_bar.update(keyboard_status_progress * 100.f);
+    }
+    if (key_reload_.isLongPressedOnce()) {
         fmt::println("Reloading...");
         this->reload();
         return;
     }
-    if (m_keyboard.getKey(key_trigger_undeath).isLongPressedOnce()) {
+    SmartKey const &key_undeath = m_keyboard.getKey(key_trigger_undeath);
+    if (key_undeath.isPressed()) {
+        keyboard_status_activated = true;
+        keyboard_status_visible = true;
+        keyboard_status_progress = key_undeath.getHoldStatus();
+        keyboard_status_bar.update(keyboard_status_progress * 100.f);
+    }
+    if (key_undeath.isLongPressedOnce()) {
+        keyboard_status_visible = false;
         is_invulnerable = true;
         is_alive = true;
     }
-    if (m_keyboard.getKey(key_trigger_death).isLongPressedOnce()) {
+    SmartKey const &key_death = m_keyboard.getKey(key_trigger_death);
+    if (key_death.isPressed()) {
+        keyboard_status_activated = true;
+        keyboard_status_visible = true;
+        keyboard_status_progress = key_death.getHoldStatus();
+        keyboard_status_bar.update(keyboard_status_progress * 100.f);
+    }
+    if (key_death.isLongPressedOnce()) {
+        keyboard_status_visible = false;
         setDeath();
     }
     if (m_keyboard.getKey(key_auto_play).isPressedDown()) {
         is_auto_running = !is_auto_running;
     }
-    if (m_keyboard.getKey(key_bird_jump).isPressedDown() || m_mouse.button_left.m_is_pressed_begin) {
+    SmartKey const &key_jump = m_keyboard.getKey(key_bird_jump);
+    if (key_jump.isPressed() && m_menu.m_screen == m_menu.screen_end) {
+        keyboard_status_activated = true;
+        keyboard_status_visible = true;
+        keyboard_status_progress = key_jump.getHoldStatus();
+        keyboard_status_bar.update(keyboard_status_progress * 100.f);
+    }
+    if (key_jump.isPressedDown() || m_mouse.button_left.m_is_pressed_begin) {
         m_bird.jump();
         m_sound.play(sound_jump);
+    }
+    if (!keyboard_status_activated) {
+        keyboard_status_visible = false;
     }
     if (m_menu.is_visible == true) {
         return;
@@ -121,6 +157,9 @@ void Game::draw(sf::RenderWindow &window) const {
     }
     m_bird.draw(window);
     m_menu.draw(window);
+    if (keyboard_status_visible) {
+        keyboard_status_bar.draw(window);
+    }
 }
 
 void Game::processAutoPlay() {

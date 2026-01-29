@@ -37,7 +37,8 @@ Interface:
   - Highscore daaronder ook tonen.
 - [ ] Keyboard indicatie
   - Als je een long press actie uitvoert, is het handig om te zien hoe lang je deze moet indrukken.
-  - Toon deze ergens onder het scherm.
+  - [x] Toon deze ergens onder het scherm.
+  - [ ] Elke key krijgt zijn eigen indicatie. Deze worden op elkaar gestapeld.
 - [ ] Begin-scherm
   - [x] Een keer klikken met de muis moet het spel starten.
   - [ ] Toevoegen van achtergrond achter de titel en de instructie.

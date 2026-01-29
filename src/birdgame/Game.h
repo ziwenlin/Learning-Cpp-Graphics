@@ -9,6 +9,7 @@
 #include "../devices/SmartKeyboard.h"
 #include "../devices/SoundManager.h"
 #include "../devices/TextureManager.h"
+#include "../gui/RoundedStatusBar.h"
 
 
 class Game {
@@ -28,6 +29,11 @@ public:
 private:
     float size_delta_time = 30;
     float average_delta_time = 0.0f;
+
+    RoundedStatusBar keyboard_status_bar;
+    float keyboard_status_progress = 0.0f;
+    bool keyboard_status_visible = false;
+    bool keyboard_status_activated = false;
 
     sf::RectangleShape outline_floor;
     sf::RectangleShape outline_ceiling;
