@@ -1,9 +1,10 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
-#include <nlohmann/json.hpp>
+
+#include "../devices/ConfigLinkManager.h"
 
 
-inline class Variables {
+inline class Variables : public ConfigLinkManager {
 public:
     static constexpr int pipe_count = 4;
     static constexpr float screen_y = 800.f;
@@ -25,35 +26,19 @@ public:
         float jump_height = 200;
     } bird;
 
-private:
-    const char *path_config = "bird_game.json";
+    Variables() : ConfigLinkManager("bird_game.json") {
+        link("bird.gravity", bird.gravity, 3000);
+        link("bird.height", bird.height, 60);
+        link("bird.jump_height", bird.jump_height, 120);
+        link("bird.position", bird.start_x, 300);
+        link("bird.width", bird.width, 80);
 
-    int ptr_counter = 0;
-    static constexpr int ptr_size = 100;
-    float *ptr_vars[ptr_size]{};
-    std::string ptr_paths[ptr_size];
-
-public:
-    Variables();
-
-    ~Variables();
-
-    void load();
-
-    void save();
-
-    void print() const;
-
-private:
-    void link(const std::string &path, float &location, float value);
-
-    static void print_helper(nlohmann::basic_json<> j, std::string path);
-
-    static nlohmann::basic_json<> &get_helper(nlohmann::basic_json<> &j, const std::string &path, const float &number);
-
-    static void load_helper(nlohmann::basic_json<> &j, const std::string &path, float &number);
-
-    static void save_helper(nlohmann::basic_json<> &j, const std::string &path, const float &number);
+        link("pipes.offset_y", pipe.offset_y, 60);
+        link("pipes.spacing_x", pipe.spacing_x, 290);
+        link("pipes.spacing_y", pipe.spacing_y, 220);
+        link("pipes.speed", pipe.speed, 280);
+        link("pipes.width", pipe.width, 180);
+    };
 } bg;
 
 

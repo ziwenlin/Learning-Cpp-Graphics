@@ -30,7 +30,6 @@ set(SOURCES
         src/birdgame/Pipes.h
         src/birdgame/Bird.cpp
         src/birdgame/Bird.h
-        src/birdgame/Variables.cpp
         src/birdgame/Variables.h
         src/devices/SoundManager.cpp
         src/devices/SoundManager.h
@@ -46,6 +45,8 @@ set(SOURCES
         src/physics/PhysicsSimulation.h
         src/devices/FileManager.cpp
         src/devices/FileManager.h
+        src/devices/ConfigLinkManager.cpp
+        src/devices/ConfigLinkManager.h
 )
 
 set(TEST_SOURCES
