@@ -28,7 +28,7 @@ protected:
     void link(const char *path, float &location, const float &value);
 
 private:
-    static void print_helper(nlohmann::basic_json<> json, std::string path);
+    static void print_helper(nlohmann::basic_json<> &json, const std::string &path);
 
     static auto get_helper(nlohmann::basic_json<> &json, const std::string &path, const float &number) -> nlohmann::basic_json<> &;
 

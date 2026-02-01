@@ -66,7 +66,7 @@ void ConfigLinkManager::link(const char *path, float &location, const float &val
 }
 
 
-void ConfigLinkManager::print_helper(nlohmann::basic_json<> json, std::string path) {
+void ConfigLinkManager::print_helper(nlohmann::basic_json<> &json, const std::string &path) {
     for (auto &[key, value]: json.items()) {
         std::string str_key = key;
         if (value.is_primitive()) {
