@@ -21,6 +21,11 @@ void ConfigLinkManager::load() {
         save();
         return;
     }
+    if (file.tellg() == 0 && file.peek() == std::ifstream::traits_type::eof()) {
+        fmt::print("Reading empty file: {}\n", path_config);
+        save();
+        return;
+    }
     nlohmann::json json = nlohmann::json::parse(file);
     for (int i = 0; i < ptr_counter; i++) {
         load_helper(json, ptr_paths[i], *ptr_vars[i]);
