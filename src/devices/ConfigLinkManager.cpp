@@ -4,8 +4,8 @@
 #include <fmt/format.h>
 
 
-ConfigLinkManager::ConfigLinkManager(const std::string &path) {
-    path_config = path.c_str();
+ConfigLinkManager::ConfigLinkManager(const char *path) {
+    path_config = path;
 }
 
 ConfigLinkManager::~ConfigLinkManager() {
@@ -17,7 +17,7 @@ ConfigLinkManager::~ConfigLinkManager() {
 void ConfigLinkManager::load() {
     std::ifstream file(path_config);
     if (file.fail()) {
-        fmt::print("Failed to reading {}\n", path_config);
+        fmt::print("Failed reading: {}\n", path_config);
         save();
         return;
     }
@@ -30,7 +30,7 @@ void ConfigLinkManager::load() {
 void ConfigLinkManager::save() {
     std::ofstream file(path_config);
     if (file.fail()) {
-        fmt::print("Failed to writing {}\n", path_config);
+        fmt::print("Failed writing: {}\n", path_config);
         return;
     }
     nlohmann::json json;
@@ -53,9 +53,9 @@ void ConfigLinkManager::print() const {
     }
 }
 
-void ConfigLinkManager::link(const std::string &path, float &location, const float &value) {
+void ConfigLinkManager::link(const char *path, float &location, const float &value) {
     ptr_vars[ptr_counter] = &location;
-    ptr_paths[ptr_counter] = path.c_str();
+    ptr_paths[ptr_counter] = path;
     ptr_counter++;
     location = value;
 }

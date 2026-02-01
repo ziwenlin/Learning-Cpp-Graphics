@@ -14,7 +14,7 @@ class ConfigLinkManager {
     std::array<const char *, ptr_size> ptr_paths{};
 
 public:
-    explicit ConfigLinkManager(const std::string &path);
+    explicit ConfigLinkManager(const char *path);
 
     ~ConfigLinkManager();
 
@@ -25,7 +25,7 @@ public:
     void print() const;
 
 protected:
-    void link(const std::string &path, float &location, const float &value);
+    void link(const char *path, float &location, const float &value);
 
 private:
     static void print_helper(nlohmann::basic_json<> json, std::string path);
