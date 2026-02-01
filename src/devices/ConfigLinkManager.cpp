@@ -1,11 +1,10 @@
 #include "ConfigLinkManager.h"
 
-#include <fstream>
 #include <fmt/format.h>
 
 
 ConfigLinkManager::ConfigLinkManager(const char *path) {
-    path_config = path;
+    m_file.setPath(path);
 }
 
 ConfigLinkManager::~ConfigLinkManager() {
@@ -15,44 +14,32 @@ ConfigLinkManager::~ConfigLinkManager() {
 }
 
 void ConfigLinkManager::load() {
-    std::ifstream file(path_config);
-    if (file.fail()) {
-        fmt::print("Failed reading: {}\n", path_config);
-        save();
+    std::string basic_string;
+    if (!m_file.read(basic_string)) {
         return;
     }
-    if (file.tellg() == 0 && file.peek() == std::ifstream::traits_type::eof()) {
-        fmt::print("Reading empty file: {}\n", path_config);
-        save();
-        return;
-    }
-    nlohmann::json json = nlohmann::json::parse(file);
+    nlohmann::json json = nlohmann::json::parse(basic_string);
     for (int i = 0; i < ptr_counter; i++) {
         load_helper(json, ptr_paths[i], *ptr_vars[i]);
     }
 }
 
 void ConfigLinkManager::save() {
-    std::ofstream file(path_config);
-    if (file.fail()) {
-        fmt::print("Failed writing: {}\n", path_config);
-        return;
-    }
     nlohmann::json json;
     for (int i = 0; i < ptr_counter; i++) {
         save_helper(json, ptr_paths[i], *ptr_vars[i]);
     }
 
-    fmt::print("Saving...\n {}\n", json.dump());
-    file << std::setw(4) << json << std::endl;
+    const nlohmann::json::string_t &basic_string = json.dump(4);
+    m_file.write(basic_string.c_str());
 }
 
-void ConfigLinkManager::print() const {
-    std::ifstream file(path_config);
-    if (file.fail()) {
+void ConfigLinkManager::print() {
+    std::string basic_string;
+    if (!m_file.read(basic_string)) {
         return;
     }
-    nlohmann::json json = nlohmann::json::parse(file);
+    nlohmann::json json = nlohmann::json::parse(basic_string);
     for (auto &[key, value]: json.items()) {
         print_helper(value, key);
     }

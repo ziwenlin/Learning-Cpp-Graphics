@@ -41,6 +41,8 @@ set(SOURCES
         src/gui/RoundedStatusBar.h
         src/birdgame/Menu.cpp
         src/birdgame/Menu.h
+        src/system/FileHandler.cpp
+        src/system/FileHandler.h
         src/physics/PhysicsSimulation.cpp
         src/physics/PhysicsSimulation.h
         src/devices/FileManager.cpp

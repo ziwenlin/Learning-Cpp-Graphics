@@ -3,9 +3,11 @@
 #include <string>
 #include <nlohmann/json.hpp>
 
+#include "../system/FileHandler.h"
+
 
 class ConfigLinkManager {
-    const char *path_config;
+    FileHandler m_file;
 
     static constexpr int ptr_size = 100;
 
@@ -22,7 +24,7 @@ public:
 
     void save();
 
-    void print() const;
+    void print();
 
 protected:
     void link(const char *path, float &location, const float &value);
