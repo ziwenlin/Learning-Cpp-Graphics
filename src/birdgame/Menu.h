@@ -1,5 +1,5 @@
-#ifndef MENU_H
-#define MENU_H
+#ifndef LEARNINGSFML_BIRDGAME_MENU_H
+#define LEARNINGSFML_BIRDGAME_MENU_H
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -75,4 +75,4 @@ private:
 };
 
 
-#endif //MENU_H
+#endif //LEARNINGSFML_BIRDGAME_MENU_H

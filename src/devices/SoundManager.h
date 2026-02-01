@@ -1,5 +1,5 @@
-#ifndef SMARTSOUND_H
-#define SMARTSOUND_H
+#ifndef LEARNINGSFML_SOUNDMANAGER_H
+#define LEARNINGSFML_SOUNDMANAGER_H
 #include <SFML/Audio.hpp>
 
 
@@ -45,4 +45,4 @@ private:
 };
 
 
-#endif //SMARTSOUND_H
+#endif //LEARNINGSFML_SOUNDMANAGER_H

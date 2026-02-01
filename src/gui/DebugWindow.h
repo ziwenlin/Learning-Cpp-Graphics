@@ -1,5 +1,5 @@
-#ifndef DEVELOPMENTWINDOW_H
-#define DEVELOPMENTWINDOW_H
+#ifndef LEARNINGSFML_DEBUGWINDOW_H
+#define LEARNINGSFML_DEBUGWINDOW_H
 
 #include <SFML/Graphics.hpp>
 
@@ -39,4 +39,4 @@ public:
 private:
 };
 
-#endif //DEVELOPMENTWINDOW_H
+#endif //LEARNINGSFML_DEBUGWINDOW_H

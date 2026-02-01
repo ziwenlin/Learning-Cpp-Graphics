@@ -1,5 +1,5 @@
-#ifndef SMARTMOUSE_H
-#define SMARTMOUSE_H
+#ifndef LEARNINGSFML_SMARTMOUSE_H
+#define LEARNINGSFML_SMARTMOUSE_H
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
 
@@ -51,4 +51,4 @@ private:
 };
 
 
-#endif // SMARTMOUSE_H
+#endif // LEARNINGSFML_SMARTMOUSE_H

@@ -1,5 +1,5 @@
-#ifndef ROUNDEDBUTTON_H
-#define ROUNDEDBUTTON_H
+#ifndef LEARNINGSFML_ROUNDEDBUTTON_H
+#define LEARNINGSFML_ROUNDEDBUTTON_H
 
 #include <string>
 #include <SFML/Graphics.hpp>
@@ -55,4 +55,4 @@ private:
 };
 
 
-#endif //ROUNDEDBUTTON_H
+#endif //LEARNINGSFML_ROUNDEDBUTTON_H

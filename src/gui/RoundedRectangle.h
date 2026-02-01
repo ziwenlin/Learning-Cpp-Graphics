@@ -1,5 +1,5 @@
-#ifndef ROUNDED_RECTANGLE_H
-#define ROUNDED_RECTANGLE_H
+#ifndef LEARNINGSFML_ROUNDEDRECTANGLE_H
+#define LEARNINGSFML_ROUNDEDRECTANGLE_H
 
 #include <SFML/Graphics.hpp>
 
@@ -40,4 +40,4 @@ private:
     void changeOuterShape();
 };
 
-#endif //ROUNDED_RECTANGLE_H
+#endif //LEARNINGSFML_ROUNDEDRECTANGLE_H

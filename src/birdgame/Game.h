@@ -1,5 +1,5 @@
-#ifndef BIRD_GAME_H
-#define BIRD_GAME_H
+#ifndef LEARNINGSFML_BIRDGAME_GAME_H
+#define LEARNINGSFML_BIRDGAME_GAME_H
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
@@ -85,4 +85,4 @@ private:
     void processKeyboard();
 };
 
-#endif //BIRD_GAME_H
+#endif //LEARNINGSFML_BIRDGAME_GAME_H

@@ -1,5 +1,5 @@
-#ifndef VARIABLES_H
-#define VARIABLES_H
+#ifndef LEARNINGSFML_BIRDGAME_VARIABLES_H
+#define LEARNINGSFML_BIRDGAME_VARIABLES_H
 
 #include "../devices/ConfigLinkManager.h"
 
@@ -42,4 +42,4 @@ public:
 } bg;
 
 
-#endif //VARIABLES_H
+#endif //LEARNINGSFML_BIRDGAME_VARIABLES_H

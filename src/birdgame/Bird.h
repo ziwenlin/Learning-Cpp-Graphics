@@ -1,5 +1,5 @@
-#ifndef BIRD_H
-#define BIRD_H
+#ifndef LEARNINGSFML_BIRDGAME_BIRD_H
+#define LEARNINGSFML_BIRDGAME_BIRD_H
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -37,4 +37,4 @@ public:
 private:
 };
 
-#endif //BIRD_H
+#endif //LEARNINGSFML_BIRDGAME_BIRD_H

@@ -1,5 +1,5 @@
-#ifndef PIPES_H
-#define PIPES_H
+#ifndef LEARNINGSFML_BIRDGAME_PIPES_H
+#define LEARNINGSFML_BIRDGAME_PIPES_H
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -38,4 +38,4 @@ private:
 };
 
 
-#endif //PIPES_H
+#endif //LEARNINGSFML_BIRDGAME_PIPES_H

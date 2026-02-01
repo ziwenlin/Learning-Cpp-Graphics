@@ -1,6 +1,5 @@
-#ifndef SMARTTEXTUREMANAGER_H
-#define SMARTTEXTUREMANAGER_H
-#include <array>
+#ifndef LEARNINGSFML_TEXTUREMANAGER_H
+#define LEARNINGSFML_TEXTUREMANAGER_H
 #include <set>
 #include <SFML/Graphics.hpp>
 
@@ -33,4 +32,4 @@ private:
 };
 
 
-#endif //SMARTTEXTUREMANAGER_H
+#endif //LEARNINGSFML_TEXTUREMANAGER_H

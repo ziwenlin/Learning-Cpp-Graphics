@@ -1,5 +1,5 @@
-#ifndef SMART_KEYBOARD_H
-#define SMART_KEYBOARD_H
+#ifndef LEARNINGSFML_SMARTKEYBOARD_H
+#define LEARNINGSFML_SMARTKEYBOARD_H
 #include <vector>
 
 #include "SFML/System/Clock.hpp"
@@ -66,4 +66,4 @@ public:
 private:
 };
 
-#endif //SMART_KEYBOARD_H
+#endif //LEARNINGSFML_SMARTKEYBOARD_H
