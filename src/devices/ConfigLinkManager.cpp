@@ -16,6 +16,10 @@ ConfigLinkManager::~ConfigLinkManager() {
 void ConfigLinkManager::load() {
     std::string basic_string;
     if (!m_file.read(basic_string)) {
+        if (basic_string.empty()) {
+            save();
+            load();
+        }
         return;
     }
     nlohmann::json json = nlohmann::json::parse(basic_string);
@@ -35,44 +39,17 @@ void ConfigLinkManager::save() {
 }
 
 void ConfigLinkManager::print() {
-    std::string basic_string;
-    if (!m_file.read(basic_string)) {
-        return;
-    }
-    nlohmann::json json = nlohmann::json::parse(basic_string);
-    for (auto &[key, value]: json.items()) {
-        print_helper(value, key);
+    for (int i = 0; i < ptr_counter; i++) {
+        fmt::println("link(\"{}\", NAMEOF({}), {}, {});", ptr_paths[i], ptr_names[i], ptr_names[i], *ptr_vars[i]);
     }
 }
 
-void ConfigLinkManager::link(const char *path, float &location, const float &value) {
+void ConfigLinkManager::link(const char *path, const char *name, float &location, const float &value) {
     ptr_vars[ptr_counter] = &location;
+    ptr_names[ptr_counter] = name;
     ptr_paths[ptr_counter] = path;
     ptr_counter++;
     location = value;
-}
-
-
-void ConfigLinkManager::print_helper(nlohmann::basic_json<> &json, const std::string &path) {
-    for (auto &[key, value]: json.items()) {
-        std::string str_key = key;
-        if (value.is_primitive()) {
-            std::string str_value;
-            if (value.is_number()) {
-                float num_value = value;
-                str_value = fmt::format("{}", num_value);
-            } else {
-                str_value = value;
-            }
-            fmt::print("link(\"{}.{}\", {}.{}, {});\n", path, str_key, path, str_key, str_value);
-            continue;
-        }
-        if (value.is_object()) {
-            print_helper(value, std::string(fmt::format("{}.{}", path, str_key)));
-        }
-        fmt::print("{}\n", str_key);
-        fmt::print("{}\n", value.dump());
-    }
 }
 
 auto ConfigLinkManager::get_helper(nlohmann::basic_json<> &json, const std::string &path, const float &number) -> nlohmann::basic_json<> & {

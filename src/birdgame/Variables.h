@@ -27,17 +27,17 @@ public:
     } bird;
 
     Variables() : ConfigLinkManager("bird_game.json") {
-        link("bird.gravity", bird.gravity, 3000);
-        link("bird.height", bird.height, 60);
-        link("bird.jump_height", bird.jump_height, 120);
-        link("bird.position", bird.start_x, 300);
-        link("bird.width", bird.width, 80);
+        link("bird.gravity", NAMEOF(bird.gravity), bird.gravity, 3000);
+        link("bird.height", NAMEOF(bird.height), bird.height, 60);
+        link("bird.jump_height", NAMEOF(bird.jump_height), bird.jump_height, 120);
+        link("bird.position", NAMEOF(bird.start_x), bird.start_x, 300);
+        link("bird.width", NAMEOF(bird.width), bird.width, 80);
 
-        link("pipes.offset_y", pipe.offset_y, 60);
-        link("pipes.spacing_x", pipe.spacing_x, 290);
-        link("pipes.spacing_y", pipe.spacing_y, 220);
-        link("pipes.speed", pipe.speed, 280);
-        link("pipes.width", pipe.width, 180);
+        link("pipes.offset_y", NAMEOF(pipe.offset_y), pipe.offset_y, 60);
+        link("pipes.spacing_x", NAMEOF(pipe.spacing_x), pipe.spacing_x, 290);
+        link("pipes.spacing_y", NAMEOF(pipe.spacing_y), pipe.spacing_y, 220);
+        link("pipes.speed", NAMEOF(pipe.speed), pipe.speed, 280);
+        link("pipes.width", NAMEOF(pipe.width), pipe.width, 180);
     };
 } bg;
 

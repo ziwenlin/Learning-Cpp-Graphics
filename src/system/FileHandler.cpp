@@ -26,12 +26,16 @@ bool FileHandler::read(std::string &data) {
         data.append(ix_data);
     }
     ix_file.close();
+    if (data.empty()) {
+        fmt::print("Reading empty file: {}\n", path_file);
+        return false;
+    }
     return true;
 }
 
 bool FileHandler::write(const char *data) {
     ox_file.open(path_file);
-    if (!ox_file.fail()) {
+    if (ox_file.fail()) {
         fmt::print("Failed writing file: {}\n", path_file);
         return false;
     }
