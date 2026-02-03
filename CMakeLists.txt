@@ -49,6 +49,8 @@ set(SOURCES
         src/devices/FileManager.h
         src/devices/ConfigLinkManager.cpp
         src/devices/ConfigLinkManager.h
+        src/devices/ScreenContentManager.cpp
+        src/devices/ScreenContentManager.h
 )
 
 set(TEST_SOURCES
