@@ -6,27 +6,35 @@
 
 struct GridObject {
     std::unique_ptr<IPlaceable> placeable = nullptr;
-    int column_span = 0;
-    int row_span = 0;
+    int column_span = -1;
+    int row_span = -1;
+    int column = -1;
+    int row = -1;
 };
 
 class GridFrame : public IPlaceable {
 public:
     static constexpr int MAX_GRID_SIZE = 20;
+    static constexpr int MAX_GRID_ARRAY = MAX_GRID_SIZE * MAX_GRID_SIZE;
 
 private:
     std::array<int, MAX_GRID_SIZE> m_row_heights = {};
     std::array<int, MAX_GRID_SIZE> m_column_widths = {};
-    std::array<GridObject, MAX_GRID_SIZE * MAX_GRID_SIZE> m_objects = {};
+    std::array<GridObject, MAX_GRID_ARRAY> m_objects = {};
 
 protected:
+    int m_x = 0;
+    int m_y = 0;
+    int m_width = 0;
+    int m_height = 0;
+
     int m_rows = 0;
     int m_columns = 0;
     float m_row_height = 0;
     float m_column_width = 0;
 
 public:
-    ~GridFrame() override;;
+    ~GridFrame() override;
 
     void setGrid(const int &rows, const int &columns);
 
