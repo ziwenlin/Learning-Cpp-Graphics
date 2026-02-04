@@ -42,12 +42,15 @@ void Game::reload() {
     m_textures.load(texture_bird, "bird");
     m_textures.load(texture_pipe, "pipe");
     m_textures.load(texture_background, "background");
+
     sf::Sprite &background = m_textures.get(texture_background);
     const sf::Vector2f &background_size = background.getLocalBounds().size;
     const sf::Vector2f background_scale(Variables::screen_x / background_size.x, Variables::screen_y / background_size.y);
     background.setScale(background_scale);
     fmt::println("Loaded textures");
 
+    m_content.setPath("bird_game_screens.json");
+    m_content.load();
     bg.load();
     fmt::println("Loaded configurations");
 
@@ -109,6 +112,7 @@ void Game::processKeyboard() {
     }
     if (m_keyboard.getKey(key_save_config).isPressedUp()) {
         bg.save();
+        m_content.save();
     }
     if (m_keyboard.getKey(key_print_config).isPressedDown()) {
         bg.print();

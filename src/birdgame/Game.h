@@ -6,6 +6,7 @@
 #include "Bird.h"
 #include "Menu.h"
 #include "Pipes.h"
+#include "../devices/ScreenContentManager.h"
 #include "../devices/SmartKeyboard.h"
 #include "../devices/SoundManager.h"
 #include "../devices/TextureManager.h"
@@ -22,6 +23,7 @@ public:
     SmartKeyboard m_keyboard;
     SoundManager m_sound;
     TextureManager m_textures;
+    ScreenContentManager m_content;
 
     int score_player = 0;
     int score_machine = 0;

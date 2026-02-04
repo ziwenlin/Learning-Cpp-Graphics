@@ -51,6 +51,9 @@ set(SOURCES
         src/devices/ConfigLinkManager.h
         src/devices/ScreenContentManager.cpp
         src/devices/ScreenContentManager.h
+        src/gui/interfaces/IDrawables.h
+        src/gui/GridFrame.cpp
+        src/gui/GridFrame.h
 )
 
 set(TEST_SOURCES
@@ -129,7 +132,9 @@ target_include_directories(unit_tests PRIVATE ${PROJECT_SOURCE_DIR}/include)
 # Link testing framework Catch2
 target_link_libraries(unit_tests PRIVATE GTest::gtest_main)
 target_link_libraries(unit_tests PRIVATE SFML::Graphics)
+target_link_libraries(unit_tests PRIVATE SFML::Audio)
 target_link_libraries(unit_tests PRIVATE fmt::fmt)
+target_link_libraries(unit_tests PRIVATE nlohmann_json::nlohmann_json)
 
 # Register test with CTest
 include(GoogleTest)
