@@ -70,6 +70,8 @@ void Game::update(const float &delta_time, const bool &has_focus) {
     if (m_window != nullptr) {
         m_mouse.update(*m_window);
     }
+    m_content.update(m_mouse);
+
     m_menu.update(m_mouse, m_keyboard);
     if (average_delta_time <= 0.0f) average_delta_time = 1.0f / 100.0f / size_delta_time;
     average_delta_time = (average_delta_time * (size_delta_time - 1.0f) + delta_time) / size_delta_time;
@@ -102,6 +104,7 @@ void Game::draw(sf::RenderWindow &window) const {
     if (keyboard_status_visible) {
         keyboard_status_bar.draw(window);
     }
+    m_content.draw(window);
 }
 
 void Game::processKeyboard() {

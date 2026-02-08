@@ -13,7 +13,7 @@ struct GridObject {
     int row = -1;
 };
 
-class GridFrame : public IPlaceable {
+class GridFrame : public IPlaceable, public IClickable {
 public:
     static constexpr int MAX_GRID_SIZE = 20;
     static constexpr int MAX_GRID_ARRAY = MAX_GRID_SIZE * MAX_GRID_SIZE;
@@ -59,6 +59,8 @@ private:
     void setColumnWidth(const int &column, const int &width);
 
 public:
+    void update(const SmartMouse &mouse) override;
+
     void draw(sf::RenderWindow &window) const override;
 
     void setSize(const int &width, const int &height) override;

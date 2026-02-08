@@ -139,6 +139,17 @@ void GridFrame::setColumnWidth(const int &column, const int &width) {
     processColumWidths();
 }
 
+void GridFrame::update(const SmartMouse &mouse) {
+    const int &grid_size = m_rows * m_columns;
+    for (int i = 0; i < grid_size; ++i) {
+        const GridObject &object = m_objects[i];
+        if (object.placeable == nullptr) continue;
+        if (IClickable *clickable = dynamic_cast<IClickable *>(object.placeable); clickable != nullptr) {
+            clickable->update(mouse);
+        }
+    }
+}
+
 void GridFrame::draw(sf::RenderWindow &window) const {
     const int &grid_size = m_rows * m_columns;
     for (int i = 0; i < grid_size; ++i) {
@@ -157,7 +168,7 @@ void GridFrame::setSize(const int &width, const int &height) {
     const int &height_distribution = m_height / m_columns;
     const int &grid_size = m_rows * m_columns;
     for (int i = 0; i < grid_size; ++i) {
-        GridObject &object = m_objects[i];
+        const GridObject &object = m_objects[i];
         if (object.placeable == nullptr) continue;
         object.placeable->setPosition(m_x + object.column * width_distribution, m_y + object.row * height_distribution);
         object.placeable->setSize(object.column_span * width_distribution, object.row_span * height_distribution);

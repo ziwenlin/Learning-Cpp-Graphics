@@ -8,7 +8,7 @@
 #include "RoundedRectangle.h"
 #include "../devices/SmartMouse.h"
 
-class RoundedButton : public IPlaceable {
+class RoundedButton : public IPlaceable, public IClickable {
 public:
     bool is_inside = false;
     bool is_pressed = false;
@@ -48,7 +48,7 @@ public:
 
     void setText(const std::string &text);
 
-    void update(const SmartMouse &mouse);
+    void update(const SmartMouse &mouse) override;
 
     void draw(sf::RenderWindow &window) const override;
 
