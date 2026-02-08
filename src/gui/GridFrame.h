@@ -37,6 +37,8 @@ protected:
 public:
     ~GridFrame() override;
 
+    void clear();
+
     void addElement(IPlaceable *element, const int &row, const int &column, const int &row_span, const int &column_span);
 
     [[nodiscard]] float getRowHeight(const int &row) const;

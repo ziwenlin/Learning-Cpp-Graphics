@@ -14,6 +14,15 @@ GridFrame::~GridFrame() {
     }
 }
 
+void GridFrame::clear() {
+    const int &grid_size = m_rows * m_columns;
+    for (int i = 0; i < grid_size; ++i) {
+        GridObject &object = m_objects[i];
+        object.placeable = nullptr;
+    }
+    m_rows = 0, m_columns = 0, m_width = 0, m_height = 0;
+}
+
 void GridFrame::addElement(IPlaceable *element, const int &row, const int &column, const int &row_span, const int &column_span) {
     if (row > m_rows || column > m_columns) return;
     const int &index = row * m_columns + column;

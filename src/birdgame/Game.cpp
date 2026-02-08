@@ -50,6 +50,7 @@ void Game::reload() {
     fmt::println("Loaded textures");
 
     m_content.setPath("bird_game_screens.json");
+    m_content.clear();
     m_content.load();
     bg.load();
     fmt::println("Loaded configurations");

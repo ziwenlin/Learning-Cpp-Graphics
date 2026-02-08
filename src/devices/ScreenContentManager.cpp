@@ -7,6 +7,11 @@ void ScreenContentManager::setPath(const char *path) {
     m_file.setPath(path);
 }
 
+void ScreenContentManager::clear() {
+    m_frame_count = 0;
+    m_button_count = 0;
+}
+
 void ScreenContentManager::load() {
     nlohmann::json json;
     if (std::string basic_string; !m_file.read(basic_string)) {

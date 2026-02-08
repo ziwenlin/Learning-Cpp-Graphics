@@ -29,6 +29,8 @@ private:
 public:
     void setPath(const char *path);
 
+    void clear();
+
     void load();
 
     void save();
