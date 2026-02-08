@@ -40,9 +40,9 @@ public:
 
     ~RoundedButton() override;
 
-    void setPosition(sf::Vector2f position);
+    void setPosition(const sf::Vector2f &position);
 
-    void setCenterPosition(float viewX, float viewY);
+    void setCenterPosition(const float &viewX, const float &viewY);
 
     void setFont(const std::shared_ptr<sf::Font> &font);
 

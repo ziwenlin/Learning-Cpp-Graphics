@@ -13,7 +13,7 @@ RoundedButton::~RoundedButton() {
     text_font.reset();
 }
 
-void RoundedButton::setPosition(const sf::Vector2f position) {
+void RoundedButton::setPosition(const sf::Vector2f &position) {
     const sf::Vector2f outline_offset(button_thickness, button_thickness);
     if (text_body != nullptr) {
         text_body->setPosition(position + sf::Vector2f(button_padding + 2 * text_offset, button_padding) + outline_offset);
@@ -21,11 +21,12 @@ void RoundedButton::setPosition(const sf::Vector2f position) {
     rectangle_body.setPosition(position);
 }
 
-void RoundedButton::setCenterPosition(float viewX, float viewY) {
-    sf::Vector2<float> size = rectangle_body.getOuterBody().getLocalBounds().size;
-    const float x = viewX - size.x * 0.5f;
-    const float y = viewY - size.y * 0.5f;
-    this->setPosition(sf::Vector2f(x, y));
+void RoundedButton::setCenterPosition(const float &viewX, const float &viewY) {
+    const sf::Vector2f &size = rectangle_body.getOuterBody().getLocalBounds().size;
+    sf::Vector2f position;
+    position.x = viewX - size.x * 0.5f;
+    position.y = viewY - size.y * 0.5f;
+    this->setPosition(position);
 }
 
 void RoundedButton::setFont(const std::shared_ptr<sf::Font> &font) {
@@ -50,6 +51,7 @@ void RoundedButton::setText(const std::string &text) {
     m_height = text_height + 2 * button_padding + 2 * text_offset + 2 * button_thickness;
     rectangle_body.setShape(m_width, m_height, corner_radius, corner_precision);
     rectangle_body.setOutline(button_thickness);
+
     // Berekenen van de positie van de tekst
     const sf::Vector2f outline_offset(button_thickness, button_thickness);
     const sf::Vector2f position = rectangle_body.getOuterBody().getPosition();

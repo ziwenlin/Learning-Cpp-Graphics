@@ -44,6 +44,8 @@ void GridFrame::setGrid(const int &rows, const int &columns) {
     if (m_rows == 0 || m_columns == 0) {
         m_rows = rows;
         m_columns = columns;
+        processColumWidths();
+        processRowHeights();
         return;
     }
     if (rows < m_rows || columns < m_columns) {
@@ -94,6 +96,7 @@ void GridFrame::setElementPosition(const int &index, const int &row, const int &
 }
 
 void GridFrame::processRowHeights() {
+    if (m_rows == 0 || m_height == 0) return;
     int total = 0, total_count = 0;
     for (int index = 0; index < m_rows; index++) {
         const int &row_height = m_row_heights[index];
@@ -110,6 +113,7 @@ void GridFrame::processRowHeights() {
 }
 
 void GridFrame::processColumWidths() {
+    if (m_columns == 0 || m_width == 0) return;
     int total = 0, total_count = 0;
     for (int index = 0; index < m_columns; ++index) {
         const int &column_width = m_column_widths[index];
