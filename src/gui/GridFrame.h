@@ -2,10 +2,11 @@
 #define LEARNINGSFML_GRIDFRAME_H
 #include <array>
 
+#include "RoundedButton.h"
 #include "../gui/interfaces/IDrawables.h"
 
 struct GridObject {
-    std::unique_ptr<IPlaceable> placeable = nullptr;
+    IPlaceable *placeable;
     int column_span = -1;
     int row_span = -1;
     int column = -1;
@@ -36,9 +37,23 @@ protected:
 public:
     ~GridFrame() override;
 
+    void addElement(IPlaceable *element, const int &row, const int &column, const int &row_span, const int &column_span);
+
+    [[nodiscard]] float getRowHeight(const int &row) const;
+
+    [[nodiscard]] float getColumnWidth(const int &column) const;
+
     void setGrid(const int &rows, const int &columns);
 
 private:
+    void setElementSize(const int &index, const int &row_span, const int &column_span);
+
+    void setElementPosition(const int &index, const int &row, const int &column);
+
+    void processRowHeights();
+
+    void processColumWidths();
+
     void setRowHeight(const int &row, const int &height);
 
     void setColumnWidth(const int &column, const int &width);
