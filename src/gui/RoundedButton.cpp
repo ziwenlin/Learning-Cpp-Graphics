@@ -3,7 +3,7 @@
 #include <fmt/format.h>
 
 RoundedButton::RoundedButton() {
-    rectangle_body.setShape(width, height, corner_radius, corner_precision);
+    rectangle_body.setShape(static_cast<float>(m_width), static_cast<float>(m_height), corner_radius, corner_precision);
     rectangle_body.setOutline(button_thickness);
     rectangle_body.color_outer = sf::Color::White;
 }
@@ -15,7 +15,9 @@ RoundedButton::~RoundedButton() {
 
 void RoundedButton::setPosition(const sf::Vector2f position) {
     const sf::Vector2f outline_offset(button_thickness, button_thickness);
-    text_body->setPosition(position + sf::Vector2f(button_padding + 2 * text_offset, button_padding) + outline_offset);
+    if (text_body != nullptr) {
+        text_body->setPosition(position + sf::Vector2f(button_padding + 2 * text_offset, button_padding) + outline_offset);
+    }
     rectangle_body.setPosition(position);
 }
 
@@ -44,9 +46,9 @@ void RoundedButton::setText(const std::string &text) {
     // Berekenen van de positie van de button
     text_offset = text_height / 6.0f;
     text_width = text_body->getLocalBounds().size.x;
-    width = text_width + 2 * button_padding + 5 * text_offset + 2 * button_thickness;
-    height = text_height + 2 * button_padding + 2 * text_offset + 2 * button_thickness;
-    rectangle_body.setShape(width, height, corner_radius, corner_precision);
+    m_width = text_width + 2 * button_padding + 5 * text_offset + 2 * button_thickness;
+    m_height = text_height + 2 * button_padding + 2 * text_offset + 2 * button_thickness;
+    rectangle_body.setShape(m_width, m_height, corner_radius, corner_precision);
     rectangle_body.setOutline(button_thickness);
     // Berekenen van de positie van de tekst
     const sf::Vector2f outline_offset(button_thickness, button_thickness);
@@ -85,4 +87,18 @@ void RoundedButton::draw(sf::RenderWindow &window) const {
     if (text_font != nullptr) {
         window.draw(*text_body);
     }
+}
+
+void RoundedButton::setSize(const int &width, const int &height) {
+    m_width = width, m_height = height;
+    rectangle_body.setShape(static_cast<float>(m_width), static_cast<float>(m_height), corner_radius, corner_precision);
+}
+
+void RoundedButton::setPosition(const int &x, const int &y) {
+    setPosition(sf::Vector2f(static_cast<float>(x), static_cast<float>(y)));
+}
+
+void RoundedButton::setPosize(const int &x, const int &y, const int &width, const int &height) {
+    setPosition(x, y);
+    setSize(width, height);
 }

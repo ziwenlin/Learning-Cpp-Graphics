@@ -44,7 +44,7 @@ private:
     void setColumnWidth(const int &column, const int &width);
 
 public:
-    void draw(sf::RenderWindow &window) override;
+    void draw(sf::RenderWindow &window) const override;
 
     void setSize(const int &width, const int &height) override;
 

@@ -47,10 +47,10 @@ void GridFrame::setColumnWidth(const int &column, const int &width) {
     m_column_widths[column] = width;
 }
 
-void GridFrame::draw(sf::RenderWindow &window) {
+void GridFrame::draw(sf::RenderWindow &window) const {
     const int &grid_size = m_rows * m_columns;
     for (int i = 0; i < grid_size; ++i) {
-        GridObject &object = m_objects[i];
+        const GridObject &object = m_objects[i];
         if (object.placeable == nullptr) continue;
         object.placeable->draw(window);
     }

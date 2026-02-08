@@ -4,17 +4,18 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 
+#include "interfaces/IDrawables.h"
 #include "RoundedRectangle.h"
 #include "../devices/SmartMouse.h"
 
-class RoundedButton {
+class RoundedButton : public IPlaceable {
 public:
     bool is_inside = false;
     bool is_pressed = false;
     bool is_activated = false;
 
-    int width = 0;
-    int height = 0;
+    int m_width = 0;
+    int m_height = 0;
     int text_height = 32;
     float text_width = 0;
     float text_offset = 32 / 6.0f;
@@ -37,7 +38,7 @@ private:
 public:
     RoundedButton();
 
-    ~RoundedButton();
+    ~RoundedButton() override;
 
     void setPosition(sf::Vector2f position);
 
@@ -49,7 +50,13 @@ public:
 
     void update(const SmartMouse &mouse);
 
-    void draw(sf::RenderWindow &window) const;
+    void draw(sf::RenderWindow &window) const override;
+
+    void setSize(const int &width, const int &height) override;
+
+    void setPosition(const int &x, const int &y) override;
+
+    void setPosize(const int &x, const int &y, const int &width, const int &height) override;
 
 private:
 };
