@@ -2,6 +2,8 @@
 #define LEARNINGSFML_INTERFACES_IDRAWABLES_H
 #include <SFML/Graphics.hpp>
 
+#include "../../devices/SmartMouse.h"
+
 
 class IDrawable {
 protected:
@@ -9,6 +11,11 @@ protected:
 
 public:
     virtual void draw(sf::RenderWindow &window) const = 0;
+};
+
+class IClickable : public IDrawable {
+public:
+    virtual void update(const SmartMouse &mouse) = 0;
 };
 
 class IPlaceable : public IDrawable {
