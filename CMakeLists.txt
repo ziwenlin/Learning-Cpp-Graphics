@@ -51,7 +51,7 @@ set(SOURCES
         src/devices/ConfigLinkManager.h
         src/devices/ScreenContentManager.cpp
         src/devices/ScreenContentManager.h
-        src/gui/interfaces/IDrawables.h
+        src/interfaces/IDrawables.h
         src/gui/GridFrame.cpp
         src/gui/GridFrame.h
 )

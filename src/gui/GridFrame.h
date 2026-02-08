@@ -3,7 +3,7 @@
 #include <array>
 
 #include "RoundedButton.h"
-#include "../gui/interfaces/IDrawables.h"
+#include "../interfaces/IDrawables.h"
 
 struct GridObject {
     IPlaceable *placeable;

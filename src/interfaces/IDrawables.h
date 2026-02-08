@@ -2,7 +2,7 @@
 #define LEARNINGSFML_INTERFACES_IDRAWABLES_H
 #include <SFML/Graphics.hpp>
 
-#include "../../devices/SmartMouse.h"
+#include "../devices/SmartMouse.h"
 
 
 class IDrawable {
